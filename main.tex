@@ -3,7 +3,7 @@
 % ==================///==================///==================///
 % I metadati del PDF (pdfauthor, pdftitle) vanno cambiati qui, nella \documentclass.
 % Gli stessi nomi compaiono anche in \author, più sotto: tienili allineati.
-\documentclass[hyperref={pdfauthor={CHANGE: author 1, CHANGE: author 2, CHANGE: author 3}, pdftitle={CHANGE: title}}, aspectratio={169}]{beamer}
+\documentclass[hyperref={pdfauthor={Enea Manzi, Marco Anisetti}, pdftitle={Security Assurance for Modern Big Data APIs}}, aspectratio={169}]{beamer}
 \usepackage[english]{babel}
 
 \usepackage{xcolor}
@@ -47,26 +47,26 @@
 % ==================///==================///==================///
 % ==================/// METADATI DELLA PRESENTAZIONE
 % ==================///==================///==================///
-\title{CHANGE: title}
+\title{Security Assurance for Modern Big Data APIs}
 
 % \author[forma corta]{\texorpdfstring{testo visibile}{testo semplice per i segnalibri del PDF}}
 % - nel testo visibile il relatore è in grassetto e ogni autore ha il numero \inst{N} del suo istituto
 % - sotto i nomi, in piccolo, email e pagina web del relatore
-\author[CHANGE: author 1, CHANGE: author 2, CHANGE: author 3]{%
+\author[Enea Manzi, Marco Anisetti]{%
     \texorpdfstring{
-        \textbf{CHANGE: author 1}\inst{1}, CHANGE: author 2\inst{1}, CHANGE: author 3\inst{2}\\[0.5em]
-        \scriptsize \href{mailto:CHANGE:author-1-email@example.org}{CHANGE: author 1 email}\\ \href{https://CHANGE:author-1-web-page}{CHANGE: author 1 web page} }{%
-        CHANGE: author 1, CHANGE: author 2, CHANGE: author 3 }%
+        \textbf{Enea Manzi}\inst{1}, Marco Anisetti\inst{1,2}\\[0.5em]
+        \scriptsize \href{mailto:enea.manzi@unimi.it}{enea.manzi@unimi.it}\\ \href{https://eneamanzi.github.io/}{https://eneamanzi.github.io/} }{%
+        Enea Manzi, Marco Anisetti }%
 }
 
 % I numeri \inst{N} devono coincidere con quelli usati in \author.
 \institute{%
-    \inst{1} CHANGE: affiliation 1 \and
-    \inst{2} CHANGE: affiliation 2
+    \inst{1} Department of Computer Science, Università degli Studi di Milano  \and
+    \inst{2} Moon Cloud srl
 }
 
 % Qui la data è il nome dell'evento e l'anno.
-\date{CHANGE: event name and year}
+\date{ITADATA 2026}
 
 
 \begin{document}
@@ -94,6 +94,12 @@
 % ==================/// SLIDE
 % ==================///==================///==================///
 % GUIDA: una decina di slide, al massimo 12, per un intervento di 12 minuti.
+%   1. Intro (1-2 slide): contesto (Background) e problema, con perché lo stato dell'arte non basta (Motivations).
+%   2. Overview dell'approccio (1 slide): una frase e un punto per componente; le slide dopo corrispondono ai punti.
+%   3. Approccio, dall'alto verso il basso: per ogni componente dove sta nell'approccio. Meglio un'immagine di una definizione.
+%   4. Esempio: dentro ogni componente mentre lo racconti, oppure passo passo dopo l'approccio.
+%   5. Esperimenti: se sono tanti, un sottoinsieme che fa passare l'intuizione.
+%   6. Conclusioni: una riga su cosa è stato fatto, due punti sui vantaggi, lavori futuri.
 \input{01_intro.tex}
 \input{02_core.tex}
 \input{03_exp.tex}

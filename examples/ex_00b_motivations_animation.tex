@@ -1,0 +1,47 @@
+% !TEX root = ../main.tex
+% ESEMPIO 0b: slide Motivations con una figura animata (personaggi e bolle di dialogo).
+%   La figura può essere un'immagine qualsiasi. Qui i numeri di sovrapposizione (overlay) sono definiti nel frame:
+%   ogni passo parte dal precedente (+1) o resta uguale (+0) quando due cose compaiono insieme.
+%   Gli stessi nomi sono usati da assets/tex/02_fig_cert_process.tex.
+%   Da copiare: la struttura (macro dei numeri nel frame, figura in assets/tex/, \input dentro adjustbox).
+%   La stessa tecnica si riusa nell'approccio, per mostrare una figura con i colori che evidenziano i passi.
+
+\begin{frame}
+    \frametitle{Example: animated scenario figure}
+    % GUIDA: il problema, e perché lo stato dell'arte non basta. Meglio mostrarlo su un esempio concreto (una figura di uno scenario),
+    % che può tornare più avanti nell'approccio.
+
+    \pgfmathsetmacro\numberStart{int(1)}
+    % passo: si evidenzia l'elemento principale e le sue dipendenze
+    \pgfmathsetmacro\numberServiceTopStart{int(\numberStart+0)}
+    \pgfmathsetmacro\numberHighlightDependencyStart{int(\numberServiceTopStart+0)}
+    % passo: nuova bolla sull'elemento principale, che poi smette di essere evidenziato
+    \pgfmathsetmacro\numberServiceTopEvidStart{int(\numberHighlightDependencyStart+1)}
+    \pgfmathsetmacro\numberServiceTopEvidEnd{int(\numberServiceTopEvidStart+0)}
+    \pgfmathsetmacro\numberServiceTopEnd{int(\numberServiceTopEvidEnd+0)}
+    % passo: restano evidenziati gli altri elementi, nuova bolla
+    \pgfmathsetmacro\numberCalloutFocusOnOtherStart{int(\numberServiceTopEvidEnd+1)}
+    \pgfmathsetmacro\numberCalloutFocusOnOtherEnd{int(\numberCalloutFocusOnOtherStart+0)}
+    % passo: doppio evidenziamento di più elementi
+    \pgfmathsetmacro\numberHighlightDependencyEnd{int(\numberCalloutFocusOnOtherEnd+0)}
+    \pgfmathsetmacro\numberHighlightDependencySomeOkStart{int(\numberCalloutFocusOnOtherStart+0)}
+    \pgfmathsetmacro\numberHighlightDependencySomeOkEnd{int(\numberHighlightDependencySomeOkStart+0)}
+    % passo: doppio evidenziamento di un altro elemento, nuova bolla
+    \pgfmathsetmacro\numberHighlightDependencySomeNotOkStart{int(\numberHighlightDependencySomeOkEnd+1)}
+    \pgfmathsetmacro\numberHighlightDependencySomeNotOkStartPartOne{int(\numberHighlightDependencySomeNotOkStart+0)}
+    \pgfmathsetmacro\numberHighlightDependencySomeNotOkStartPartOneEnd{int(\numberHighlightDependencySomeNotOkStartPartOne+0)}
+    \pgfmathsetmacro\numberHighlightDependencySomeNotOkStartPartTwoStart{int(\numberHighlightDependencySomeNotOkStartPartOneEnd+0)}
+    \pgfmathsetmacro\numberHighlightDependencySomeNotOkStartPartTwoEnd{int(\numberHighlightDependencySomeNotOkStartPartTwoStart+0)}
+    \pgfmathsetmacro\numberHighlightDependencySomeNotOkEnd{int(\numberHighlightDependencySomeNotOkStartPartTwoEnd+0)}
+    \pgfmathsetmacro\numberEnd{int(\numberHighlightDependencySomeNotOkEnd+0)}
+    % passo finale: ogni elemento mostra la sua bolla e compare l'immagine
+    \pgfmathsetmacro\numberCertStart{int(\numberHighlightDependencySomeNotOkEnd+1)}
+
+    \pgfmathsetmacro\numberPatrickHappy{int(\numberCertStart+1)}
+    \pgfmathsetmacro\numberCertEnd{int(\numberPatrickHappy+0)}
+
+    \begin{adjustbox}{max totalsize={.9\linewidth}{\textheight},center}
+        \input{assets/tex/02_fig_cert_process.tex}
+    \end{adjustbox}
+
+\end{frame}

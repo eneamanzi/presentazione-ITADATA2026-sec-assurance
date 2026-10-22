@@ -1,0 +1,47 @@
+% !TEX root = ../main.tex
+% ESEMPIO 0a: slide Background con elenco evidenziato passo passo accanto a una figura.
+%   Ogni punto dell'elenco usa \alert<n>, che lo evidenzia solo alla sovrapposizione (overlay) n. Gli stessi
+%   numeri sono usati dalla figura (assets/tex/01_fig_cert_process.tex) per evidenziare la parte corrispondente.
+%   Da copiare: le macro dei numeri, le due colonne e l'\input della figura dentro adjustbox.
+
+\begin{frame}
+    \frametitle{Example: highlighted list next to a figure}
+    % GUIDA: il concetto, lo schema o il contesto di cui parla il lavoro, con i suoi elementi. Meglio una figura che una definizione
+    % lunga: ogni elemento si evidenzia (\alert<n>) mentre lo nomini.
+
+    % Numero di sovrapposizione (overlay) in cui compare ogni passo. Il primo è 2 perché alla
+    % sovrapposizione 1 si vede la figura senza evidenziazioni; ogni passo parte dal precedente.
+    % Gli stessi nomi sono usati da assets/tex/01_fig_cert_process.tex per evidenziare la figura.
+    \pgfmathsetmacro\numberProperty{int(2)}
+    \pgfmathsetmacro\numberTarget{int(\numberProperty+1)}
+    \pgfmathsetmacro\numberEvidenceCollectionModel{int(\numberTarget+1)}
+    \pgfmathsetmacro\numberCertificationModel{int(\numberEvidenceCollectionModel+1)}
+    \pgfmathsetmacro\numberExecution{int(\numberCertificationModel+1)}
+    \pgfmathsetmacro\numberCertificate{int(\numberExecution+1)}
+
+    \begin{columns}[T]
+        \begin{column}{.45\textwidth}
+
+            CHANGE: one sentence introducing the \alert{concept} and its \alert{key words}, followed by the elements
+
+            \vspace{.5em}
+
+            % Un punto per ogni passo: \alert<n> lo evidenzia solo alla sovrapposizione n.
+            \begin{itemize}\setlength\itemsep{1em}
+                \item \alert<\numberProperty>{CHANGE: step 1}
+                \item \alert<\numberTarget>{CHANGE: step 2}
+                \item \alert<\numberEvidenceCollectionModel>{CHANGE: step 3}
+                \item \alert<\numberCertificationModel>{CHANGE: step 4}
+                \item \alert<\numberExecution>{CHANGE: step 5}
+                \item \alert<\numberCertificate>{CHANGE: step 6}
+            \end{itemize}
+
+        \end{column}
+        \begin{column}{.55\textwidth}
+            \begin{adjustbox}{max totalsize={\linewidth}{.8\textheight},center}
+                \input{assets/tex/01_fig_cert_process.tex}
+            \end{adjustbox}
+        \end{column}
+    \end{columns}
+
+\end{frame}

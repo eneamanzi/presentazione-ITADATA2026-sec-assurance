@@ -1,0 +1,117 @@
+% !TEX root = ../main.tex
+% ESEMPIO 0d: slide degli esperimenti e dei risultati.
+%   - Experiments (1): testo a sinistra e immagine a destra in due colonne; \pause fa comparire il punto successivo.
+%   - Experiments (2): intestazione fissa e contenuto che cambia con \only<n>; overlayarea riserva lo spazio,
+%     così niente si sposta da un passo all'altro. Il terzo passo è una tabella (vedi anche ex_05_tables.tex).
+%   - Results: grafico a barre orizzontali (pgfplots, groupplot) con dati letti da un CSV (vedi ex_04_line_plots.tex
+%     per i grafici a linee).
+%   Da copiare: il frame che serve, poi sostituire i CHANGE.
+
+\begin{frame}
+    \frametitle{Example: experiments, text and image}
+    % GUIDA: obiettivo degli esperimenti e come sono impostati. Se sono tanti, mostra solo il sottoinsieme che fa passare l'intuizione.
+
+    \alert{Goal}: CHANGE: goal of the experiments
+
+    \vspace{1em}
+
+    % Testo a sinistra, immagine a destra. \pause fa comparire il punto successivo al passo seguente.
+    \begin{columns}
+        \begin{column}{.7\textwidth}
+            \begin{itemize}\setlength{\itemsep}{1em}
+                \item \alert{CHANGE: item 1}: CHANGE: description of the first point\ldots
+                      \pause\item \ldots CHANGE: item 2, which appears at the next step
+            \end{itemize}
+        \end{column}
+        \begin{column}{.3\textwidth}
+            \includegraphics[width=.6\textwidth]{assets/img/patrick_star_sad.png}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Example: experiments, changing content}
+    % GUIDA: come è costruito l'esperimento (dati, misure, configurazioni); la tabella riassume le configurazioni.
+
+    % Intestazione fissa e contenuto che cambia: \only<1-> resta visibile a tutti i passi, mentre
+    % \only<1>, \only<2>, \only<3> compaiono solo al passo indicato. overlayarea riserva lo spazio,
+    % così niente si sposta da un passo all'altro.
+    \begin{overlayarea}{\textwidth}{.75\textheight}
+        \only<1->{
+                \alert{CHANGE: fixed header}: CHANGE: sentence that stays at every step, with \alert{key words} and the symbol $T$
+
+                \vspace{1em}
+            }
+        \only<1>{
+                CHANGE: introduction of the list, in terms of
+
+                \begin{columns}
+                    \begin{column}{.8\textwidth}
+                        \begin{itemize}\setlength{\itemsep}{1em}
+                            \item CHANGE: point 1
+                            \item CHANGE: point 2
+                                  \begin{itemize}
+                                      \item CHANGE: sub-point of point 2, with an \emph{emphasized} word
+                                  \end{itemize}
+                        \end{itemize}
+
+                        \vspace{1em}
+
+                        CHANGE: closing sentence
+                    \end{column}
+                    \begin{column}{.2\textwidth}
+                        \includegraphics[width=1\textwidth]{assets/img/patrick_scientist.jpg}
+                    \end{column}
+                \end{columns}
+            }
+        \only<2>{
+
+                \begin{columns}
+                    \begin{column}{.8\textwidth}
+                        CHANGE: sentence about the \alert{key concept} $T$
+
+                        \vspace{1em}
+
+                        \begin{itemize}\setlength{\itemsep}{1em}
+                            \item CHANGE: point 1
+                            \item CHANGE: point 2
+                        \end{itemize}
+                    \end{column}
+                    \begin{column}{.2\textwidth}
+                        \includegraphics[width=1\textwidth]{assets/img/patrick_question.jpg}
+                    \end{column}
+                \end{columns}
+            }
+        \only<3>{
+                \vspace{1em}
+
+                % Tabella con intestazione su due righe: \multirow per la prima colonna, \multicolumn per i gruppi.
+                % Le righe sono di booktabs (\toprule, \midrule, \bottomrule); \cmidrule traccia una riga parziale.
+                \begin{adjustbox}{max totalsize={.675\linewidth}{\textheight},center}
+                    \scriptsize
+                    \begin{tabular}{c|cc|cc|cc}
+                        \toprule
+                        \multirow{2}{*}{\textbf{CHANGE: row label}} & \multicolumn{2}{c|}{\textbf{CHANGE: group A}} & \multicolumn{2}{c|}{\textbf{CHANGE: group B}} & \multicolumn{2}{c}{\textbf{CHANGE: group C}}                                                                                                                                \\
+                                                                    & \multicolumn{1}{c}{\textbf{CHANGE: A1}}       & \multicolumn{1}{c|}{\textbf{CHANGE: A2}}      & \multicolumn{1}{c}{\textbf{CHANGE: B1}}      & \multicolumn{1}{c|}{\textbf{CHANGE: B2}} & \multicolumn{1}{c}{\textbf{CHANGE: C1}} & \multicolumn{1}{c}{\textbf{CHANGE: C2}} \\
+                        \midrule
+                        1                                           & 0                                             & 0                                             & 0                                            & 0                                        & 4                                       & 16                                      \\
+                        2                                           & 80                                            & 20                                            & 0                                            & 0                                        & 0                                       & 0                                       \\
+                        3                                           & 10                                            & 20                                            & 15                                           & 5                                        & 5                                       & 5                                       \\
+                        4                                           & 20                                            & 5                                             & 10                                           & 5                                        & 5                                       & 10                                      \\
+                        \bottomrule
+                    \end{tabular}
+                \end{adjustbox}
+            }
+    \end{overlayarea}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Example: results plot}
+    % GUIDA: i risultati, per esempio come grafici, con una sola conclusione per grafico.
+
+    % Grafico a barre orizzontali (pgfplots, groupplot) con dati letti da un CSV; vedi il file incluso.
+    % Due pannelli per slide. Per altre configurazioni o per la variante a quattro pannelli vedi i commenti in testa al file.
+    \input{assets/tex/03_plot_quality/plot_01.tex}
+\end{frame}
