@@ -1,0 +1,106 @@
+% ==================///==================///==================///
+% ==================/// PREAMBOLO
+% ==================///==================///==================///
+% I metadati del PDF (pdfauthor, pdftitle) vanno cambiati qui, nella \documentclass.
+% Gli stessi nomi compaiono anche in \author, più sotto: tienili allineati.
+\documentclass[hyperref={pdfauthor={CHANGE: author 1, CHANGE: author 2, CHANGE: author 3}, pdftitle={CHANGE: title}}, aspectratio={169}]{beamer}
+\usepackage[english]{babel}
+
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{pifont}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage{anyfontsize}
+\usepackage{setspace}
+\usepackage{changepage}
+\usepackage{soul, color}
+\usepackage[normalem]{ulem}
+\usepackage[shortcuts]{extdash}
+\usepackage[outline]{contour}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{mathtools}
+\usepackage{xifthen}
+\usepackage{csquotes}
+\usepackage{makecell}
+% \usepackage[maxnames=9, firstinits=true]{biblatex}
+% \addbibresource{bibliography.bib}
+
+\usepackage{colortbl}
+\usepackage{pbox}
+
+\usepackage{booktabs}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, backgrounds, calc, fit, patterns, positioning, quotes, shapes, shapes.geometric, shapes.misc, shapes.symbols, decorations.pathreplacing}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{groupplots}
+\usepackage{pgfplotstable}
+\usepackage{tikzpeople}
+
+\usetheme{Nicola}
+% Le slide dell'appendice (Examples) non contano nel totale della talk (es. "7 / 11").
+\usepackage{appendixnumberbeamer}
+
+% ==================///==================///==================///
+% ==================/// METADATI DELLA PRESENTAZIONE
+% ==================///==================///==================///
+\title{CHANGE: title}
+
+% \author[forma corta]{\texorpdfstring{testo visibile}{testo semplice per i segnalibri del PDF}}
+% - nel testo visibile il relatore è in grassetto e ogni autore ha il numero \inst{N} del suo istituto
+% - sotto i nomi, in piccolo, email e pagina web del relatore
+\author[CHANGE: author 1, CHANGE: author 2, CHANGE: author 3]{%
+    \texorpdfstring{
+        \textbf{CHANGE: author 1}\inst{1}, CHANGE: author 2\inst{1}, CHANGE: author 3\inst{2}\\[0.5em]
+        \scriptsize \href{mailto:CHANGE:author-1-email@example.org}{CHANGE: author 1 email}\\ \href{https://CHANGE:author-1-web-page}{CHANGE: author 1 web page} }{%
+        CHANGE: author 1, CHANGE: author 2, CHANGE: author 3 }%
+}
+
+% I numeri \inst{N} devono coincidere con quelli usati in \author.
+\institute{%
+    \inst{1} CHANGE: affiliation 1 \and
+    \inst{2} CHANGE: affiliation 2
+}
+
+% Qui la data è il nome dell'evento e l'anno.
+\date{CHANGE: event name and year}
+
+
+\begin{document}
+
+% ==================///==================///==================///
+% ==================/// FRAME DEL TITOLO
+% ==================///==================///==================///
+% Sotto \titlepage c'è un \vfill vuoto: nel deck ICWS di Nicola qui vanno i loghi dei progetti
+% e, in piccolo, i ringraziamenti ai finanziamenti.
+\begin{frame}
+    \titlepage
+
+    \vfill
+
+\end{frame}
+
+% ==================///==================///==================///
+% ==================/// MACRO E STILI TIKZ
+% ==================///==================///==================///
+% Copiati da Nicola (SecAssure 2026): non modificare. Le figure in assets/tex/ ne dipendono.
+\input{00_macro.tex}
+\input{00_common_tikz.tex}
+
+% ==================///==================///==================///
+% ==================/// SLIDE
+% ==================///==================///==================///
+% GUIDA: una decina di slide, al massimo 12, per un intervento di 12 minuti.
+\input{01_intro.tex}
+\input{02_core.tex}
+\input{03_exp.tex}
+\input{04_conclusions.tex}
+
+% Esempi: tecniche pronte da copiare nelle slide, in appendice. Per toglierli cancella queste due righe.
+\appendix
+\input{05_examples.tex}
+
+\end{document}

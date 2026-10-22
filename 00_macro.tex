@@ -1,0 +1,341 @@
+\newcommand*{\prop}{\ensuremath{p}}
+\newcommand*{\propertyNameStyle}[1]{\textsl{#1}}
+\newcommand*{\target}{\ensuremath{ToC}}
+\newcommand*{\setStyle}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand*{\targetSet}{\referred{\setStyle{TOC}}}
+\newcommand*{\mechanism}{\ensuremath{m}}
+% \newcommand*{\evidCollectionModel}{\ensuremath{\mathcal{E}}}
+\newcommand*{\evidCollectionModel}{\ensuremath{E}}
+\newcommand*{\evalFn}{\ensuremath{\mathcal{F}}}
+% \newcommand*{\certModel}{\ensuremath{\mathcal{CM}}}
+\newcommand*{\certModel}{\ensuremath{CM}}
+\newcommand*{\certModelSet}{\referred{\setStyle{\certModel}}}
+%\newcommand*{\cert}{\ensuremath{\mathcal{C}}}
+\newcommand*{\cert}{\ensuremath{C}}
+\newcommand*{\certSet}{\referred{\setStyle{\cert}}}
+\newcommand*{\evid}{\ensuremath{ev}}
+%\newcommand*{}{def}
+\newcommand*{\attr}{\ensuremath{attr}}
+\newcommand*{\referred}[1]{\ensuremath{\overline{#1}}}
+
+\newcommand*{\repo}{\ensuremath{\mathcal{R}}}
+
+\newcommand*{\signature}{\texttt{sig}}
+\newcommand*{\signatureCA}[1][]{\signature\ensuremath{_{\text{CA}_{\text{#1}}}}}
+\newcommand*{\signatureAL}[1][]{\signature\ensuremath{_{\text{AL}_{\text{#1}}}}}
+
+\newcommand*{\dimension}{\ensuremath{d}}
+\newcommand*{\angled}[1]{\ensuremath{\langle #1\rangle}}
+
+
+\newcommand{\verificationStep}{\ensuremath{v}}
+
+\newcommand{\targetInput}{\ensuremath{\mathcal{I}}}
+
+%\newcommand{\dimension}{\ensuremath{d}}
+
+\newcommand{\abbrvPreTraining}{\text{\textit{pt}}}
+\newcommand{\abbrvAdaptation}{\text{\textit{ad}}}
+\newcommand{\abbrvInference}{\text{\textit{in}}}
+\newcommand{\abbrvArtifact}{\text{\textit{ar}}}
+
+\newcommand{\viewPreTraining}{\ensuremath{\view_{\abbrvPreTraining}}}
+\newcommand{\viewAdaptation}{\ensuremath{\view_{\abbrvAdaptation}}}
+\newcommand{\viewInference}{\ensuremath{\view_{\abbrvInference}}}
+\newcommand{\viewArtifact}{\ensuremath{\view_{\abbrvArtifact}}}
+\newcommand{\viewAdaptationInference}{\ensuremath{\view_{\abbrvAdaptation+\abbrvInference}}}
+\newcommand{\dimensionPreTraining}{\ensuremath{\dimension_{\abbrvPreTraining}}}
+\newcommand{\dimensionAdaptation}{\ensuremath{\dimension_{\abbrvAdaptation}}}
+\newcommand{\dimensionInference}{\ensuremath{\dimension_{\abbrvInference}}}
+\newcommand{\dimensionAdaptationInference}{\ensuremath{\dimension_{\abbrvAdaptation+\abbrvInference}}}
+\newcommand{\dimensionArtifact}{\ensuremath{\dimension_{\abbrvArtifact}}}
+
+\newcommand{\succSymbol}{\ensuremath{\text{\textit{Succ}}}}
+\newcommand{\succFn}[1]{\ensuremath{\succSymbol(#1)}}
+
+\newcommand{\foundation}{\text{found}}
+
+\newcommand{\tableVGap}{.5em}
+
+\newcommand{\steponly}[1]{(#1)}
+\newcommand{\step}[1]{step \steponly{#1}}
+\newcommand{\steps}[2]{steps \steponly{#1}--\steponly{#2}}
+\newcommand{\Step}[1]{Step \steponly{#1}}
+\newcommand{\Steps}[2]{Steps \steponly{#1}--\steponly{#2}}
+
+\newcommand{\stepExperimentOnly}[1]{\emph{#1}}
+%\newcommand{\stepExperiment}[1]{\emph{step}~\stepExperimentOnly{#1}}
+\newcommand{\StepExperiment}[1]{\emph{Step}~\stepExperimentOnly{#1}}
+
+\newcommand*{\gapStyle}[1]{#1}
+\newcommand*{\gap}[1]{G#1}
+
+\newcommand{\testCaseOutput}{\ensuremath{out}}
+\newcommand{\testCaseResult}{\ensuremath{res}}
+
+
+%\newcommand{\hypergraphEvalRule}{\ensuremath{H_{\text{eval}}}}\
+\newcommand{\hypergraphEvalRule}{\ensuremath{\mathcal{R}}}
+\newcommand{\hypergraphAll}{\ensuremath{H_{\text{cert}}}}
+\newcommand{\hypergraphInstance}{\ensuremath{\mathcal{H}}}
+\newcommand{\verificationPath}{\ensuremath{\mathcal{V}}}
+
+\newcommand{\hypergraphCertModel}{\ensuremath{H}}
+%\newcommand{\hypergraphCert}{\ensuremath{H_{\text{cert}}}}
+\NewDocumentCommand{\hypergraphCert}{o}{%
+  \ensuremath{H_{\text{cert}\IfValueT{#1}{, #1}}}%
+}
+
+\newcommand{\hyperpath}{\ensuremath{\text{\emph{path}}}}
+
+\newcommand{\FPathStarSymbol}{\ensuremath{\mathcal{F}}}
+\newcommand{\BPathStarSymbol}{\ensuremath{\mathcal{B}}}
+\newcommand{\BFPathStarSymbol}{\ensuremath{\mathcal{BF}}}
+\newcommand{\FPathStarOf}[1]{\ensuremath{\FPathStarSymbol{(#1)}}}
+\newcommand{\BPathStarOf}[1]{\ensuremath{\BPathStarSymbol{(#1)}}}
+\newcommand{\BFPathStarOf}[1]{\ensuremath{\BFPathStarSymbol{(#1)}}}
+\newcommand{\PathStarSymbol}{\ensuremath{\text{\emph{PathsSimple}}}}
+\newcommand{\PathStarOf}[1]{\ensuremath{\PathStarSymbol{(#1)}}}
+
+\newcommand{\evalNode}{\ensuremath{\evalFn}}
+\newcommand{\evalNodeAll}{\ensuremath{\widehat{\evalFn}}}
+
+% \newcommand{\nodes}{\ensuremath{V}}
+% \newcommand{\edges}{\ensuremath{E}}
+\newcommand{\nodes}{\ensuremath{N}}
+\newcommand{\arcs}{\ensuremath{A}}
+
+%\newcommand{\node}{\ensuremath{n}}
+
+\newcommand{\modelName}[1]{\texttt{#1}}
+
+\newcommand{\llmGemma}[1][short]{%
+  \ifthenelse{\equal{#1}{short}}{%
+    \modelName{gemma3:27b}%
+  }{%
+    \modelName{gemma3:27b-it-q4\_K\_M}%
+  }%
+}
+\newcommand{\llmLlama}[1][short]{%
+  \ifthenelse{\equal{#1}{short}}{%
+    \modelName{llama3.3:70b}%
+  }{%
+    \modelName{llama3.3:70b-instruct-q5\_K\_M}%
+  }%
+}
+\newcommand{\llmDeepseek}[1][short]{%
+  \ifthenelse{\equal{#1}{short}}{%
+    \modelName{deepseek-r1:70b}%
+  }{%
+    \modelName{deepseek-r1:70b}%
+  }%
+}
+\newcommand{\llmMistral}[1][short]{%
+  \ifthenelse{\equal{#1}{short}}{%
+    \modelName{mistral:123b}%
+  }{%
+    \modelName{mistral-large:123b-instruct-2411-q5\_K\_M}%
+  }%
+}
+\newcommand{\llmQwenCoder}[1][short]{%
+  \ifthenelse{\equal{#1}{short}}{%
+    \modelName{qwen3-coder:30b}%
+  }{%
+    \modelName{qwen3-coder:30b-a3b-q4\_K\_M}%
+  }%
+}
+\newcommand{\llmGptOss}[1][short]{%
+  \ifthenelse{\equal{#1}{short}}{%
+    \modelName{gpt-oss:20b}%
+  }{%
+    \modelName{gpt-oss:20b}%
+  }%
+}
+\newcommand{\llmCodeLlama}[1][short]{%
+  \ifthenelse{\equal{#1}{short}}{%
+    \modelName{codellama:70b}%
+  }{%
+    \modelName{codellama:70b-instruct-q5\_K\_M}%
+  }%
+}
+
+% \newcommand{\llmGemma}{\modelName{gemma3:27b-it-q4\_K\_M}}
+% \newcommand{\llmLlama}{\modelName{llama3.3:70b-instruct-q5\_K\_M}}
+% \newcommand{\llmDeepseek}{\modelName{deepseek-r1:70b}}
+% \newcommand{\llmMistral}{\modelName{mistral-large:123b-instruct-2411-q5\_K\_M}}
+% \newcommand{\llmQwenCoder}{\modelName{qwen3-coder:30b-a3b-q4\_K\_M}}
+% \newcommand{\llmGptOss}{\modelName{gpt-oss:20b}}
+% \newcommand{\llmCodeLlama}{\modelName{codellama:70b-instruct-q5\_K\_M}}
+
+
+\newcommand{\E}{\ensuremath{E}}
+\newcommand{\Efirst}{\ensuremath{\E_{\text{first}}}}
+\newcommand{\Elast}{\ensuremath{\E_{\text{last}}}}
+\newcommand{\Erandom}{\ensuremath{\E_{\text{random}}}}
+\newcommand{\Enull}{\ensuremath{\E_{\text{null}}}}
+
+%\newcommand{\Prompts}{\ensuremath{\mathbb{P}}}
+
+\newcommand{\llm}{\ensuremath{\text{\emph{app}}}}
+
+\newcommand{\probe}{\ensuremath{pr}}
+\newcommand{\myN}{\ensuremath{n}}
+\newcommand{\myM}{\ensuremath{m}}
+\newcommand{\accordance}{\ensuremath{\text{\emph{res}}}}
+%\newcommand{\probeSet}{\ensuremath{P}}
+\newcommand{\prompt}{\ensuremath{\text{\emph{prompt}}}}
+
+\newcommand{\answer}{\ensuremath{\text{\emph{ans}}}}
+
+\newcommand{\orderBias}{\ensuremath{\text{\emph{bias}}}}
+
+\newlength{\oldtabcolsep}
+\setlength{\oldtabcolsep}{\tabcolsep}
+
+\newcommand{\tailSetSymbol}{\ensuremath{\text{\emph{tail}}}}
+\newcommand{\headSetSymbol}{\ensuremath{\text{\emph{head}}}}
+
+\newcommand{\node}{\ensuremath{\text{\emph{node}}}}
+\newcommand{\arc}{\ensuremath{\text{\emph{arc}}}}
+
+\newcommand{\headSet}[1]{\ensuremath{\headSetSymbol(#1)}}
+\newcommand{\tailSet}[1]{\ensuremath{\tailSetSymbol(#1)}}
+
+\newcommand{\guardFunctionSymbol}{\ensuremath{G}}
+\newcommand{\guardFunction}[1]{\ensuremath{\guardFunctionSymbol(#1)}}
+\newcommand{\evidenceFunctionSymbol}{\ensuremath{EV}}
+\newcommand{\evidenceFunction}[1]{\ensuremath{\evidenceFunctionSymbol(#1)}}
+\newcommand{\nil}{\texttt{nil}}
+\newcommand{\error}{\texttt{error}}
+
+%%%%%%%%%
+% new macro
+
+\newcommand{\propertyLabel}{\ensuremath{p}}
+\newcommand{\behaviorSet}{\ensuremath{\mathcal{B}}}
+\newcommand{\verificationStepTarget}{\ensuremath{t}}
+\newcommand{\verificationStepActivity}{\ensuremath{s}}
+\newcommand{\conditionGuardSymbol}{\ensuremath{\text{\emph{g}}}}
+\newcommand{\conditionGuardFunction}[1]{\ensuremath{\conditionGuardSymbol(#1)}}
+
+%\newcommand{\verificationPathAnnotated}{\ensuremath{\overline{\verificationPath}}}
+
+\newcommand{\verificationGraphAnnotated}{\ensuremath{\overline{\behaviorSet}}}
+\newcommand{\verificationNodesAnnotated}{\ensuremath{\overline{\nodes}}}
+\newcommand{\verificationArcsAnnotated}{\ensuremath{\overline{\arcs}}}
+
+
+\newcommand{\sourceFunctionSymbol}{\ensuremath{\text{\emph{source}}}}
+\newcommand{\sourceFunction}[1]{\ensuremath{\sourceFunctionSymbol(#1)}}
+
+\newcommand{\firstFunctionSymbol}{\ensuremath{\text{\emph{first}}}}
+\newcommand{\firstFunction}[1]{\ensuremath{\firstFunctionSymbol(#1)}}
+
+\newcommand{\lastFunctionSymbol}{\ensuremath{\text{\emph{last}}}}
+\newcommand{\lastFunction}[1]{\ensuremath{\lastFunctionSymbol(#1)}}
+
+\newcommand{\arcCounterSymbol}{\ensuremath{c}}
+\newcommand{\arcCounterOf}[1]{\ensuremath{\arcCounterSymbol[#1]}}
+
+
+
+\newcommand{\applTypeTextStandalone}{Type 1: Standalone}
+\newcommand{\applTypeTextIntegratedArtifactGeneration}{Type 2: Integrated -- Artifact Generation}
+\newcommand{\applTypeTextIntegratedDecisionMaking}{Type 3: Integrated -- Decision-Making}
+
+\newcommand{\probeOutput}{\ensuremath{\text{\emph{out}}}}
+\newcommand{\probeOutputTrue}{\ensuremath{\probeOutput^{\top}}}
+\newcommand{\probeOutputFalse}{\ensuremath{\probeOutput^{\bot}}}
+
+\newcommand{\FKGLSymbolFunction}{\ensuremath{\text{\emph{FK}}}}
+\newcommand{\FKGLFunction}[1]{\ensuremath{\FKGLSymbolFunction(#1)}}
+\newcommand{\DLSymbolFunction}{\ensuremath{\text{\emph{DL}}}}
+\newcommand{\DLFunction}[1]{\ensuremath{\DLSymbolFunction(#1)}}
+
+\newcommand{\detail}[1]{\emph{#1}}
+\newcommand{\detailLow}{\detail{Low}}
+\newcommand{\detailMediumLow}{\detail{Medium--Low}}
+\newcommand{\detailMediumHigh}{\detail{Medium-High}}
+\newcommand{\detailHigh}{\detail{High}}
+
+% displays a "check mark"
+\newcommand{\ok}{\ding{51}}
+% displays an "x mark"
+\newcommand{\notOk}{\ding{55}}
+
+
+\newcommand{\bigO}{\mathcal{O}}
+
+\newcommand{\arcsCardinality}{\ensuremath{\vert \arcs \vert}}
+\newcommand{\nodesCardinality}{\ensuremath{\vert \nodes \vert}}
+
+\newcommand{\nodesFailed}{\ensuremath{\overline{F}}}
+
+
+\newcommand{\spaceOne}{~~~~}
+
+\newcommand{\challenge}[1]{\textbf{C#1}}
+
+\newcommand{\parMini}[1]{\parbox{\linewidth}{\tiny #1}}
+\newcommand{\fullCiteMini}[1]{\parMini{\fullcite{#1}}}
+
+
+\newcommand{\parAlmostMini}[1]{\parbox{\linewidth}{\footnotesize #1}}
+\newcommand{\fullCiteAlmostMini}[1]{\parAlmostMini{\fullcite{#1}}}
+
+\newcommand{\timestyle}[1]{#1}
+\newcommand{\timeshort}{\timestyle{S}}
+\newcommand{\timemedium}{\timestyle{M}}
+\newcommand{\timelong}{\timestyle{L}}
+
+
+\newcommand*{\service}[1]{\ensuremath{s_{#1}}}
+
+\newcommand*{\pavail}{\ensuremath{\prop_\text{avail}}}
+\newcommand*{\ppriv}{\ensuremath{\prop_{\text{priv}}}}
+\newcommand*{\pConfTransit}{\ensuremath{\prop_{\text{conf\_net}}}}
+\newcommand*{\pConfStorage}{\ensuremath{\prop_{\text{conf\_str}}}}
+
+
+%\newcommand*{\relwordTargetCloudTrad}{def}
+\newcommand*{\abbrvServiceStorage}{\text{str}}
+\newcommand*{\abbrvServiceDatabase}{\text{db}}
+\newcommand*{\abbrvServiceAuth}{\text{auth}}
+\newcommand*{\abbrvServiceNetwork}{\text{net}}
+\newcommand*{\abbrvServiceKube}{\text{k8s}}
+\newcommand*{\abbrvServiceAnalytics}{\text{dawp}}
+% \newcommand*{\abbrvServiceNetworkInt}{\text{netinf}}
+% \newcommand*{\abbrvServiceStorageInt}{\text{strinf}}
+
+\newcommand*{\abbrvServiceNetworkIntCloud}{\text{netinf\_cl}}
+\newcommand*{\abbrvServiceStorageIntCloud}{\text{strinf\_cl}}
+\newcommand*{\abbrvServiceNetworkIntEdge}{\text{netinf\_edge}}
+\newcommand*{\abbrvServiceStorageIntEdge}{\text{strinf\_edge}}
+
+\newcommand*{\abbrvMechanismUserAuth}{\text{user}}
+\newcommand*{\abbrvMechanismScheduling}{\text{sched}}
+\newcommand*{\abbrvMechanismData}{\text{data}}
+
+\newcommand*{\abbrvHandlerApp}{\text{app}}
+\newcommand*{\abbrvHandlerCSP}{\text{csp}}
+\newcommand*{\abbrvHandlerISP}{\text{isp}}
+
+\newcommand*{\CA}{\emph{\gls{CA}}}
+\newcommand*{\CAApplication}{\CA\ensuremath{_{\abbrvHandlerApp}}}
+\newcommand*{\CACSP}{\CA\ensuremath{_{\abbrvHandlerCSP}}}
+\newcommand*{\CAISP}{\CA\ensuremath{_{\abbrvHandlerISP}}}
+
+\newcommand*{\AL}{\emph{\gls{AL}}}
+\newcommand*{\ALApplication}{\AL\ensuremath{_{\abbrvHandlerApp}}}
+\newcommand*{\ALCSP}{\AL\ensuremath{_{\abbrvHandlerCSP}}}
+\newcommand*{\ALISP}{\AL\ensuremath{_{\abbrvHandlerISP}}}
+
+\newcommand{\approachSOTA}{\text{\emph{SOTA}}}
+\newcommand{\approachOur}{\text{\emph{multi}}}
+\newcommand{\certTimeSymbol}{\ensuremath{T}}
+\newcommand{\certTimeFunction}[1]{\ensuremath{\certTimeSymbol}(#1)}
+
+\newcommand*{\certStatusStyle}[1]{\texttt{#1}}
+\newcommand*{\certStatusValid}[1]{\certStatusStyle{valid(}#1\certStatusStyle{)}} % chktex 9 chktex 36
+\newcommand*{\certStatusSuspended}[1]{\certStatusStyle{suspended(}#1\certStatusStyle{)}} % chktex 9 chktex 36
+\newcommand*{\certStatusRevoked}[1]{\certStatusStyle{revoked(}#1\certStatusStyle{)}} % chktex 9 chktex 36

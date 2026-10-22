@@ -1,0 +1,90 @@
+% GRAFICO: due pannelli affiancati (una configurazione ciascuno), barre orizzontali, dati letti da un CSV,
+% una sola legenda condivisa.
+%
+% Colonne di data.csv (x index): 0 e 1 = configurazione 1 (stato dell'arte, nuovo approccio); 2 e 3 = configurazione 2.
+%
+% VARIANTI
+% - Altre configurazioni: il CSV ha anche le colonne 4–7 (configurazioni 3 e 4). Per mostrarle in una seconda slide
+%   si copia questo file, si cambiano i titoli dei pannelli ("Configuration N") e gli x index (4, 5 e 6, 7).
+% - Quattro pannelli (2x2): group size=2 by 2 e quattro \nextgroupplot. In una sola slide non entra (la riga di sotto esce
+%   dalla pagina), quindi è adatto a una figura di un articolo. In quel caso, sotto ogni pannello si possono mettere
+%   le lettere (a)-(d) con un ciclo dopo \end{groupplot}:
+%       \foreach \letter/\target in {a/c1r1, b/c2r1}{ \node[below=0.25cm of my plots \target.south] {\small (\letter)}; }
+%   dove cNrM è il pannello di colonna N e riga M del gruppo "my plots". Per la riga di sotto, che ha anche l'etichetta
+%   dell'asse x, la distanza va portata a 0.8cm.
+% - Legenda: è definita nel secondo pannello (legend to name=leg) e posizionata sopra i due pannelli con
+%   \pgfplotslegendfromname. Lo stesso nome può essere definito una volta sola nel documento: se due slide includono
+%   un grafico con questo codice, il secondo deve usare un nome diverso (per esempio leg2).
+\pgfplotstableread[col sep=comma]{assets/tex/03_plot_quality/data.csv}\data
+
+\begin{adjustbox}{max totalsize={.99\linewidth}{\textheight},center}
+    \begin{tikzpicture}
+        \pgfplotsset{every tick label/.append style={font=\normalsize}}
+        \pgfplotsset{every axis label/.append style={font=\normalsize}}
+        \begin{groupplot}[
+                group style={
+                    group name=my plots,
+                    group size=2 by 1,
+                    vertical sep=1.45cm, 
+                    xticklabels at=all,
+                    yticklabels at=edge left,
+                    xlabels at=edge bottom,
+                    ylabels at=edge left
+                },
+                xlabel={\certTimeSymbol\ (pm)},
+                ylabel={Simulation},
+                xticklabel style={
+                    font=\small
+                },
+                y tick label style={
+                    /pgf/number format/fixed, font=\small
+                },
+                %width=0.45*\textwidth,
+                scaled y ticks=false,
+                scaled x ticks=false,
+                xbar, % to draw a horizontal histogram
+                ytick=data,
+                nodes near coords, % add data right of the bar
+                enlarge x limits={upper, value=0.18}, % to have enough room for the nodes near coords, and just at the right-hand side
+                %bar width=4pt,
+                %xbar=4.5pt
+                xmin=0,
+        ]
+
+            \nextgroupplot[title={\normalsize \textbf{Configuration 1}}]
+            \addplot[draw=black, fill=gray!50, bar width=4.5pt] table[x index=0, y expr=\coordindex+1]{\data};
+            \addplot[draw=black, fill=white, bar width=4.5pt] table[x index=1, y expr=\coordindex+1]{\data};
+
+            \coordinate (top1) at (rel axis cs:0,1);% coordinate at top of the first plot
+
+            \nextgroupplot[title={\normalsize \textbf{Configuration 2}},
+                    legend style={
+                        at={($(0,0)+(1cm,1cm)$)},
+                        legend columns=2,
+                        fill=none,
+                        draw=none,
+                        anchor=south,
+                        inner sep=0.2em,
+                        column sep=5pt,
+                        align=center,
+                        %yshift=1ex,
+                    },
+                    legend to name=leg,
+            ]
+            \addplot[draw=black, fill=gray!50, bar width=4.5pt] table[x index=2, y expr=\coordindex+1]{\data};
+            \addlegendentry{\certTimeSymbol\ (\approachSOTA)}
+            \addplot[draw=black, fill=white, bar width=4.5pt] table[x index=3, y expr=\coordindex+1]{\data};
+            \addlegendentry{\certTimeSymbol\ (Our appr.)}
+
+            \coordinate (top2) at (rel axis cs:1,1);% coordinate at top of the second plot
+
+        \end{groupplot}
+
+        % legend
+        \coordinate (legend pos pre) at ($(top1)!.5!(top2)$);
+        \coordinate (legend pos) at (legend pos pre |- current bounding box.north);
+        \node[above] at (legend pos)
+        {\pgfplotslegendfromname{leg}};
+
+    \end{tikzpicture}
+\end{adjustbox}

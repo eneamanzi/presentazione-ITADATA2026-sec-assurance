@@ -1,0 +1,17 @@
+		\begin{tikzpicture}
+			\tikzset{
+				every node/.style={font=\scriptsize}
+			}
+
+			% \node[rboxes] (valid) {Valid};
+			% \node[rboxes] (suspended) [right=2 of valid] {Suspended};
+			% \node[rboxes] (revoked) [right=2 of suspended] {Revoked};
+			\node[rboxes] (valid) {\certStatusValid{\cert}};
+			\node[rboxes] (suspended) [right=2 of valid] {\certStatusSuspended{\cert}};
+			\node[rboxes] (revoked) [right=2 of suspended] {\certStatusRevoked{\cert}};
+
+			\draw[-latex] (valid) to [out=30,in=180-30] node [above]{\makecell{AL failure\\\referred{\cert} suspended}} (suspended);
+			\draw[-latex] (suspended) to [out=180+30,in=-30] node [below]{\makecell{Issue remediated}} (valid);
+			\draw[-latex] (valid.north) -- ++(0,1.5) -- node[midway,above]{\referred{\cert} revoked} ([yshift=1.5cm]revoked.north) -- (revoked.north);
+			\draw[-latex] (suspended) -- node [above]{\makecell{Issue not\\remediated}} (revoked);
+		\end{tikzpicture}

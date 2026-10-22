@@ -1,0 +1,33 @@
+% ESEMPIO 3: la stessa figura riusata in più frame.
+%   La figura (examples/fig_reuse.tex) usa due coppie di numeri di overlay, First e Second. Ogni frame le
+%   imposta come serve: la coppia che non deve comparire viene posta a 0, e siccome gli overlay partono da 1
+%   non è mai visibile. Così un solo file di figura serve più slide, ognuna con la sua animazione.
+
+\begin{frame}
+    \frametitle{Example: one figure, first frame}
+
+    \pgfmathsetmacro\numberFirstStart{int(2)}
+    \pgfmathsetmacro\numberFirstEnd{int(\numberFirstStart+1)}
+    % non usati in questo frame: a 0 non compaiono mai
+    \pgfmathsetmacro\numberSecondStart{int(0)}
+    \pgfmathsetmacro\numberSecondEnd{int(0)}
+
+    \begin{adjustbox}{width=.8\linewidth, max height=.6\textheight, center}
+        \input{examples/fig_reuse.tex}
+    \end{adjustbox}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Example: the same figure, second frame}
+
+    \pgfmathsetmacro\numberFirstStart{int(0)}
+    \pgfmathsetmacro\numberFirstEnd{int(0)}
+    \pgfmathsetmacro\numberSecondStart{int(2)}
+    \pgfmathsetmacro\numberSecondEnd{int(\numberSecondStart+0)}
+
+    \begin{adjustbox}{width=.8\linewidth, max height=.6\textheight, center}
+        \input{examples/fig_reuse.tex}
+    \end{adjustbox}
+
+\end{frame}

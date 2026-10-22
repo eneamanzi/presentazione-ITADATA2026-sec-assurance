@@ -1,0 +1,64 @@
+name: Build LaTeX Presentation
+
+on:
+  push:
+    branches: [ main, master ]
+    # Parte solo se cambiano i sorgenti, non i file di documentazione.
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+
+# Un solo build per branch: un nuovo push annulla quello ancora in corso.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Serve la scrittura per fare push del branch pdf-release con il GITHUB_TOKEN.
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Con args espliciti l'action non aggiunge il suo -pdf di default, quindi vince -pdflua.
+      # -jobname fissa il nome del PDF (altrimenti sarebbe main.pdf).
+      # Il motore e -shell-escape vengono da .latexmkrc.
+      - name: Compile presentation
+        uses: xu-cheng/latex-action@4.1.0
+        with:
+          # Versione fissa, uguale a quella locale: il PDF non cambia quando esce una nuova TeX Live.
+          texlive_version: 2026
+          root_file: main.tex
+          args: -pdflua -interaction=nonstopmode -jobname=presentation
+
+      # Prima del cambio di branch, quando i percorsi sono ancora quelli del checkout.
+      - name: Upload PDF as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Presentation-PDF
+          path: presentation.pdf
+
+      # pdf-release è un branch orfano che contiene solo il PDF, nella radice.
+      # [skip ci] evita che questo commit rilanci il workflow.
+      - name: Push PDF to pdf-release branch
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          # Copia in /tmp: nel nuovo branch va nella radice e git rm svuota la working tree.
+          cp presentation.pdf /tmp/presentation.pdf
+          # Il PDF compilato sta nella radice e nel branch pdf-release c'è (dal secondo run) un presentation.pdf versionato:
+          # senza rimuoverlo, git checkout si rifiuta di cambiare branch (file non tracciato che verrebbe sovrascritto).
+          rm -f presentation.pdf
+          git fetch origin
+          # Primo run: il branch non esiste, il checkout fallisce e si crea quello orfano.
+          git checkout pdf-release 2>/dev/null || git checkout --orphan pdf-release
+          git rm -rf . --quiet 2>/dev/null || true
+          mv /tmp/presentation.pdf .
+          git add presentation.pdf
+          # Nessun commit se il PDF è identico a quello già pubblicato.
+          git diff --staged --quiet || git commit -m "Auto-update PDF [skip ci]"
+          git push origin pdf-release

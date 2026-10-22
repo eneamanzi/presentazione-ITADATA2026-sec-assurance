@@ -1,0 +1,108 @@
+% MIT License
+
+% Copyright (c) 2019 Nicola Bena
+
+% Permission is hereby granted, free of charge, to any person obtaining a copy
+% of this software and associated documentation files (the "Software"), to deal
+% in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+
+% The above copyright notice and this permission notice shall be included in all
+% copies or substantial portions of the Software.
+
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+% SOFTWARE.
+
+
+\ProvidesPackage{beamercolorthemeNicola}
+
+\mode<presentation>
+
+\definecolor{DarkBlue}{RGB}{43, 61, 80} %dark blue # 2b3d50
+\definecolor{DarkGrey}{RGB}{128, 128, 128} % dark grey 808080
+\definecolor{DarkerGrey}{RGB}{191, 191, 191} % a slightly darker grey, used in the footer
+\definecolor{LightGrey}{RGB}{217, 217, 217} % light grey
+\definecolor{VeryLightGrey}{RGB}{230, 230, 230} % a very light grey e6e6e6
+\definecolor{White}{RGB}{254 ,254, 254} % white!
+%\definecolor{Gold}{RGB}{245, 225, 138} % gold-ish
+\definecolor{Goldenrod}{RGB}{218, 165, 32} % "dark" gold
+\definecolor{VeryDarkGoldGrey}{RGB}{124, 124, 80} % a very dark mix between gold and grey
+\definecolor{DarkGoldGrey}{RGB}{225, 225, 208} % a sort of mix between gold and grey
+\definecolor{LightGoldGrey}{RGB}{235, 235, 224} % a sort of mix between gold and grey, but lighter % ebebe0
+\definecolor{VeryLightGoldGrey}{RGB}{245, 245, 239} % a sort of mix between gold and grey, very light
+\definecolor{Orange}{RGB}{255, 148, 77} % a light orange, used for alert?
+\definecolor{LightGoldenRod}{RGB}{232,193,95} % light  version of goldenrod % e8c15f
+
+\definecolor{Orange}{RGB}{189, 88, 44}
+\definecolor{LightOrange}{RGB}{228, 131, 18}
+
+% now applying those colors
+
+% blocks
+% normal block
+\setbeamercolor{block title}{fg=White, bg=DarkBlue}
+\setbeamercolor{block body}{fg=DarkBlue, bg=VeryLightGrey}
+% alert block
+\setbeamercolor{block title alerted}{fg=White, bg=DarkBlue}
+\setbeamercolor{block body alerted}{fg=DarkBlue, bg=VeryLightGoldGrey}
+
+% text
+\setbeamercolor{normal text}{fg=DarkBlue}
+\setbeamercolor{alerted text}{fg=Goldenrod}
+
+\setbeamercolor{title}{fg=White,bg=DarkBlue}
+\setbeamercolor{frametitle}{fg=White, bg=DarkBlue}
+
+\setbeamercolor{itemize item}{fg=DarkBlue}
+\setbeamercolor{itemize subitem}{fg=DarkBlue}
+\setbeamercolor{itemize subsubitem}{fg=DarkBlue}
+
+\setbeamercolor{enumerate item}{fg=DarkBlue}
+\setbeamercolor{enumerate subitem}{fg=DarkBlue}
+\setbeamercolor{enumerate subsubitem}{fg=DarkBlue}
+
+% change the numbered bullets
+\setbeamercolor{item projected}{bg=DarkBlue, fg=White}
+
+\setbeamercolor{description item}{fg=DarkBlue}
+\setbeamercolor{description subitem}{fg=DarkBlue}
+\setbeamercolor{description subsubitem}{fg=DarkBlue}
+
+% footer
+\setbeamercolor{footline}{bg=DarkerGrey, fg=DarkBlue}
+
+% toc
+\setbeamercolor{section in toc}{bg=White, fg=DarkBlue}
+\setbeamercolor{subsection in toc}{bg=White, fg=DarkBlue}
+% numbers of sections - not needed since we use
+% item projected
+% \setbeamercolor{section number projected}{bg=DarkBlue, fg=White}
+% \setbeamercolor{subsection number projected}{bg=DarkBlue, fg=White}
+
+% "attributes"
+\setbeamercolor{author}{fg=DarkGrey}
+\setbeamercolor{date}{fg=DarkGrey}
+\setbeamercolor{framesubtitle}{fg=DarkGrey}
+\setbeamercolor{institute}{fg=DarkGrey}
+
+
+\setbeamercolor{color box first}{bg=LightOrange, fg=White}
+\setbeamercolor{color box second}{bg=DarkerGrey, fg=DarkBlue}
+
+\mode<all>
+
+\colorlet{DarkRed}{red!45!black}
+\colorlet{DarkGreen}{green!45!black}
+
+\colorlet{ColorGood}{DarkGreen}
+\colorlet{ColorBad}{DarkRed}
+
+\colorlet{CellColorOk}{green!30!white}
+\colorlet{CellColorNotOk}{red!30!white}

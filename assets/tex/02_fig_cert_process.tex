@@ -1,0 +1,273 @@
+
+	
+\begin{tikzpicture}
+			% \tikzset{
+			% 	every node/.style={font=\scriptsize}
+			% }
+	\node[service in certification process,
+    on slide={<\numberServiceTopStart> highlight light},
+    on slide={<\numberServiceTopEvidStart-\numberServiceTopEvidEnd> highlight light},
+    ] (target) {\makecell{Data Analysis Engine (\target)}};
+	
+    \node[service,below=0.6 of target,
+    on slide={<\numberServiceTopStart> highlight light},
+    on slide={<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd> highlight light}
+    ] (auth) {Authentication};
+
+	\node[service,below=0.5 of auth,
+    on slide={<\numberServiceTopStart> highlight light},
+    on slide={<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd> highlight light}
+    ] (db) {Database};
+
+	\node[service,below=0.5 of db,
+    on slide={<\numberServiceTopStart> highlight light},
+    on slide={<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd> highlight light}
+    ] (ds) {\makecell{Distributed\\Storage}};
+	
+    \node[service,left=1.5 of ds,
+    on slide={<\numberServiceTopStart> highlight light},
+    on slide={<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd> highlight light}
+    ] (mn) {\makecell{Mesh\\Network}};
+	
+    \node[service,right=2 of ds,
+    on slide={<\numberServiceTopStart> highlight light},
+    on slide={<\numberHighlightDependencySomeNotOkStart-\numberHighlightDependencySomeNotOkEnd> highlight light}
+    ] (k8s) {Kubernetes};
+	
+    \node[service,below=0.7 of mn,
+    on slide={<\numberServiceTopStart> highlight light},
+    on slide={<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd> highlight light}
+    ] (ni) {\makecell{Network Interface}};
+	
+    \node[service,below=0.7 of ds,
+    on slide={<\numberServiceTopStart> highlight light},
+    on slide={<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd> highlight light}
+    ] (si) {\makecell{Storage Interface}};
+
+	\begin{scope}[every node/.style={font=\footnotesize}]
+		\draw[->, link] (target) -- node [left] {\tiny depends on} (auth);
+		\draw[->, link] ([yshift=-5pt]target.east) -- ++(.25,0) |- node [left,pos=.175] {\tiny depends on} ([yshift=3pt]db.east);
+		\draw[->, link] (auth) -- node [left] {\tiny depends on} (db);
+		\draw[->, link] (db) -- node [left] {\tiny depends on} (ds);
+		\draw[->, link] (ds) -- node [above] {\tiny depends on} (mn);
+		\draw[->, link] (target) -| node [above,pos=.25] {\tiny depends on} ([xshift=-5pt]mn.north);
+		\draw[->, link] (auth) -| node [above,pos=.25] {\tiny depends on} (mn.north);
+		\draw[->, link] (db) -| node [above,pos=.25] {\tiny depends on} ([xshift=5pt]mn.north);
+		\draw[->, link] ([yshift=-3pt]k8s.west) -- node [below] {\tiny coordinates} ([yshift=-3pt]ds.east);
+		\draw[->, link] ([xshift=-5]k8s.north) |- node [below left] {\tiny coordinates} ([yshift=-3pt]db.east);
+		\draw[->, link] (k8s.north) |- node [below left] {\tiny coordinates} (auth.east);
+		\draw[->, link] ([xshift=5]k8s.north) |- node [below left] {\tiny coordinates} ([yshift=5pt]target.east);
+		\draw[->, link] ([xshift=3]k8s.south) -- ++(0,-.6) -| node [below,pos=.25] {\tiny coordinates} ([xshift=3pt]si.north);
+		\draw[->, link] ([xshift=-3]k8s.south) -- ++(0,-.4) -| node [below right] {\tiny coordinates} ([xshift=3pt]ni.north);
+		\draw[->, link] (target.east) -- ++(.5,0) |- node [right,pos=.128] {\tiny depends on} ([yshift=3pt]ds.east);
+		\draw[->, link] ([xshift=-3]ds.south) -- node [left] {\tiny depends on} ([xshift=-3pt]si.north);
+		\draw[->, link] ([xshift=-3]mn.south) -- node [left] {\tiny depends on} ([xshift=-3pt]ni.north);
+	\end{scope}
+
+
+    \path let \p1 = (target), \p2 = (k8s) in
+        coordinate (person-1-pos) at (\x2, \y1);
+    \coordinate (person-1-pos) at ([xshift=20]person-1-pos); 
+
+    \node[dave, minimum size=.75cm, xshift=20,
+        visible on=<\numberStart-\numberEnd>
+    ] (person-1) at (person-1-pos) {};
+    %
+    %
+    % 2. let's certify it.
+    \node[speaking question, callout absolute pointer=(person-1.mouth), anchor=west,
+    visible on=<\numberServiceTopStart>
+    ] (person-1-speak-1) at ([xshift=15]person-1.east) {%
+        \begin{varwidth}{\widthof{These are its dependencies, }}
+            \raggedright
+            Let's certify this service. These are its dependencies, specified in \certModel.
+        \end{varwidth}%
+    };
+    %
+    %
+    % 3. collect evidence from there
+    \node[speaking question, callout absolute pointer=(person-1.mouth), anchor=west,
+    visible on=<\numberServiceTopEvidStart-\numberServiceTopEvidEnd>
+    ] (person-1-speak-2) at ([xshift=15]person-1.east) {%
+        \begin{varwidth}{\widthof{These are its dependencies, }}
+            \raggedright
+            Let's certify this service. First, we collect evidence from its mechanisms.
+        \end{varwidth}%
+    };
+    %
+    %
+    % 4. exists cert compatible?
+    \node[speaking question, callout absolute pointer=(person-1.mouth), anchor=west,
+    visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+    ] (person-1-speak-3) at ([xshift=15]person-1.east) {%
+        \begin{varwidth}{\widthof{These are its dependencies, }}
+            \raggedright
+            Let's certify this service. \alert{These are its dependencies: are they already certified according to $\certModel.\referred{\certModel_i}$}?
+        \end{varwidth}%
+    };
+    %
+    %
+    % 5. highlight many that are
+    % so we need a judge
+    \node[judge, minimum size=.75cm, xshift=20,
+        %visible on=<\numberHighlightDependencySomeOkStart-\numberHighlightDependencySomeOkEnd>
+        visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+    ] (person-2) at ([yshift=-80]person-1-pos) {};
+    \node[speaking question, callout absolute pointer=(person-2.mouth), anchor=west,
+    %visible on=<\numberHighlightDependencySomeOkStart-\numberHighlightDependencySomeOkEnd>
+        visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+    ] (person-2-speak-4) at ([xshift=15]person-2.east) {%
+        \begin{varwidth}{\widthof{I hereby guarantee that }}
+            \raggedright
+            I hereby guarantee that these dependencies are already certified.
+        \end{varwidth}%
+    };
+    %
+    %
+    % 6. pt1 highlight some that are not.
+    % we need a judge
+    \node[judge, minimum size=.75cm, xshift=20,
+    visible on=<\numberHighlightDependencySomeNotOkStart-\numberHighlightDependencySomeNotOkEnd>
+    ] (person-5) at (person-1-pos) {};
+    \node[speaking question, callout absolute pointer=(person-1.mouth), anchor=west,
+    visible on=<\numberHighlightDependencySomeNotOkStart-\numberHighlightDependencySomeNotOkEnd>
+    ] (person-2-speak-5) at ([xshift=15]person-1.east) {%
+        \begin{varwidth}{\widthof{I hereby declare that}}
+            \raggedright
+            I hereby declare that these dependencies are not already certified.
+        \end{varwidth}%
+    };
+    % we need dave right below
+    \node[dave, minimum size=.75cm, xshift=20,
+    visible on=<\numberHighlightDependencySomeNotOkStart-\numberHighlightDependencySomeNotOkEnd>
+    ] (person-3) at ([yshift=-80]person-1-pos) {};
+    %
+    \node[speaking question, callout absolute pointer=(person-3.mouth), anchor=west,
+    visible on=<\numberHighlightDependencySomeNotOkStart-\numberHighlightDependencySomeNotOkEnd>
+    ] (person-3-speak-5) at ([xshift=15]person-3.east) {%
+        \begin{varwidth}{\widthof{Let's repeat}}
+            \raggedright
+            Let's repeat the process recursively.
+        \end{varwidth}%
+    };
+    %
+    %
+    % 7. certificate
+    % we re-add the judge just because
+    \node[judge, minimum size=.75cm, xshift=20,
+        visible on=<\numberCertStart-\numberCertEnd>
+    ] (person-4) at ([yshift=-50]person-1-pos) {};
+    %
+    \node[speaking question, callout absolute pointer=(person-4.mouth), anchor=west,
+    visible on=<\numberCertStart-\numberCertEnd>
+    ] (person-3-speak-5) at ([xshift=15]person-4.east) {%
+        \begin{varwidth}{\widthof{Based on the evidence and the }}
+            \raggedright
+            Based on the evidence and the referred certificates provided to me, I hereby award a \alert{certificate \cert}, including the evidence, the \alert{referred certificates $\{\referred{\cert}\}$}, and my signature. 
+        \end{varwidth}%
+    };
+
+
+    % south
+    \foreach \src/\pointer in {ni/ni.south, si/si.south}{
+        \node[speaking question, callout absolute pointer=(\pointer), anchor=north,
+        visible on=<\numberCertStart-\numberCertEnd>,
+        %visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+        ] at ([yshift=-10]\pointer) (\src-cert) {%
+            %\begin{varwidth}{\widthof{certified}}
+                \tiny I am certified
+            %\end{varwidth}
+        };
+        \node[speaking question, callout absolute pointer=(\pointer), anchor=north,
+        %visible on=<\numberCertStart-\numberCertEnd>,
+        visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+        ] at ([yshift=-10]\pointer) (\src-cert-2) {%
+            %\begin{varwidth}{\widthof{certified}}
+                \tiny I am certified
+            %\end{varwidth}
+        };
+    }
+    % mesh
+    \node[speaking question, callout absolute pointer=(mn.west), anchor=east,
+        visible on=<\numberCertStart-\numberCertEnd>,
+        %visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+        ] (mn-cert) at ([xshift=-10]mn.west) {%
+            %\begin{varwidth}{\widthof{certified}}
+                \tiny I am certified
+            %\end{varwidth}
+        };
+    \node[speaking question, callout absolute pointer=(mn.west), anchor=east,
+        %visible on=<\numberCertStart-\numberCertEnd>,
+        visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+        ] (mn-cert) at ([xshift=-10]mn.west) {%
+            %\begin{varwidth}{\widthof{certified}}
+                \tiny I am certified
+            %\end{varwidth}
+        };
+    % db
+    \path let \p1 = (mn-cert), \p2 = (db) in
+        node[speaking question, callout absolute pointer=(db.west), %anchor=east,
+         yshift=5,
+        visible on=<\numberCertStart-\numberCertEnd>,
+        %visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+        ] (db-cert) at (\x1, \y2) {%
+            \tiny I am certified
+        };
+    % repeat.
+    \path let \p1 = (mn-cert), \p2 = (db) in
+        node[speaking question, callout absolute pointer=(db.west), %anchor=east,
+         yshift=5,
+        %visible on=<\numberCertStart-\numberCertEnd>,
+        visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+        ] (db-cert-2) at (\x1, \y2) {%
+            \tiny I am certified
+        };
+    % auth
+    \path let \p1 = (db-cert), \p2 = (auth) in
+        node[speaking question, callout absolute pointer=(auth.west), %anchor=east,
+         yshift=5,
+        %visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+        visible on=<\numberCertStart-\numberCertEnd>
+        ] at (\x1, \y2) (auth-cert) {%
+            \tiny I am certified
+        };
+    \path let \p1 = (db-cert), \p2 = (auth) in
+        node[speaking question, callout absolute pointer=(auth.west), %anchor=east,
+         yshift=5,
+        visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+        %visible on=<\numberCertStart-\numberCertEnd>
+        ] at (\x1, \y2) (auth-cert-2) {%
+            \tiny I am certified
+        };
+    % target
+    \node[speaking question, callout absolute pointer=(target.north), anchor=south,
+        visible on=<\numberCertStart-\numberCertEnd>
+        ] at ([yshift=10]target.north) (target-cert) {%
+            \tiny I am certified
+        };
+    % ds
+    \node[speaking question, callout absolute pointer=(ds.south east), anchor=north west,
+        visible on=<\numberCertStart-\numberCertEnd>,
+        %visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+        ] at (si -| k8s) (ds-cert) {%
+            \tiny I am certified
+        };
+    \node[speaking question, callout absolute pointer=(ds.south east), anchor=north west,
+        %visible on=<\numberCertStart-\numberCertEnd>,
+        visible on=<\numberCalloutFocusOnOtherStart-\numberCalloutFocusOnOtherEnd>
+        ] at (si -| k8s) (ds-cert-2) {%
+            \tiny I am certified
+        };  
+    % k8s
+    \node[speaking question, callout absolute pointer=(k8s.east), anchor=west,
+        visible on=<\numberCertStart-\numberCertEnd>
+        ] at ([xshift=10]k8s.east) (k8s-cert) {%
+            \tiny I am certified
+        }; 
+
+
+    \node[visible on=<\numberPatrickHappy>, anchor=north] at ([yshift=-10]person-3-speak-5.south) {\includegraphics[width=.3\textwidth]{assets/img/patrick_happy.jpg}};
+
+
+\end{tikzpicture}
+

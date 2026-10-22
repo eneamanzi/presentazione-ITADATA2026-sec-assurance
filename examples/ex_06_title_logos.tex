@@ -1,0 +1,33 @@
+% ESEMPIO 6: slide del titolo con più autori, loghi e ringraziamenti ai finanziamenti.
+%   - \begingroup ... \endgroup: i metadati (\title, \author, ...) valgono solo qui, così il titolo vero della
+%     talk, scritto in main.tex, non cambia. Nella tua presentazione questo blocco si scrive in main.tex.
+%   - Sotto \titlepage: i loghi in una tabella dentro adjustbox (altezza al massimo il 12,5% della slide) e,
+%     in piccolo, il testo dei finanziamenti con \parMini (definita in 00_macro.tex).
+%   - Qui al posto dei loghi ci sono due immagini di esempio: sostituiscile con le tue.
+
+\begingroup
+\title{Example: title slide with logos and funding}
+\author{\small \textbf{Speaker}\inst{1} \and Author Two\inst{1} \and Author Three\inst{2}}
+\institute{\inst{1} Affiliation 1 \and \inst{2} Affiliation 2}
+\date{}
+
+\begin{frame}
+    \titlepage
+
+    \vfill
+
+    \vspace{-2em}
+    \begin{adjustbox}{max totalsize={\textwidth}{.125\textheight},center}
+        \begin{tabular}{lr}
+            \includegraphics[width=.05\textwidth]{assets/img/patrick_happy.jpg} &
+            \includegraphics[width=.1\textwidth]{assets/img/patrick_scientist.jpg}
+        \end{tabular}
+    \end{adjustbox}
+
+    \parMini{The work was partially supported by
+        \emph{i)} project A, funded by the funder under the call number 1;
+        \emph{ii)} project B, funded by another funder.
+    }
+
+\end{frame}
+\endgroup

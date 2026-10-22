@@ -1,0 +1,8 @@
+\begin{tikzpicture}[node distance=2.5em]
+    \node[rboxes, on slide={<\numberFirstStart-\numberFirstEnd> highlight light}] (a) {Element A};
+    \node[rboxes, right=of a, on slide={<\numberFirstStart-\numberFirstEnd> highlight light}] (b) {Element B};
+    \node[rboxes, right=of b, on slide={<\numberSecondStart-\numberSecondEnd> highlight light}] (c) {Element C};
+
+    \draw[->, link, on slide={<\numberFirstStart-\numberFirstEnd> highlight link}] (a) -- node[on link] {relation} (b);
+    \draw[->, link, on slide={<\numberSecondStart-\numberSecondEnd> highlight link}] (b) -- node[on link] {relation} (c);
+\end{tikzpicture}

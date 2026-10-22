@@ -1,0 +1,626 @@
+\newcommand{\highlightprofilecolor}{LightGoldenRod!100}
+\colorlet{HighlightFill}{LightGoldenRod!50}
+\colorlet{HighlightFillLight}{LightGoldenRod!50}
+\colorlet{HighlightProfile}{LightGoldenRod!100}
+\definecolor{NotSoDarkGrey}{RGB}{160, 160, 160}
+
+%%% tikz macro
+\colorlet{PoisonedRedForText}{white!70!red!100}
+\colorlet{PoisonedRedOut}{red!70}
+\colorlet{UnPoisonedGreen}{green!40!black!40}
+\colorlet{UnPoisonedGreenForText}{green!30!white!90}
+\colorlet{HighlightColor}{Goldenrod}
+\colorlet{default}{DarkBlue}
+\colorlet{HighlightFill}{LightGoldenRod!60}
+
+\definecolor{Completed}{RGB}{82,163,0}
+\definecolor{InProgress}{RGB}{204, 102, 0}
+
+\newcommand{\normalwidth}{0.3pt}
+\newcommand{\thickwidth}{0.8pt} %means thick
+
+\newcommand{\forhash}{for hash}
+%\newcommand{\forTool}{for tool}
+\newcommand{\forrisk}{for risk}
+
+\newcommand{\forToolTraining}{for tool training}
+\newcommand{\forToolTesting}{for tool testing}
+
+\newcommand{\poisonedRF}{1}
+% determines the actual title of the our approach part of the figures,
+% considered only when is \forTool.
+% \newcommand{\headerEnsemblePoisoned}{Poisoned Hash\-/Based Ensemble}
+% \newcommand{\headerEnsembleNonPoisoned}{Non\-/Poisoned Hash\-/Based Ensemble}
+\newcommand{\headerEnsemblePoisoned}{Hash\-/Based Ensemble (Poisoned Training Sets)}
+\newcommand{\headerEnsembleNonPoisoned}{Hash\-/Based Ensemble (Clean Training Sets)}
+\newcommand{\headerEnsembleDefault}{Hash\-/Based Ensemble}
+
+\newcommand{\headerRfTestingPoisoned}{Poisoned}
+\newcommand{\headerRfTestingNonPoisoned}{Non\-/Poisoned}
+\newcommand{\headerRfOther}{}
+
+\newcommand{\codePoisoned}{Poisoned}
+\newcommand{\codeNonPoisoned}{Non\-/Poisoned}
+
+\newcommand{\devilLarge}{Large}
+\newcommand{\devilSmall}{Small}
+
+\tikzset{
+  invisible/.style={opacity=0,text opacity=0},
+  visible on/.style={alt=#1{}{invisible}},
+  alt/.code args={<#1>#2#3}{%
+    \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+  },
+  on slide/.code args={<#1>#2}{%
+  \only<#1>{\pgfkeysalso{#2}}%
+}
+}
+
+\tikzset{
+    every node/.style={
+        font=\scriptsize,
+    },
+    dataset/.style={
+        draw,
+        cylinder,
+        shape border rotate=90,
+        align=center,
+    },
+    on path/.style={
+        above
+    },
+    rf/.style={
+        draw,
+        rounded corners,
+        %double,
+        % NODES MUST BE FILLED UPFRONT, OR
+        % ANIMATING FILL IS MEANINGLESS
+        fill=white
+    },
+    test path/.style={
+        dashed
+    },
+    connections/.style={
+        very thin
+    },
+    partition/.style={
+        draw,
+        cylinder,
+        shape border rotate=90,
+        align=center,
+        minimum height=.6cm,
+        minimum width=.35cm,
+        fill=white
+    },
+    link/.style={
+        >=Latex
+    },
+    container/.style={
+        very thin,
+        draw
+    },
+    poisoning link/.style={
+        link,
+        decorate,
+        decoration={
+            amplitude=.5pt,
+            segment length=4pt,
+            zigzag},
+        ultra thin,
+       % >=Stealth
+    },
+    data point/.style={
+        draw,
+        %very thin,
+        %rectangle,
+        rounded corners,
+        font={
+            \tiny
+        },
+        fill=white,
+        %fill opacity=.5
+    },
+    data point moving/.style={
+        circle,
+        draw,
+        fill=black,
+        inner sep=1pt
+    },
+    poisoned/.style={
+        fill = PoisonedRedOut
+    },
+    majority voting/.style={
+        isosceles triangle,
+        draw,
+    },
+    on slide/.code args={<#1>#2}{%
+      \only<#1>{\pgfkeysalso{#2}}%
+    },
+    highlight base/.style={
+        very thick
+    },  
+    highlight path/.style={
+        highlight base,
+        draw=LightGoldenRod,
+    },
+    highlight node/.style={
+        highlight base,
+        fill=HighlightFill,
+    },
+    highlight double/.style={
+        double=LightGoldenRod,
+        double distance=1.2pt,
+        line width=.3pt
+    } ,
+    arrow path unpoisoned/.append style={
+        double=UnPoisonedGreen,
+        arrows={-Latex[fill=UnPoisonedGreen]}
+    },
+    arrow path poisoned/.append style={
+        double=PoisonedRedOut,
+        arrows={-Latex[fill=PoisonedRedOut]}
+    },
+    % cross line/.style={
+    %     %double=scope’s color setting,
+    %     double=default,
+    %     draw=white,
+    %     % the thickness of the outer line,
+    %     very thick, 
+    %     double distance=.1pt
+    % },
+    % cross line arrow/.style={
+    %     arrows={-Latex[]}
+    % }
+    highlight path poisoned/.style={},
+    highlight path unpoisoned/.style={},
+    invisible with opacity/.style={opacity=0.025},
+    visible with opacity on/.style={alt=#1{}{invisible with opacity}},
+    % alt/.code args={<#1>#2#3}{%
+    %   \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    % },
+    highlight line in pgfplot/.style={
+        LightGoldenRod,
+        line width=3pt
+    },
+    poisoning attack/.style={
+        draw,
+        %dashed
+        fill=white
+    },
+    super container/.style={
+        draw,
+        dashed
+    },
+    low link/.style={
+        link,
+        ultra thin
+    },
+    bar/.style={
+        thin,
+        dotted
+    },
+    from test/.style={
+        ultra thin
+    },
+    highlight accuracy/.style={
+        ultra thick
+    },
+    explanation/.style={
+        font={\Large},
+    },
+    explanation link/.style={
+        >=Latex,
+    },
+    line am/.style={},
+    line m2/.style={
+        dashed
+    }
+}
+
+\newcommand{\includegraphicswithwisibility}[3]{
+\begin{tikzpicture}
+\node[visible with opacity on={#1}] at (0,0) {\includegraphics[#2]{#3}};
+\end{tikzpicture}
+}
+
+\tikzset{
+    entity/.style={
+      draw,
+      ellipse,
+      very thin
+    },
+    artifact/.style={
+      rectangle,
+      draw,
+      rounded corners,
+      fill=VeryLightGrey!50
+    },
+    service/.style={
+      chamfered rectangle,
+      chamfered rectangle angle=30,
+      draw,
+      %fill=VeryLightGrey!120
+    },
+    every node/.style={
+        font={\scriptsize},
+        text centered,
+    },
+    on link/.style={
+      fill=white,
+    },   
+    connector/.style={
+        >=stealth,
+    },
+    connector assurance/.style={
+        >=Stealth,
+        dashed
+    },
+    on slide/.code args={<#1>#2}{%
+      \only<#1>{\pgfkeysalso{#2}}%
+    },
+    highlight base/.style={
+      very thick
+    },
+    highlight/.style={
+      highlight base,
+      fill=LightGoldenRod,
+    },
+    highlight profile/.style={
+      \highlightprofilecolor
+    },
+    highlight double/.style={
+      double=LightGoldenRod
+    },
+    highlight text/.style={
+      text=Goldenrod,
+    },
+    highlight link/.style={
+      %thick,
+      color=Goldenrod
+    },
+    highlight light/.style={
+      fill=LightGoldenRod!50
+    },
+    highlight very light/.style={
+      fill=LightGoldenRod!20
+    },
+      element/.style={
+          inner sep=1.5pt,
+          font=\footnotesize
+      },
+      connector/.style={
+          >=Stealth,
+      },
+      lattice layer label/.style={
+          text width=2.9cm,
+          font={\footnotesize},
+      },
+      not chosen color/.style={
+          black!50
+      },
+      lattice layer separator/.style={
+          dashed,
+      },
+      service label/.style={
+          fill=white,
+          circle,
+          draw,
+          very thick,
+          inner sep=2.5pt,
+      },
+      lattice element bound/.style={
+          fill=black!15,
+          double
+      },
+      lattice element selected/.style={
+          fill=Goldenrod!15,
+          double
+      },
+      lattice element not chosen/.style={
+          not chosen color,
+          densely dotted
+      },
+      lattice element not chosen link/.style={
+          not chosen color,
+          densely dotted
+      },
+      service element not chosen/.style={
+          text=black!50,
+          draw=black!50,
+          dashed,
+      },
+      header/.style={
+      },
+      main box/.style={
+          font={\small}
+      },
+      link/.style={
+        >=Latex,
+      },
+      activity/.style={
+        fill=white
+      },
+    % for cert history
+      arrow/.style={
+        draw,
+        minimum height=1cm,
+        inner sep=2pt,
+        shape=signal,
+        signal from=west,
+        signal to=east,
+        signal pointer angle=110,
+        top color=DarkBlue,
+        bottom color=DarkBlue,
+        text=White,
+        text width=.24\textwidth,
+        font = {\small}
+    },
+    desc/.style={
+      %text width=3.9cm,
+      text width=.22\textwidth,
+      fill=VeryLightGrey,
+      %minimum height=1cm,
+      %anchor=south
+      % text depth=1cm,
+      rectangle,
+      font = {\footnotesize}
+    },
+    highlight line in plot/.style={
+      %Goldenrod,
+      %line width=3pt
+  },
+  basic question/.style={
+    rectangle callout,
+    %fill=HighlightFillLight,
+    fill=VeryLightGrey!50,
+    draw,
+  },
+  object/.style={
+    draw,
+    rectangle,
+    rounded corners,
+    fill=white
+    %minimum height=1.8cm
+},
+  % this combination is needed because otherwise when we use
+  % labels, the underlying drawing is visible through the foreground label
+  a bit of transparency/.style={
+    %semitransparent,
+    opacity=0.5, % it was 0.85
+    draw opacity=0.5,
+  },
+  a bit of transparency label/.style={
+    a bit of transparency,
+    opacity=0.85,
+    text opacity=1
+  },
+% used as "header" of a box
+  box label/.style={
+    fill=DarkBlue,
+    text=white,
+    double,
+    %draw=white,
+    rounded corners
+  },
+  basic question no color/.style={
+    rectangle callout,
+    %basic question no callout pre,
+    %fill=HighlightFillLight,
+    %fill=white,
+    fill=VeryLightGrey!50,
+    draw,
+    thick
+  },
+  aggregation block/.style={
+    circle,
+    draw,
+    inner sep=1pt,
+    %fill=CellColorOk
+  },
+    link comment/.style={
+      dashed
+    },
+}
+\tikzset{
+	entity/.style={
+			draw,
+			ellipse,
+			%circle,
+			thin,
+			%inner sep=0pt
+		},
+	artifact/.style={
+			rectangle,
+			draw,
+			rounded corners,
+			%fill=VeryLightGrey!50
+		},
+	service in certification process/.style={
+			chamfered rectangle,
+			chamfered rectangle angle=30,
+			draw,
+			%fill=VeryLightGrey!120
+		},
+	% every node/.style={
+	% 		font={\small},
+	% 		text centered,
+	% 	},
+	on link/.style={
+			fill=white,
+		},
+	link/.style={
+			>=Latex,
+			thin
+		},
+	probe link/.style={
+			link,
+			dashdotted
+		},
+	ca cert/.style={
+			entity,
+			inner sep=0pt,
+		},
+	step separator/.style={
+			draw,
+			thin,
+			dotted
+		},
+	container/.style={
+			very thin,
+			draw,
+			rounded corners,
+			%densely dotted
+		},
+	container line/.style={
+			very thin,
+			rounded corners,
+			%densely dotted
+		},
+	service/.style={
+			rectangle,
+			draw,
+			fill=white,
+			minimum width=.35cm,
+			minimum height=.35cm
+		},
+	label desc/.style={},
+	label desc with shape/.style={
+			label desc,
+			rounded corners,
+			draw
+		},
+	boxes/.style = {
+			draw=black,
+			rectangle,
+		},
+	rboxes/.style = {
+			boxes,
+			rounded corners
+		}
+}
+
+\tikzset{
+	basic graph node/.style={
+		circle,
+		draw,
+		minimum width=.6cm
+		%minimum width=\refwidth
+	},
+	verification step/.style={
+		basic graph node,
+		fill=white
+	},
+	evaluation function/.style={
+		basic graph node,
+		%fill=black
+		double,
+		fill=white
+	},
+	evaluation function global/.style={
+		draw,
+		double,
+		rectangle,
+		minimum width=.6cm,
+		minimum height=.6cm,
+		%fill=black
+	},
+	hyperarc/.style={
+		>=Latex,
+	},
+}
+
+\tikzset{
+	pics/hyperarc between fan in/.style n args={5}{
+		code={
+			\path let \p1 = ($(#1)!.5!(#2)$), \p2 = ($(#2)!.5!(#3)$) in
+        		coordinate (#4) at (\x1, \y2);
+   			\foreach \src in {#1, #2} {
+        		\draw[-, hyperarc, #5] (\src) -- (#4);
+    		}
+    		\draw[->, hyperarc, #5] (#4) -- (#3);
+		}
+	},
+		pics/hyperarc between fan out/.style n args={5}{
+		code={
+			\path let \p1 = ($(#1)!.5!(#2)$), \p2 = ($(#2)!.5!(#3)$) in
+        		coordinate (#4) at (\x1, \y2);
+
+   			\foreach \src in {#1, #2} {
+        		\draw[<-, hyperarc, #5] (\src) -- (#4);
+    		}
+    		\draw[-, hyperarc, #5] (#4) -- (#3);
+		}
+	},
+}
+
+\tikzset{
+	visited node/.style={
+		%double
+	},
+	visited arc/.style={
+		thick
+	},
+	pruned node/.style={
+		fill=gray!30
+	},
+	pruned arc/.style={
+		draw=gray!50
+	}
+}
+
+\tikzset{
+	evidence content/.style={
+		font=\scriptsize
+	}
+}
+
+\definecolor{colorBlindBiOrange}{HTML}{E66100}
+\definecolor{colorBlindBiViolet}{HTML}{5D3A9B}
+
+\tikzset{
+	orange in violet out double/.style={
+		fill=colorBlindBiOrange,
+		double=colorBlindBiViolet,
+		draw=colorBlindBiViolet,
+		very thick
+	},
+	orange out/.style={
+		draw=colorBlindBiOrange,
+		very thick
+	}
+}
+
+\tikzset{
+	highlighted hyperarc in path/.style={
+		thick
+	}
+}
+
+\tikzset{
+	hyperarc in verification path/.style={
+		very thick,
+        highlight path
+	},
+	node in verification path/.style={
+		very thick,
+        highlight path
+	},
+}
+
+\tikzset{
+  speaking question/.style={
+    ellipse callout,
+    fill=VeryLightGrey!50,
+    draw,
+    %very thick
+    %thick
+  },
+}
+
+\tikzset{
+    certificate callout/.style={
+        rectangle callout,
+        fill=VeryLightGrey!50,
+        draw, 
+    }
+}

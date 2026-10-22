@@ -1,0 +1,50 @@
+% ESEMPIO 1: contenuto che si sostituisce a ogni passo, note con le fonti, figura esterna.
+%   - \only<n>{...}: il blocco compare solo al passo n e lascia il posto al successivo. Non si accumula,
+%     a differenza di \item<n->.
+%   - \footnote{...}: la nota compare in fondo alla slide insieme al suo punto.
+%   - A destra una figura fatta con un altro strumento (per esempio draw.io: File > Export as > PDF,
+%     con "Crop" attivo), inclusa con \includegraphics e la larghezza della colonna.
+%   - $\Longrightarrow$ \alert{...}: riga di sintesi sotto i punti.
+
+\begin{frame}
+    \frametitle{Example: replacing content, footnotes, external figure}
+
+    \begin{columns}[T]
+        \begin{column}{.45\textwidth}
+
+            \vspace{1em}
+
+            \only<1>{
+                \begin{itemize}\setlength\itemsep{.5em}
+                    \item first point of the first group
+                    \item second point, with a \alert{key word}
+                    \item third point
+                \end{itemize}
+            }
+            \only<2>{
+                \begin{itemize}\setlength\itemsep{.5em}
+                    \item a figure from a source: \$13 trillion\footnote{Source: Source A}
+                    \item another figure: 29.3 bln\footnote{Source: Source B}
+                    \item a third figure: \$2.7--6.2 trillion\footnote{Source: Source A}
+                \end{itemize}
+            }
+            \only<3>{
+                \begin{itemize}\setlength\itemsep{1em}
+                    \item a point with a \alert{key word}
+                    \begin{itemize}\setlength\itemsep{.5em}
+                        \item a sub-point
+                    \end{itemize}
+                \end{itemize}
+
+                \vspace{.5em}
+
+                $\Longrightarrow$ \alert{conclusion in one line}
+            }
+
+        \end{column}
+        \begin{column}{.55\textwidth}
+            \includegraphics[width=\columnwidth]{assets/img/patrick_question.jpg}
+        \end{column}
+    \end{columns}
+
+\end{frame}

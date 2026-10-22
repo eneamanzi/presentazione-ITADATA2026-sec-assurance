@@ -1,0 +1,14 @@
+{
+    // Compila con "latexmk" senza opzioni: motore e cartelle sono in .latexmkrc.
+    "latex-workshop.latex.recipe.default": "latexmk (latexmkrc)",
+    // Deve coincidere con $aux_dir in .latexmkrc.
+    "latex-workshop.latex.auxDir": ".temp",
+    // Compila solo quando salvi un .tex. Con il default ("onFileChange") ogni build cambia .temp/main.bbl,
+    // che fa partire un'altra build: due build insieme si bloccano a vicenda su Windows (Permission denied).
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.synctex.afterBuild.enabled": true,
+    "latex-workshop.formatting.latex": "latexindent",
+    "[latex]": {
+        "editor.formatOnSave": true
+    }
+}

@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+    % Un componente riusabile della figura: pics/<nome>/.style n args={3}.
+    % Argomenti: #1 = nome (serve a dare nomi unici ai nodi), #2 = posizione, #3 = intervalli di overlay in cui
+    % il gruppo è evidenziato (anche non contigui). Si chiama con \pic{box group={nome}{(x,y)}{intervalli}};
+    \tikzset{
+        pics/box group/.style n args={3}{
+            code={
+                \begin{scope}[shift={#2}]
+                    \foreach \i in {1,2,3}{
+                        \node[rboxes, minimum width=4em,
+                            on slide={<#3> highlight light}] (box-#1-\i) at (0,{-0.9*\i}) {#1.\i};
+                    }
+                \end{scope}
+            }
+        }
+    }
+
+    \pic{box group={a}{(0,0)}{2-2, 4-4}};
+    \pic{box group={b}{(5,0)}{3-4}};
+
+    % I nodi creati dal componente si usano come qualunque altro nodo: box-<nome>-<numero>.
+    \draw[->, link, on slide={<4-4> highlight link}] (box-a-3) -- node[on link] {relation} (box-b-3);
+\end{tikzpicture}

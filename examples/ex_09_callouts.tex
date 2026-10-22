@@ -1,0 +1,19 @@
+% ESEMPIO 9: callout con codice e linguetta, callout con più puntatori, personaggio con bolla.
+%   Passo 1: callout con del codice, che punta a un nodo, con una linguetta col titolo (stile box label).
+%   Passo 2: un solo callout con più code verso più nodi (stile callouts, definito in examples/fig_callouts.tex;
+%            serve la libreria TikZ decorations.pathreplacing, caricata in main.tex).
+%   Passo 3: personaggio (tikzpeople) con bolla di dialogo.
+%
+%   Codice colorato con minted (come nel deck ICWS di Nicola): non è abilitato qui perché serve Pygments
+%   installato (nel PC e nella CI) e shell-escape (già attivo in .latexmkrc). Per usarlo:
+%     preambolo di main.tex:  \usepackage{minted}   \setminted{breaklines, breakanywhere}
+%     nel callout, al posto del testo a larghezza fissa:  \parbox{.45\textwidth}{\inputminted{json}{file.json}}
+
+\begin{frame}
+    \frametitle{Example: callouts, code, several pointers, characters}
+
+    \begin{adjustbox}{width=.95\linewidth, max height=.8\textheight, center}
+        \input{examples/fig_callouts.tex}
+    \end{adjustbox}
+
+\end{frame}

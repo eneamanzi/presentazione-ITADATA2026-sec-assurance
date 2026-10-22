@@ -1,0 +1,64 @@
+\begin{tikzpicture}
+    % Stili per un callout con PIÙ puntatori (da tex.stackexchange.com, domanda 432276): store path salva il
+    % percorso del nodo, callouts={(punto1), (punto2), ...} disegna una "coda" verso ciascun punto.
+    \tikzset{
+        % senza coda: rettangolo senza riempimento, serve a disegnare il callout con più code (vedi sotto)
+        basic question no callout/.style={
+            rectangle,
+            preaction={draw=none, thick},
+            fill=none
+        },
+        add path/.style={
+            decoration={show path construction,
+                moveto code={\xdef\savedpath{\savedpath (\tikzinputsegmentfirst)}},
+                lineto code={\xdef\savedpath{\savedpath -- (\tikzinputsegmentlast)}},
+                curveto code={\xdef\savedpath{\savedpath .. controls (\tikzinputsegmentsupporta) and (\tikzinputsegmentsupportb) ..(\tikzinputsegmentlast)}},
+                closepath code={\xdef\savedpath{\savedpath -- cycle}}
+            },
+            decorate
+        },
+        store path/.style={add path},
+        store path/.prefix code={\xdef\savedpath{}},
+        callouts/.style={
+            store path,
+            append after command={
+                foreach \target in {#1}{
+                    ($(callout)!2pt!-90:\target$)--\target --($(callout)!2pt!90:\target$)
+                } \savedpath
+            },
+            alias=callout
+        }
+    }
+
+    \node[rboxes] (a) at (0,0) {Element A};
+    \node[rboxes] (b) at (4,0) {Element B};
+    \node[rboxes] (c) at (8,0) {Element C};
+
+    % Passo 1: callout con del codice dentro e una linguetta col titolo (stile box label). Un solo puntatore:
+    % callout absolute pointer. Il codice è testo a larghezza fissa; con minted (vedi sotto) avrebbe i colori.
+    \node[basic question no color, callout absolute pointer={(a.north)}, anchor=south,
+        visible on=<1>] (code callout) at ([yshift=1.3cm]a.north east) {%
+        \parbox{.32\textwidth}{\ttfamily\scriptsize
+            \{\\
+            ~~"key": "value",\\
+            ~~"status": 1\\
+            \}}%
+    };
+    \node[box label, visible on=<1>] at (code callout.north) {\textbf{Label tab}};
+
+    % Passo 2: un unico callout con tre code, verso tre nodi (stile callouts, definito sopra).
+    % Il disegno (bordo e riempimento) è applicato solo al passo 2 con on slide: così anche le code, che fanno
+    % parte dello stesso percorso, compaiono solo a quel passo.
+    \path[basic question no callout, on slide={<2> preaction={draw, very thick}, fill=VeryLightGrey!50}]
+        node[callouts={(a.south), (b.south), (c.south)}, visible on=<2>] at (4,-2.2) {%
+            \parbox{.3\textwidth}{One bubble with several pointers}%
+        };
+
+    % Passo 3: personaggio (tikzpeople) con bolla di dialogo; l'ancora "mouth" è la bocca del personaggio.
+    \node[devil, minimum size=.6cm, visible on=<3>] (attacker) at (10.5,-1.8) {};
+    \node[speaking question, callout absolute pointer={(attacker.mouth)}, anchor=east,
+        visible on=<3>] at ([xshift=-.6cm, yshift=-.3cm]attacker.west) {%
+        \parbox{.2\textwidth}{A speech bubble from a character}%
+    };
+
+\end{tikzpicture}

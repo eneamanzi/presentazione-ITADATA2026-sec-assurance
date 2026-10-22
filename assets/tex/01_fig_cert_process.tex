@@ -1,0 +1,48 @@
+
+\begin{tikzpicture}
+
+
+    \node[entity, on slide={<\numberCertificationModel> highlight light}] (ca) at (-1.5, 0) {CA};
+
+  \node[artifact, on slide={<\numberCertificationModel,\numberExecution> highlight light}] (cm) at (-1.5, -1.65) {\makecell{Certification\\Model}};
+
+    \draw[->, link, on slide={<\numberCertificationModel> highlight link}] (ca) to node[on link, on slide={<\numberCertificationModel> highlight text}]{prepares} (cm);
+
+    \node[artifact, on slide={<\numberProperty-\numberExecution> highlight light}] (properties) at (2.5, -1.65) (property)  {\makecell{Property}};
+
+    \node[service, on slide={<\numberTarget-\numberExecution> highlight light}] (target) at (2.5, -3.25) {\makecell{Target}};
+
+    \draw[->, link, on slide={<\numberCertificationModel-\numberExecution> highlight link}] (cm) to node[on link, on slide={<\numberCertificationModel-\numberExecution> highlight text}] {evaluates} (property);
+
+    %\draw[->, link, on slide={<4,5> highlight link}] (cm) to node[on link, on slide={<4,5> highlight text}] {to assess} (target);
+    \draw[->, link, on slide={<\numberTarget-\numberExecution> highlight link}] (property) to node[on link, on slide={<\numberTarget-\numberExecution> highlight text}] {on} (target);
+
+    \node[artifact, on slide={<\numberEvidenceCollectionModel-\numberExecution> highlight light}] (evidence collection model) at (cm |- target) {\makecell{Evidence\\Coll. Model}};
+
+    %\node[entity, inner sep=1pt, on slide={<5> highlight light}] (lab) at (-1.5, -3.65) {\makecell{Accredited\\Lab}};
+
+    \node[entity, inner sep=1pt, on slide={<\numberExecution> highlight light}] (lab) at ([yshift=-45]evidence collection model.south) {\makecell{Accredited\\Lab}};
+
+    \draw[->, link, on slide={<\numberEvidenceCollectionModel, \numberCertificationModel, \numberExecution> highlight link}] (target) to node[on link, on slide={<\numberEvidenceCollectionModel, \numberCertificationModel, \numberExecution> highlight text}] {according to} (evidence collection model);
+
+    %\draw[->, link, on slide={<5> highlight link}] (cm) to node[on link, on slide={<5> highlight text}]{executed by} (lab);
+    \draw[->, link, on slide={<\numberExecution> highlight link}] (evidence collection model) to node[on link, on slide={<\numberExecution> highlight text}]{executed by} (lab);
+
+    \draw[->, link, on slide={<\numberExecution> highlight link}] (lab) to node[on link, on slide={<\numberExecution> highlight text}] (against) {against} (target);
+
+    \node[artifact, on slide={<\numberExecution> highlight light}] at ([yshift=-35]against.south) (evidence) {Evidence};
+
+    \draw[->, link, on slide={<\numberExecution> highlight link}] (against) to node[on link, on slide={<\numberExecution> highlight text}] {collecting} (evidence);
+
+    \node[artifact, on slide={<\numberCertificate> highlight light}] at ([yshift=-35]evidence.south) (certificate) {\makecell{Certificate}};
+
+    \draw[ link, ->, on slide={<\numberCertificate> highlight link}] (evidence) to node[on link, on slide={<\numberCertificate> highlight text}]{on success} (certificate);
+
+   %  \draw[link, ->, bend right=70, on slide={<6> highlight link}] (certificate.east) to node[xshift=20, near end, on link, on slide={<6> highlight text}] (includes) {includes} (evidence.east);
+
+   %  \draw[->, link, bend right=45, on slide={<6> highlight link}] (includes) to (target.east);
+
+   %  \draw[->, link, bend right=55, on slide={<6> highlight link}] (includes.east) to (property.east);
+
+
+\end{tikzpicture}
