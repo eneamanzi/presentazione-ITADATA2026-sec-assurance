@@ -1,11 +1,31 @@
 % !TEX root = main.tex
 % GUIDA: slide di esperimenti e risultati: testo con immagine, contenuto
 % sostituibile, tabella e grafico.
-\begin{frame}
-    \frametitle{CHANGE: Experiments}
 
-    CHANGE: obiettivo degli esperimenti e come sono impostati. Se sono tanti, mostra solo il sottoinsieme che fa passare l'intuizione.
-    Una o due slide.
+\begin{frame}
+    \frametitle{Experimental Evaluation}
+
+    \begin{columns}[T]
+        \begin{column}{.5\textwidth}
+            \textbf{Testbed}
+            \begin{itemize}
+                \item \textbf{Forgejo} 14.0.3 -- \textbf{Kong} 3.9 DB-less
+                \item Chosen for its structural properties: native OAS, multi-tenant roles, gateway enforcement
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{.5\textwidth}
+            \textbf{Results}
+            \begin{itemize}
+                \item \textbf{Determinism:} 2 independent runs produced \textcolor{red}{byte-identical} outcomes
+                \item 18 tests, 7 domains: \textbf{\textcolor{green!70!black}{9 PASS}}, \textbf{\textcolor{red}{7 FAIL}}, \textbf{\textcolor{orange}{2 SKIP}}, \textbf{0 ERROR} -- 98 findings
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \begin{block}{Discrepancy between Contract and Reality}
+        Endpoints marked as \textcolor{red}{protected} in the specification, but genuinely public, responded \textcolor{red}{without credentials} (Test 1.1).
+    \end{block}
 
 \end{frame}
 

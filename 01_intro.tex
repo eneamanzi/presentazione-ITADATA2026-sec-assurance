@@ -2,15 +2,52 @@
 % GUIDA: 1-2 slide di contesto (Background e Motivations). Vedi gli esempi
 % legacy per le animazioni con figura e scenario.
 \begin{frame}
-    \frametitle{CHANGE: Background}
+    \frametitle{Context: Big Data APIs \& Security Assurance}
 
-    CHANGE: il concetto, lo schema o il contesto di cui parla il lavoro, con i suoi elementi. Meglio una figura che una definizione lunga.
+    % Goal della slide: Stabilire il contesto (Big Data API) e far capire subito dove si colloca il problema.
+    \begin{itemize}
+        \item \textbf{Big Data Ecosystem:} rely on microservices and distributed pipelines, exposed via REST APIs
+
+        \item \textbf{The Trust Boundary:} API Gateways centralize critical enforcement (authentication, authorization, \dots)
+
+        \item \textbf{The Assurance Gap:} Security focuses on infrastructure, while API testing targets functional correctness, leaving the interface layer exposed.
+
+        \item \textbf{The Consequence:} Interface-level vulnerabilities (e.g., cross-tenant access) can compromise the entire Big Data pipeline
+    \end{itemize}
 
 \end{frame}
 
 \begin{frame}
-    \frametitle{CHANGE: Motivations}
+    \frametitle{State of Art Limits (Motivations) \& Objectives}
 
-    CHANGE: il problema, e perché lo stato dell'arte non basta. Meglio mostrarlo su un esempio concreto (una figura di uno scenario).
+    \begin{columns}[T]
+        \begin{column}{.5\textwidth}
+            \begin{block}{State of the Art Limitations}
+                \begin{itemize}
+                    \item \textbf{Syntactic Blindness:} \\
+                          Checks request/response syntax, ignoring security contract semantics
+                    \item \textbf{The Oracle Problem:} \\
+                          Lacks automated criteria for security guarantee.
+                    \item \textbf{Unreliable Execution:} \\
+                          Non-deterministic outcomes (flakiness) prevent continuous CI/CD integration
+                \end{itemize}
+            \end{block}
+        \end{column}
+
+        \begin{column}{.5\textwidth}
+            % Objectives
+            \begin{block}{Our Objectives}
+                \begin{itemize}
+                    \item \textbf{Semantic Verification:} \\
+                          Move beyond syntax to verify the actual behavior of security controls.
+                    \item \textbf{Specified Oracles:} \\
+                          Automate pass/fail verdicts using hardcoded, domain-derived rules.
+                    \item \textbf{Agnostic \& Deterministic:} \\
+                          Build a reproducible engine, portable across any documented target.
+                \end{itemize}
+            \end{block}
+        \end{column}
+
+    \end{columns}
 
 \end{frame}

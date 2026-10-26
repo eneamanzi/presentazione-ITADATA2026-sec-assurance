@@ -1,19 +1,80 @@
 % !TEX root = main.tex
 % GUIDA: slide dell'approccio (Overview, Details e diagramma).
 \begin{frame}
-    \frametitle{CHANGE: Our Approach: Overview}
+    \frametitle{Our Approach: Contract-Driven API Assurance}
 
-    CHANGE: una frase sull'approccio e sotto un punto per componente. Le slide dopo corrispondono ai punti, nello stesso ordine:
-    è un indice implicito dei contenuti, non una scaletta.
+    % High-level summary sentence (The Core Thesis)
+    \textbf{Core Idea:} Derive syntactically valid probes from OpenAPI contracts and evaluate security semantics using deterministic, specified oracles.
+
+    \begin{itemize}
+        \item \textbf{Application Agnosticism \& Contract-Driven Probing} \\
+              Zero target-specific code; input generation driven strictly by OpenAPI specs and configuration.
+
+        \item \textbf{Specified Oracles for Security Guarantees} \\
+              Domain-derived evaluation rules to detect semantic violations beyond HTTP status codes.
+
+        \item \textbf{Eight-Domain Taxonomy \& Privilege Gradient} \\
+              Structured test coverage scaling with available vantage points (Black, Grey, White Box).
+
+        \item \textbf{Deterministic Assessment Engine} \\
+              Topological scheduling and LIFO teardown ensuring 100\% reproducible verdicts for CI/CD.
+    \end{itemize}
 
 \end{frame}
 
+% Come interroghiamo il target: Agnosticismo + Contratto OpenAPI (risolve G3 - portabilità).
+% Come organizziamo i test e gli accessi: Tassonomia a 8 domini + Box Gradient (struttura della copertura).
+% Come valutiamo la risposta: Oracoli Specificati (risolve G1 e G2 - cecità sintattica e oracle problem).
+% Come eseguiamo i test in modo affidabile: Motore basato su DAG (risolve G4 - determinismo e CI/CD).   
+
 \begin{frame}
-    \frametitle{CHANGE: Our Approach: Details}
+    \frametitle{Approach Details: Agnosticism \& Contract-Driven}
+    \begin{itemize}
+        \item \textbf{Application Agnosticism:} Zero target-specific code. Logic is driven entirely by \texttt{openapi.yaml} and \texttt{config.yaml}.
+        \item
+        \item \textbf{Configuration as Source of Truth:} All deployment variables (URLs, credentials) are isolated from the engine.
+        \item
+        \item \textbf{Contract-Driven Probing:} The specification generates syntactically valid requests and defines the exact attack surface.
+    \end{itemize}
+\end{frame}
 
-    CHANGE: una slide per componente, dall'alto verso il basso: dove sta nell'approccio complessivo, poi cos'è. Meglio un'immagine,
-    anche animata, di una definizione lunga. Si copia il frame per ogni componente (Details (1), (2), \ldots).
+\begin{frame}
+    \frametitle{Approach Details: Taxonomy \& Privilege Gradient}
+    \begin{itemize}
+        \item \textbf{8-Domain Taxonomy (D0--D7):} Structured security guarantees (e.g., Auth, RBAC, Integrity) aligned with NIST standards.
+        \item
+        \item \textbf{Privilege-Aware Coverage (Box Gradient):} Coverage scales dynamically based on available access:
+        \item
+              \begin{itemize}
+                  \item \textit{BLACK\_BOX:} Network-level perimeter controls.
+                  \item \textit{GREY\_BOX:} Multi-role credentials for segregation (RBAC/BOLA).
+                  \item \textit{WHITE\_BOX:} Gateway administrative configuration plane.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
 
+\begin{frame}
+    \frametitle{Approach Details: Specified Oracles}
+    \begin{itemize}
+        \item \textbf{Semantic Evaluation:} Moves beyond basic syntax (e.g., HTTP 500 errors) to judge actual security behavior.
+        \item
+        \item \textbf{3-Step Oracle Construction:}
+              \begin{enumerate}
+                  \item Identify the specific security guarantee.
+                  \item Define its behavioral violation.
+                  \item Encode the evaluation rule.
+              \end{enumerate}
+        \item \textbf{Epistemic Limit:} Verdicts rely on contract compliance; an inaccurate specification yields flawed assumptions.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Approach Details: Deterministic Engine}
+    \begin{itemize}
+        \item \textbf{DAG-Based Scheduling:} Resolves test dependencies statically before execution (e.g., auth before access).
+        \item \textbf{100\% Reproducible:} Fixed configuration and strict LIFO teardown guarantee identical outcomes across runs.
+        \item \textbf{Actionable Output:} Distinct semantic exit codes route results directly to CI/CD pipelines.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
