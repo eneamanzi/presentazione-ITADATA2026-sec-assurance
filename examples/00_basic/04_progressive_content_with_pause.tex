@@ -1,0 +1,19 @@
+% ESEMPIO BASE: \pause per far comparire progressivamente i punti.
+% L'immagine resta fissa mentre il testo a sinistra procede.
+
+\begin{frame}
+    \frametitle{04 Basic: progressive content with \texttt{\textbackslash pause}}
+
+    \begin{columns}[T]
+        \begin{column}{.65\textwidth}
+            \begin{itemize}\setlength{\itemsep}{1em}
+                \item First point, visible from the beginning.
+                \pause
+                \item Second point, revealed at the next overlay.
+            \end{itemize}
+        \end{column}
+        \begin{column}{.35\textwidth}
+            \includegraphics[width=.8\columnwidth]{assets/img/patrick_star_sad.png}
+        \end{column}
+    \end{columns}
+\end{frame}

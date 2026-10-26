@@ -1,7 +1,8 @@
+% Legacy Nicola: macro specifiche alla notazione e agli esperimenti originali.
+% Gli helper generici sono definiti in 00_macro_common.tex e non vengono duplicati qui.
+
 \newcommand*{\prop}{\ensuremath{p}}
-\newcommand*{\propertyNameStyle}[1]{\textsl{#1}}
 \newcommand*{\target}{\ensuremath{ToC}}
-\newcommand*{\setStyle}[1]{\ensuremath{\mathcal{#1}}}
 \newcommand*{\targetSet}{\referred{\setStyle{TOC}}}
 \newcommand*{\mechanism}{\ensuremath{m}}
 % \newcommand*{\evidCollectionModel}{\ensuremath{\mathcal{E}}}
@@ -16,8 +17,6 @@
 \newcommand*{\evid}{\ensuremath{ev}}
 %\newcommand*{}{def}
 \newcommand*{\attr}{\ensuremath{attr}}
-\newcommand*{\referred}[1]{\ensuremath{\overline{#1}}}
-
 \newcommand*{\repo}{\ensuremath{\mathcal{R}}}
 
 \newcommand*{\signature}{\texttt{sig}}
@@ -25,9 +24,6 @@
 \newcommand*{\signatureAL}[1][]{\signature\ensuremath{_{\text{AL}_{\text{#1}}}}}
 
 \newcommand*{\dimension}{\ensuremath{d}}
-\newcommand*{\angled}[1]{\ensuremath{\langle #1\rangle}}
-
-
 \newcommand{\verificationStep}{\ensuremath{v}}
 
 \newcommand{\targetInput}{\ensuremath{\mathcal{I}}}
@@ -54,21 +50,6 @@
 \newcommand{\succFn}[1]{\ensuremath{\succSymbol(#1)}}
 
 \newcommand{\foundation}{\text{found}}
-
-\newcommand{\tableVGap}{.5em}
-
-\newcommand{\steponly}[1]{(#1)}
-\newcommand{\step}[1]{step \steponly{#1}}
-\newcommand{\steps}[2]{steps \steponly{#1}--\steponly{#2}}
-\newcommand{\Step}[1]{Step \steponly{#1}}
-\newcommand{\Steps}[2]{Steps \steponly{#1}--\steponly{#2}}
-
-\newcommand{\stepExperimentOnly}[1]{\emph{#1}}
-%\newcommand{\stepExperiment}[1]{\emph{step}~\stepExperimentOnly{#1}}
-\newcommand{\StepExperiment}[1]{\emph{Step}~\stepExperimentOnly{#1}}
-
-\newcommand*{\gapStyle}[1]{#1}
-\newcommand*{\gap}[1]{G#1}
 
 \newcommand{\testCaseOutput}{\ensuremath{out}}
 \newcommand{\testCaseResult}{\ensuremath{res}}
@@ -252,42 +233,16 @@
 \newcommand{\DLSymbolFunction}{\ensuremath{\text{\emph{DL}}}}
 \newcommand{\DLFunction}[1]{\ensuremath{\DLSymbolFunction(#1)}}
 
-\newcommand{\detail}[1]{\emph{#1}}
-\newcommand{\detailLow}{\detail{Low}}
-\newcommand{\detailMediumLow}{\detail{Medium--Low}}
-\newcommand{\detailMediumHigh}{\detail{Medium-High}}
-\newcommand{\detailHigh}{\detail{High}}
-
-% displays a "check mark"
-\newcommand{\ok}{\ding{51}}
-% displays an "x mark"
-\newcommand{\notOk}{\ding{55}}
-
-
-\newcommand{\bigO}{\mathcal{O}}
-
 \newcommand{\arcsCardinality}{\ensuremath{\vert \arcs \vert}}
 \newcommand{\nodesCardinality}{\ensuremath{\vert \nodes \vert}}
 
 \newcommand{\nodesFailed}{\ensuremath{\overline{F}}}
 
 
-\newcommand{\spaceOne}{~~~~}
-
-\newcommand{\challenge}[1]{\textbf{C#1}}
-
-\newcommand{\parMini}[1]{\parbox{\linewidth}{\tiny #1}}
 \newcommand{\fullCiteMini}[1]{\parMini{\fullcite{#1}}}
 
 
-\newcommand{\parAlmostMini}[1]{\parbox{\linewidth}{\footnotesize #1}}
 \newcommand{\fullCiteAlmostMini}[1]{\parAlmostMini{\fullcite{#1}}}
-
-\newcommand{\timestyle}[1]{#1}
-\newcommand{\timeshort}{\timestyle{S}}
-\newcommand{\timemedium}{\timestyle{M}}
-\newcommand{\timelong}{\timestyle{L}}
-
 
 \newcommand*{\service}[1]{\ensuremath{s_{#1}}}
 

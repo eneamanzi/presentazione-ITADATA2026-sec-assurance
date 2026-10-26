@@ -1,0 +1,42 @@
+% Macro generiche del template.
+% Questo file contiene solo helper indipendenti dal contenuto scientifico
+% della presentazione concreta.
+
+\newcommand*{\propertyNameStyle}[1]{\textsl{#1}}
+\newcommand*{\setStyle}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand*{\referred}[1]{\ensuremath{\overline{#1}}}
+\newcommand*{\angled}[1]{\ensuremath{\langle #1\rangle}}
+
+\newcommand{\tableVGap}{.5em}
+
+\newcommand{\steponly}[1]{(#1)}
+\newcommand{\step}[1]{step \steponly{#1}}
+\newcommand{\steps}[2]{steps \steponly{#1}--\steponly{#2}}
+\newcommand{\Step}[1]{Step \steponly{#1}}
+\newcommand{\Steps}[2]{Steps \steponly{#1}--\steponly{#2}}
+
+\newcommand{\stepExperimentOnly}[1]{\emph{#1}}
+\newcommand{\StepExperiment}[1]{\emph{Step}~\stepExperimentOnly{#1}}
+
+\newcommand*{\gapStyle}[1]{#1}
+\newcommand*{\gap}[1]{G#1}
+
+\newcommand{\detail}[1]{\emph{#1}}
+\newcommand{\detailLow}{\detail{Low}}
+\newcommand{\detailMediumLow}{\detail{Medium--Low}}
+\newcommand{\detailMediumHigh}{\detail{Medium-High}}
+\newcommand{\detailHigh}{\detail{High}}
+
+\newcommand{\ok}{\ding{51}}
+\newcommand{\notOk}{\ding{55}}
+\newcommand{\bigO}{\mathcal{O}}
+\newcommand{\spaceOne}{~~~~}
+\newcommand{\challenge}[1]{\textbf{C#1}}
+
+\newcommand{\parMini}[1]{\parbox{\linewidth}{\tiny #1}}
+\newcommand{\parAlmostMini}[1]{\parbox{\linewidth}{\footnotesize #1}}
+
+\newcommand{\timestyle}[1]{#1}
+\newcommand{\timeshort}{\timestyle{S}}
+\newcommand{\timemedium}{\timestyle{M}}
+\newcommand{\timelong}{\timestyle{L}}

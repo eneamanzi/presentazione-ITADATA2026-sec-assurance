@@ -1,0 +1,37 @@
+% ESEMPIO BASE: lista e figura TikZ sincronizzate dagli stessi overlay.
+% Overlay 1: figura neutra; overlay 2, 3 e 4: evidenziazione di A, B e C.
+% Overlay 5: A e C sono evidenziati insieme, mostrando un overlay non contiguo.
+% La figura condivisa viene riusata anche dall'esempio advanced: il disegno
+% resta lo stesso, ma gli intervalli passati ai suoi stili producono
+% evidenziazioni diverse.
+
+\begin{frame}
+    \frametitle{02 Basic: highlighted list next to a figure}
+
+    \newcommand{\stepNeutral}{1}
+    \newcommand{\stepA}{2}
+    \newcommand{\stepBOne}{3}
+    \newcommand{\stepBTwo}{3}
+    \newcommand{\stepC}{4}
+    \newcommand{\stepAAndC}{5}
+
+    \begin{columns}[T]
+        \begin{column}{.4\textwidth}
+            This list highlights the current step in the process:
+
+            \vspace{.75em}
+
+            \begin{itemize}\setlength{\itemsep}{1em}
+                \item \alert<\stepA,\stepAAndC>{Step A}
+                \item \alert<\stepBOne>{Step B1}
+                \item \alert<\stepBTwo>{Step B2}
+                \item \alert<\stepC,\stepAAndC>{Step C}
+            \end{itemize}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            \begin{center}
+                \input{examples/assets/figures/fig_overlay_graph.tex}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}

@@ -1,0 +1,178 @@
+% ESEMPIO: grafici PGFPlots con dati esterni.
+% La sorgente dei dati e' indipendente dal tipo di grafico:
+% - grafici a linee letti da file .dat;
+% - grafici a barre orizzontali letti da CSV.
+% Le proporzioni, gli assi e le legende seguono gli esempi originali di Nicola.
+% Il CSV e' invece contenuto dimostrativo neutro: le due configurazioni usano
+% colonne diverse, non una copia degli stessi dati.
+
+\begin{frame}
+    \frametitle{07 Basic: completed sentence and line plots}
+
+    \pgfmathsetmacro\numberTextStart{int(1)}
+    \pgfmathsetmacro\numberTextEnd{int(\numberTextStart+0)}
+    \pgfmathsetmacro\numberGraphStart{int(\numberTextEnd+1)}
+    \pgfmathsetmacro\numberGraphEnd{int(\numberGraphStart+0)}
+
+    \begin{overlayarea}{\textwidth}{.9\textheight}
+        \only<\numberTextStart-\numberGraphEnd>{
+            \alert{Measure} varying the number of
+        }
+        \only<\numberGraphStart-\numberGraphEnd>{
+            \alert{parameter A} and \alert{parameter B}
+        }
+
+        \only<\numberTextStart-\numberTextEnd>{
+            \vspace{1em}
+            \begin{itemize}\setlength{\itemsep}{1em}
+                \item \alert{parameter A} in $\{2,\ldots,5\}$
+                \item \alert{parameter B} in $\{1,\ldots,5\}$
+            \end{itemize}
+        }
+
+        \only<\numberGraphStart-\numberGraphEnd>{
+            \vspace{1em}
+
+            \pgfplotstableread{examples/assets/data/lines_01.dat}\dataTableParameterA
+            \pgfplotstableread{examples/assets/data/lines_02.dat}\dataTableParameterB
+
+            \pgfplotsset{every tick label/.append style={font=\normalsize}}
+
+            \begin{adjustbox}{max totalsize={.99\textwidth}{.6\textheight},center}
+                \begin{tabular}{cc}
+                    \begin{tikzpicture}[scale=.5]
+                        \begin{axis}[
+                                xlabel={\normalsize \textbf{Parameter A}},
+                                ylabel={\normalsize \textbf{Measure}},
+                                xmin=2, xmax=5,
+                                xtick={2, ..., 5},
+                                ymin=4, ymax=11,
+                                legend pos=north west,
+                                legend columns=2,
+                                legend style={/tikz/every even column/.append style={column sep=0.5cm}},
+                                scale only axis
+                            ]
+                            \addplot[color=black, mark options={solid}]
+                                table [x index=0, y index=1] {\dataTableParameterA};
+                            \addlegendentry{1 unit}
+                            \addplot[color=black, mark options={solid}, dashed]
+                                table [x index=0, y index=2] {\dataTableParameterA};
+                            \addlegendentry{2 units}
+                            \addplot[color=black, mark options={solid}, dotted]
+                                table [x index=0, y index=3] {\dataTableParameterA};
+                            \addlegendentry{3 units}
+                            \addplot[color=black, mark options={solid}, dashdotted]
+                                table [x index=0, y index=4] {\dataTableParameterA};
+                            \addlegendentry{4 units}
+                            \addplot[color=black, mark options={solid},
+                                dash pattern={on 1pt off 2pt on 1pt off 2pt on 3pt}]
+                                table [x index=0, y index=5] {\dataTableParameterA};
+                            \addlegendentry{5 units}
+                        \end{axis}
+                    \end{tikzpicture}
+                    &
+                    \begin{tikzpicture}[scale=.5]
+                        \begin{axis}[
+                                xlabel={\normalsize \textbf{Parameter B}},
+                                xmin=1, xmax=5,
+                                xtick={1,2,3,4,5},
+                                ymin=4, ymax=11,
+                                legend pos=north west,
+                                scale only axis
+                            ]
+                            \addplot[color=black, mark options={solid}]
+                                table [x index=0, y index=1] {\dataTableParameterB};
+                            \addlegendentry{2 items}
+                            \addplot[color=black, dashed, mark options={solid}]
+                                table [x index=0, y index=2] {\dataTableParameterB};
+                            \addlegendentry{3 items}
+                            \addplot[color=black, dashdotted, mark options={solid}]
+                                table [x index=0, y index=3] {\dataTableParameterB};
+                            \addlegendentry{4 items}
+                            \addplot[color=black, dotted, mark options={solid}]
+                                table [x index=0, y index=4] {\dataTableParameterB};
+                            \addlegendentry{5 items}
+                        \end{axis}
+                    \end{tikzpicture}
+                    \\
+                    {\footnotesize Varying parameter A} &
+                    {\footnotesize Varying parameter B}
+                \end{tabular}
+            \end{adjustbox}
+
+            \vspace{1em}
+            $\Longrightarrow$ \alert{linear} increase of the measure
+        }
+    \end{overlayarea}
+\end{frame}
+
+\begin{frame}
+    \frametitle{07 Advanced: horizontal bar plots from a CSV}
+
+    \pgfplotstableread[col sep=comma]{examples/assets/data/data_comparison.csv}\dataComparison
+
+    \begin{adjustbox}{max totalsize={.99\linewidth}{\textheight},center}
+        \begin{tikzpicture}
+            \begin{groupplot}[
+                    group style={
+                        group name=basic bar plots,
+                        group size=2 by 1,
+                        vertical sep=1.45cm,
+                        xticklabels at=all,
+                        yticklabels at=edge left,
+                        xlabels at=edge bottom,
+                        ylabels at=edge left
+                    },
+                    xlabel={Value},
+                    ylabel={Category},
+                    xticklabel style={font=\small},
+                    yticklabel style={font=\small},
+                    scaled y ticks=false,
+                    scaled x ticks=false,
+                    xbar,
+                    ytick={1,2,3},
+                    yticklabels={Group 1,Group 2,Group 3},
+                    nodes near coords,
+                    enlarge x limits={upper, value=0.18},
+                    xmin=0,
+                    width=.43\textwidth,
+                    height=.48\textheight
+                ]
+                \nextgroupplot[title={\normalsize \textbf{Configuration 1}}]
+                    \addplot[draw=black, fill=gray!50, bar width=4.5pt]
+                        table[x=C1_Method_A, y expr=\coordindex+1]{\dataComparison};
+                    \addplot[draw=black, fill=white, bar width=4.5pt]
+                        table[x=C1_Method_B, y expr=\coordindex+1]{\dataComparison};
+                    \coordinate (bar top left) at (rel axis cs:0,1);
+
+                \nextgroupplot[
+                        title={\normalsize \textbf{Configuration 2}},
+                        legend style={
+                            at={($(0,0)+(1cm,1cm)$)},
+                            legend columns=2,
+                            fill=none,
+                            draw=none,
+                            anchor=south,
+                            inner sep=0.2em,
+                            column sep=5pt,
+                            align=center
+                        },
+                        legend to name=basicBarLegend
+                    ]
+                    \addplot[draw=black, fill=gray!50, bar width=4.5pt]
+                        table[x=C2_Method_A, y expr=\coordindex+1]{\dataComparison};
+                    \addlegendentry{Method A}
+                    \addplot[draw=black, fill=white, bar width=4.5pt]
+                        table[x=C2_Method_B, y expr=\coordindex+1]{\dataComparison};
+                    \addlegendentry{Method B}
+                    \coordinate (bar top right) at (rel axis cs:1,1);
+            \end{groupplot}
+
+            \coordinate (bar legend middle) at ($(bar top left)!.5!(bar top right)$);
+            \coordinate (bar legend position)
+                at (bar legend middle |- current bounding box.north);
+            \node[above] at (bar legend position)
+                {\pgfplotslegendfromname{basicBarLegend}};
+        \end{tikzpicture}
+    \end{adjustbox}
+\end{frame}

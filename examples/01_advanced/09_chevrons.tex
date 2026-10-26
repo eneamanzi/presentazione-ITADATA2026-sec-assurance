@@ -1,0 +1,26 @@
+% ESEMPIO AVANZATO: riga di chevron con descrizioni e lista in primo piano.
+% Riprende la struttura della tecnica originale di Nicola:
+% - stile arrow per i chevron;
+% - stile desc per le schede sotto ciascun chevron;
+% - dissolvenza delle schede con text opacity e fill opacity;
+% - lista in primo piano con visible on e highlighting progressivo.
+
+\begin{frame}
+    \frametitle{09 Advanced: chevrons and fading background}
+
+    \pgfmathsetmacro\numberFadeStart{int(2)}
+    \pgfmathsetmacro\numberItemA{int(\numberFadeStart+0)}
+    \pgfmathsetmacro\numberItemB{int(\numberItemA+1)}
+    \pgfmathsetmacro\numberItemC{int(\numberItemB+1)}
+    \pgfmathsetmacro\numberFadeEnd{int(\numberItemC+0)}
+
+    \begin{center}
+        A sentence introducing the \alert{three phases}\ldots
+    \end{center}
+
+    \vspace{1em}
+
+    \begin{adjustbox}{max totalsize={.9\textwidth}{\textheight},center}
+        \input{examples/assets/figures/fig_chevrons.tex}
+    \end{adjustbox}
+\end{frame}

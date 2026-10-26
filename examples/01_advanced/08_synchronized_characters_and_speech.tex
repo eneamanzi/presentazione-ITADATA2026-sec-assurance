@@ -1,0 +1,59 @@
+% ESEMPIO AVANZATO: personaggi e fumetti riusati dalla tecnica di Nicola.
+% Dimostra testo sostituito, due speaker simultanei e una scena finale,
+% sincronizzati con l'highlighting del grafo.
+% Il grafo incluso a sinistra e' la stessa figura condivisa dell'esempio
+% basic: qui riceve intervalli diversi e quindi colorazioni diverse, sincronizzate
+% con la comparsa dei personaggi e dei fumetti.
+
+\begin{frame}
+    \frametitle{08 Advanced: synchronized characters and speech}
+
+    \newcommand{\stepA}{1}
+    \newcommand{\stepBOne}{2}
+    \newcommand{\stepBTwo}{3}
+    \newcommand{\stepC}{4-5}
+    \newcommand{\stepAAndC}{5}
+
+    \begin{columns}[T]
+        \begin{column}{.42\textwidth}
+            \begin{center}
+                \input{examples/assets/figures/fig_overlay_graph.tex}
+            \end{center}
+        \end{column}
+        \begin{column}{.58\textwidth}
+            \begin{center}
+                \begin{tikzpicture}
+                    \node[dave, minimum size=.8cm, visible on=<1-4>]
+                        (dave-first) at (0,1.2) {};
+                    \node[speaking question, callout absolute pointer=(dave-first.mouth),
+                        anchor=west, visible on=<1>]
+                        at ([xshift=1cm]dave-first.east) {\alert{Speaker 1:} Speech 1};
+                    \node[speaking question, callout absolute pointer=(dave-first.mouth),
+                        anchor=west, visible on=<2>]
+                        at ([xshift=1cm]dave-first.east) {\alert{Speaker 1:} Speech 2};
+                    \node[speaking question, callout absolute pointer=(dave-first.mouth),
+                        anchor=west, visible on=<3>]
+                        at ([xshift=1cm]dave-first.east) {\alert{Speaker 1:} Speech 3};
+                    \node[speaking question, callout absolute pointer=(dave-first.mouth),
+                        anchor=west, visible on=<4>]
+                        at ([xshift=1cm]dave-first.east) {\alert{Speaker 1:} Speech 4};
+
+                    \node[judge, minimum size=.8cm, visible on=<3-4>]
+                        (judge-second) at (0,-1.2) {};
+                    \node[speaking question, callout absolute pointer=(judge-second.mouth),
+                        anchor=west, visible on=<3>]
+                        at ([xshift=1cm]judge-second.east) {\alert{Speaker 2:} Speech 1};
+                    \node[speaking question, callout absolute pointer=(judge-second.mouth),
+                        anchor=west, visible on=<4>]
+                        at ([xshift=1cm]judge-second.east) {\alert{Speaker 2:} Speech 2};
+
+                    \node[dave, minimum size=.8cm, visible on=<5>]
+                        (dave-final) at (0,0) {};
+                    \node[speaking question, callout absolute pointer=(dave-final.mouth),
+                        anchor=west, visible on=<5>]
+                        at ([xshift=1cm]dave-final.east) {\alert{Final speaker:} Final speech};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}

@@ -1,0 +1,19 @@
+% ESEMPIO BASE: \only dentro overlayarea per sostituire il contenuto.
+% L'overlayarea riserva lo spazio mentre cambia il blocco mostrato.
+
+\begin{frame}
+    \frametitle{05 Basic: replacing content with \texttt{\textbackslash only}}
+
+    \begin{overlayarea}{\textwidth}{.65\textheight}
+        \only<1>{
+            \begin{block}{First view}
+                This block is visible only on the first overlay.
+            \end{block}
+        }
+        \only<2>{
+            \begin{block}{Final view}
+                The previous block is replaced by this content.
+            \end{block}
+        }
+    \end{overlayarea}
+\end{frame}

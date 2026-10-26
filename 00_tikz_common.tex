@@ -1,0 +1,108 @@
+% Stili TikZ generici del template.
+% Le definizioni qui raccolte sono disponibili per gli esempi basic/advanced.
+
+\colorlet{HighlightFill}{LightGoldenRod!50}
+\colorlet{HighlightColor}{Goldenrod}
+
+\tikzset{
+  every node/.style={
+    font={\scriptsize},
+    text centered,
+  },
+  invisible/.style={opacity=0,text opacity=0},
+  visible on/.style={alt=#1{}{invisible}},
+  alt/.code args={<#1>#2#3}{%
+    \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}%
+  },
+  on slide/.code args={<#1>#2}{%
+    \only<#1>{\pgfkeysalso{#2}}%
+  },
+  link/.style={
+    >=Latex,
+    thin,
+  },
+  on link/.style={fill=white},
+  highlight base/.style={very thick},
+  highlight/.style={
+    highlight base,
+    fill=LightGoldenRod,
+  },
+  highlight text/.style={text=Goldenrod},
+  highlight link/.style={color=Goldenrod},
+  highlight light/.style={fill=LightGoldenRod!50},
+  boxes/.style={
+    draw=black,
+    rectangle,
+  },
+  rboxes/.style={
+    boxes,
+    rounded corners,
+  },
+  entity/.style={
+    draw,
+    ellipse,
+    thin,
+  },
+  artifact/.style={
+    rectangle,
+    draw,
+    rounded corners,
+  },
+  service/.style={
+    rectangle,
+    draw,
+    fill=white,
+    minimum width=.35cm,
+    minimum height=.35cm,
+  },
+  connector/.style={>=Stealth},
+  container/.style={
+    very thin,
+    draw,
+    rounded corners,
+  },
+  activity/.style={fill=white},
+  object/.style={
+    draw,
+    rectangle,
+    rounded corners,
+    fill=white,
+  },
+  arrow/.style={
+    draw,
+    minimum height=1cm,
+    inner sep=2pt,
+    shape=signal,
+    signal from=west,
+    signal to=east,
+    signal pointer angle=110,
+    top color=DarkBlue,
+    bottom color=DarkBlue,
+    text=White,
+    text width=.24\textwidth,
+    font={\small},
+  },
+  desc/.style={
+    text width=.22\textwidth,
+    fill=VeryLightGrey,
+    rectangle,
+    font={\footnotesize},
+  },
+  box label/.style={
+    fill=DarkBlue,
+    text=white,
+    double,
+    rounded corners,
+  },
+  speaking question/.style={
+    ellipse callout,
+    fill=VeryLightGrey!50,
+    draw,
+  },
+  basic question no color/.style={
+    rectangle callout,
+    fill=VeryLightGrey!50,
+    draw,
+    thick,
+  },
+}

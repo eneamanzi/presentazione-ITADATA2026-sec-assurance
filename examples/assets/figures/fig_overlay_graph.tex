@@ -1,0 +1,23 @@
+\begin{tikzpicture}[node distance=2.5em and 2.8em]
+    \node[draw, rounded corners, fill=white,
+        on slide={<\stepA,\stepAAndC> highlight light}] (a) {Step A};
+    \node[draw, rounded corners, fill=white, below left=of a,
+        on slide={<\stepBOne> highlight light}] (b1) {Step B1};
+    \node[draw, rounded corners, fill=white, below right=of a,
+        on slide={<\stepBTwo> highlight light}] (b2) {Step B2};
+    \node[draw, rounded corners, fill=white, below=of b1,
+        on slide={<\stepC,\stepAAndC> highlight light}] (c) {Step C};
+
+    \draw[->, link,
+        on slide={<\stepA,\stepAAndC> highlight link}]
+        (a) -- node[on link, on slide={<\stepA,\stepAAndC> highlight text}] {branch 1} (b1);
+    \draw[->, link,
+        on slide={<\stepA,\stepAAndC> highlight link}]
+        (a) -- node[on link, on slide={<\stepA,\stepAAndC> highlight text}] {branch 2} (b2);
+    \draw[->, link,
+        on slide={<\stepBOne> highlight link}]
+        (b1) -- node[on link, on slide={<\stepBOne> highlight text}] {merge} (c);
+    \draw[->, link,
+        on slide={<\stepBTwo> highlight link}]
+        (b2) -- node[on link, on slide={<\stepBTwo> highlight text}] {merge} (c);
+\end{tikzpicture}

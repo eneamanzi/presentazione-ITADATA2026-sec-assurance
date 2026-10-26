@@ -1,0 +1,30 @@
+% ESEMPIO AVANZATO: componente parametrico TikZ con \pic.
+% La definizione e le chiamate sono riusate direttamente da Nicola in
+% examples/assets/figures/fig_pic.tex. Il componente riceve nome, posizione e overlay:
+% la stessa costruzione puo' quindi essere istanziata piu' volte senza
+% duplicare il disegno interno.
+
+\begin{frame}
+    \frametitle{10 Advanced: reusable component with \texttt{\textbackslash pic}}
+
+    \begin{columns}[T]
+        \begin{column}{.38\textwidth}
+            The same component is instantiated twice:
+
+            \vspace{.5em}
+
+            \begin{itemize}\setlength{\itemsep}{.7em}
+                \item \textbf{Name}: \texttt{a} or \texttt{b}; it becomes part of the node names.
+                \item \textbf{Position}: the second argument moves the whole group.
+                \item \textbf{Overlay}: the third argument selects when that group is highlighted.
+                \item The relation uses the generated nodes
+                    \texttt{box-a-3} and \texttt{box-b-3}.
+            \end{itemize}
+        \end{column}
+        \begin{column}{.62\textwidth}
+            \begin{adjustbox}{width=\linewidth, max height=.72\textheight, center}
+                \input{examples/assets/figures/fig_pic.tex}
+            \end{adjustbox}
+        \end{column}
+    \end{columns}
+\end{frame}

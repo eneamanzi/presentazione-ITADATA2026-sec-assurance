@@ -7,7 +7,9 @@ La struttura, le macro e le tecniche di animazione vengono dalla presentazione d
 ## Struttura
 
 - `main.tex`: preambolo, metadati (titolo, autori, istituti, evento), frame del titolo, `\input` delle sezioni
-- `00_macro.tex`, `00_common_tikz.tex`: macro e stili TikZ condivisi, copiati da Nicola, **non modificare**: le figure ne dipendono
+- `00_macro_common.tex`, `00_tikz_common.tex`: macro e stili TikZ riutilizzabili
+- `00_macro_project.tex`: spazio per la notazione della nuova presentazione
+- `examples/legacy-nicola/00_macro_legacy.tex`, `00_tikz_legacy.tex`: dipendenze delle slide originali di Nicola, caricate solo da `05_examples.tex`
 - `01_intro.tex` (Background, Motivations), `02_core.tex` (Overview, Details, diagramma a stati), `03_exp.tex` (Experiments, Results), `04_conclusions.tex` (Conclusions, ringraziamenti)
 - `assets/tex/`: le figure, un file per figura, animate con i numeri di overlay definiti nel frame; `assets/tex/03_plot_quality/`: il grafico e il suo `data.csv`
 - `assets/img/`: le immagini che compaiono nelle slide
@@ -33,22 +35,24 @@ Dopo i ringraziamenti c'è una sezione "Examples", numerata a parte (non conta n
 
 | Esempio | Tecnica |
 |---|---|
-| `ex_01_replace_footnotes.tex` | contenuto che si sostituisce a ogni passo (`\only`), note con le fonti (`\footnote`), figura esterna (draw.io) accanto al testo, riga di sintesi `$\Longrightarrow$` |
-| `ex_02_ranges_titles.tex` | intervalli di overlay non contigui (`<1-1, 3-3>`), anche in una macro; titolo del frame che cambia a ogni passo |
-| `ex_03_reuse_figure.tex` + `fig_reuse.tex` | la stessa figura riusata in più frame, ponendo a 0 i numeri di overlay che non servono |
-| `ex_04_line_plots.tex` + `lines_01.dat`, `lines_02.dat` | frase che si completa a passi, grafici a linee con tratteggi diversi, dati da `.dat`, didascalie sotto, riga di sintesi |
-| `ex_05_tables.tex` | tabelle impilate con didascalia, intestazioni in colore, larghezze con `\widthof`, tabella con `\multirow` e `\multicolumn` accanto a un elenco |
-| `ex_06_title_logos.tex` | slide del titolo con più autori, loghi e ringraziamenti ai finanziamenti |
-| `ex_07_chevrons.tex` + `fig_chevrons.tex` | riga di chevron con descrizioni sotto, dissolvenza dello sfondo, elenco in primo piano |
-| `ex_08_pic.tex` + `fig_pic.tex` | componente riusabile con `\pic` e argomenti (nome, posizione, intervalli di overlay) |
-| `ex_09_callouts.tex` + `fig_callouts.tex` | callout con codice e linguetta, callout con più puntatori, personaggio con bolla |
+| `02_highlighted_list_next_to_figure.tex` | elenco con un elemento evidenziato accanto a una figura sincronizzata |
+| `03_technical_definition.tex` | definizione tecnica formattata con una tupla |
+| `04_progressive_content_with_pause.tex` | contenuto progressivo con `\pause` |
+| `05_replacing_content_with_only.tex` | contenuto alternativo con `\only` e `overlayarea` |
+| `06_tables.tex` | tabelle impilate con intestazioni colorate, `\multirow` e `\multicolumn` |
+| `07_plots_external_data.tex` + `lines_01.dat`, `lines_02.dat`, `data_comparison.csv` | frase progressiva, grafici e dati esterni |
+| `08_synchronized_characters_and_speech.tex` + `fig_overlay_graph.tex` | personaggi e fumetti sincronizzati con una figura riusata |
+| `09_chevrons.tex` + `fig_chevrons.tex` | riga di chevron con descrizioni e dissolvenza dello sfondo |
+| `10_reusable_pic_component.tex` + `fig_pic.tex` | componente riusabile con `\pic` e argomenti |
+| `11_callouts_and_speech_bubbles.tex` + `fig_callouts.tex` | callout, linguette e fumetti |
+| `12_title_logos_and_funding.tex` | slide del titolo con più autori, loghi e finanziamenti |
 
 Per toglierla basta cancellare in `main.tex` le due righe `\appendix` e `\input{05_examples.tex}`.
 
 Due scelte da conoscere:
 
 - La libreria TikZ `chains` (usata da Nicola per i chevron) **non è caricata**: con quella le figure a bolle delle Motivations stampano centinaia di caratteri senza font. I chevron sono quindi posizionati con `right=3pt of ...`.
-- Il codice colorato con `minted` (come nel deck ICWS) non è abilitato: serve Pygments installato sul PC e nella CI. Come attivarlo è scritto nel commento di `ex_09_callouts.tex`.
+- Il codice colorato con `minted` (come nel deck ICWS) non è abilitato: serve Pygments installato sul PC e nella CI. Come attivarlo è scritto nel commento di `11_callouts_and_speech_bubbles.tex`.
 
 ## Nuova presentazione
 

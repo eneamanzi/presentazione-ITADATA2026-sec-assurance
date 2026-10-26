@@ -1,0 +1,65 @@
+% ESEMPIO BASE: composizioni di tabelle riutilizzabili nelle slide.
+% - due tabelle impilate con una didascalia per ciascuna;
+% - intestazione su più righe con \multirow e \multicolumn;
+% - tabella affiancata a un elenco puntato.
+% booktabs migliora le righe della tabella; adjustbox evita che una tabella
+% troppo larga esca dai margini della slide.
+
+\begin{frame}
+    \frametitle{06 Basic: stacked tables}
+
+    \begin{adjustbox}{max totalsize={\textwidth}{.75\textheight},center}
+        \begin{tabular}{c}
+            \begin{tabular}{l c l}
+                \toprule
+                \textbf{\alert{Item}} & \textbf{\alert{Status}} & \textbf{\alert{Description}} \\
+                \midrule
+                Item A & ready & Short description \\
+                Item B & pending & Another description \\
+                \bottomrule
+            \end{tabular}\\[-.1em]
+            \textbf{First table}\\[1em]
+            \begin{tabular}{p{.18\textwidth} c p{.3\textwidth}}
+                \toprule
+                \textbf{\alert{Item}} & \textbf{\alert{Value}} & \textbf{\alert{Comment}} \\
+                \midrule
+                Item C & 12 & A longer comment that wraps onto a second line \\
+                Item D & 27 & Another comment with controlled cell width \\
+                \bottomrule
+            \end{tabular}\\[-.1em]
+            \textbf{Second table}
+        \end{tabular}
+    \end{adjustbox}
+\end{frame}
+
+\begin{frame}
+    \frametitle{06 Basic: table with grouped columns}
+
+    \begin{columns}[T]
+        \begin{column}{.62\textwidth}
+            \begin{adjustbox}{max totalsize={\textwidth}{.7\textheight},center}
+                \begin{tabular}{l r cc}
+                    \toprule
+                    \multirow{2}{*}{\textbf{\alert{Step}}}
+                        & \multirow{2}{*}{\textbf{\alert{Value}}}
+                        & \multicolumn{2}{c}{\alert{Cost}} \\
+                    & & \textbf{\alert{Unit A}} & \textbf{\alert{Unit B}} \\
+                    \midrule
+                    Step 1 & 8 & 0.41 & 1.29 \\
+                    Step 2 & 5 & 0.24 & 0.74 \\
+                    Step 3 & 4 & 0.19 & 0.59 \\
+                    \midrule
+                    \textbf{Total} & \textbf{17} & \textbf{0.84} & \textbf{2.62} \\
+                    \bottomrule
+                \end{tabular}
+            \end{adjustbox}
+        \end{column}
+        \begin{column}{.38\textwidth}
+            \begin{itemize}\setlength{\itemsep}{.8em}
+                \item The value is the measured quantity.
+                \item Unit A and Unit B show two cost estimates.
+                \item The final row gives the total.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
