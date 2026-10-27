@@ -7,10 +7,13 @@
     % Goal della slide: Stabilire il contesto (Big Data API) e far capire subito dove si colloca il problema.
     \begin{itemize}
         \item \textbf{Big Data Ecosystem:} distributed services organized into pipelines and exposed through REST APIs
+              \pause
 
         \item \textbf{Trust Boundary:} API Gateways centralize main security controls.
+              \pause
 
         \item \textbf{Assurance Gap:} infrastructure and functional testing leave API security semantics largely unchecked
+              \pause
 
         \item \textbf{Consequence:} An API-level weakness can expose the pipelines and data behind the interface.
     \end{itemize}
@@ -24,11 +27,11 @@
         \begin{column}{.5\textwidth}
             \begin{block}{State of the Art Limitations}
                 \begin{itemize}
-                    \item \textbf{Syntactic Blindness:} \\
+                    \item<1-> \textbf{Syntactic Blindness:} \\
                           Checks request/response syntax, but not security semantics
-                    \item \textbf{The Oracle Problem:} \\
+                    \item<2-> \textbf{The Oracle Problem:} \\
                           No automated criterion to evaluate security guarantees
-                    \item \textbf{Unreliable Execution:} \\
+                    \item<3-> \textbf{Unreliable Execution:} \\
                           Flaky results make continuous CI/CD integration unreliable
                 \end{itemize}
             \end{block}
@@ -38,11 +41,11 @@
             % Objectives
             \begin{block}{Our Objectives}
                 \begin{itemize}
-                    \item \textbf{Semantic Verification:} \\
+                    \item<1-> \textbf{Semantic Verification:} \\
                           Verify security behavior beyond request/response syntax
-                    \item \textbf{Specified Oracles:} \\
+                    \item<2-> \textbf{Specified Oracles:} \\
                           Define explicit rules for evaluating security guarantees
-                    \item \textbf{Agnostic \& Deterministic:} \\
+                    \item<3-> \textbf{Agnostic \& Deterministic:} \\
                           Build a reproducible engine, portable across any documented target.
                 \end{itemize}
             \end{block}

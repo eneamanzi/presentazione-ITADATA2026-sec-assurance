@@ -34,40 +34,40 @@
     \frametitle{Experimental Results}
 
     \begin{center}
-        \textbf{Two independent runs}
+        \uncover<1->{
+                \textbf{Two independent runs} \\
+                produced the same outcomes across \textbf{18 active tests in 7 domains}
+            }
 
-        \vspace{0.4em}
 
-        produced the same outcomes across
-        \textbf{18 active tests in 7 domains}
-
-        \vspace{1em}
-
-        {\Large
-            \textbf{\textcolor{green!70!black}{9 PASS}}
-            \hspace{1.5em}
-            \textbf{\textcolor{red}{7 FAIL}}
-            \hspace{1.5em}
-            \textbf{\textcolor{orange}{2 SKIP}}
-            \hspace{1.5em}
-            \textbf{0 ERROR}
-        }
+        \uncover<2->{
+                {\Large
+                    \textbf{\textcolor{green!70!black}{9 PASS}}
+                    \hspace{1.5em}
+                    \textbf{\textcolor{red}{7 FAIL}}
+                    \hspace{1.5em}
+                    \textbf{\textcolor{orange}{2 SKIP}}
+                    \hspace{1.5em}
+                    \textbf{0 ERROR}
+                }
+            }
 
         \vspace{1.5em}
 
-        \begin{beamercolorbox}[sep=0.8em,wd=.9\textwidth]{block body}
-            \centering
-            \textbf{Key result: A Discrepancy Between Contract and Behaviour}
+        \uncover<3->{
+                \begin{beamercolorbox}[sep=0.8em,wd=.9\textwidth]{block body}
+                    \centering
+                    \textbf{Key result: A Discrepancy Between Contract and Behaviour}
 
-            \vspace{0.4em}
+                    \vspace{0.4em}
 
-            Forgejo's OpenAPI specification declares the endpoints as protected,
-            but the service accepts requests to them without credentials.
+                    Forgejo's OpenAPI specification declares the endpoints as protected,
+                    but the service accepts requests to them without credentials.
 
-            \vspace{0.4em}
+                    \vspace{0.4em}
 
-            The specified oracle reports a discrepancy and classifies the behaviour as \textsc{bypassed}.
-        \end{beamercolorbox}
-
+                    The specified oracle reports a discrepancy and classifies the behaviour as \textsc{bypassed}.
+                \end{beamercolorbox}
+            }
     \end{center}
 \end{frame}
