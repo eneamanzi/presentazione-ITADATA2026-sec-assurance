@@ -3,19 +3,30 @@
 \begin{frame}
     \frametitle{Conclusions \& Future Work}
 
+    % Testo precedente:
+    % Conclusions
+    % - Contract-driven assessment verifies security behavior beyond syntactic conformance.
+    % - Specified oracles and the eight-domain taxonomy organize semantic security checks.
+    % - The deterministic engine distinguishes enforced from violated guarantees and supports reproducible continuous verification.
+    % Future Work
+    % - Complete the coverage of the taxonomy and add adapters for managed cloud gateways.
+    % - Develop reliable methods to generate security oracles automatically.
+    % Solo nello speech: i limiti (oracoli manuali, D5 senza test, un solo target), ognuno legato a un future work.
     \textbf{Conclusions}
     \begin{itemize}
-        \item Contract-driven assessment verifies security behavior beyond syntactic conformance.
-        \item Specified oracles and the eight-domain taxonomy organize semantic security checks.
-        \item The deterministic engine distinguishes enforced from violated guarantees and supports reproducible continuous verification.
+        \item Contract-driven security assurance for Big Data APIs, with \alert{specified oracles}
+        \item Verifies security \alert{behavior}, not only syntax
+        \item \alert{Same outcomes} across independent runs $\rightarrow$ ready for CI/CD
+        \item Found a real \alert{contract--behavior discrepancy} on Forgejo
     \end{itemize}
 
-
+    \vspace{.8em}
     \uncover<2->{
             \textbf{Future Work}
             \begin{itemize}
-                \item Complete the coverage of the taxonomy and add adapters for managed cloud gateways.
-                \item Develop reliable methods to generate security oracles automatically.
+                \item \alert{Automatic generation} of security oracles
+                \item Complete the coverage of the taxonomy
+                \item Validation on \alert{other targets}
             \end{itemize}
         }
 

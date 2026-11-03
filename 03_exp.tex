@@ -5,68 +5,88 @@
 \begin{frame}
     \frametitle{Experimental Setup}
 
+    % Colonna destra rinominata (prima: "Target properties"): sono le proprietà che rendono Forgejo
+    % un esempio valido per i servizi Big Data dietro un gateway.
+    % Solo nello speech: Kong DB-less = configurazione read-only, gateway identico a ogni avvio;
+    % esempi di condizioni (broken: rate limiting off, TLS self-signed; enforced: security headers, redirect HTTPS).
     \begin{columns}[T]
         \begin{column}{.5\textwidth}
             \textbf{Target and gateway}
             \begin{itemize}
                 \item \textbf{Forgejo} 14.0.3 -- \textbf{Kong} 3.9 DB-less
-                \item PostgreSQL 15 as the persistence backend
+                \item PostgreSQL 15
+                \item 3 accounts: admin + 2 users
             \end{itemize}
         \end{column}
 
         \begin{column}{.5\textwidth}
-            \textbf{Target properties}
+            \textbf{Interface properties}\\
+            {\footnotesize\textit{shared by Big Data services behind a gateway}}
             \begin{itemize}
-                \item Native OpenAPI specification
-                \item Distinct privilege levels and parameterized endpoints
-                \item Gateway configuration available for white-box checks
+                \item Native \alert{OpenAPI specification}
+                \item Distinct \alert{privilege levels} and parameterized endpoints
+                \item \alert{Gateway configuration} available
             \end{itemize}
         \end{column}
     \end{columns}
 
-    \vfill
+    \vspace{1.2em}
 
-    The testbed combines expected successes, deliberately broken controls, and native target behavior.
+    % Frase precedente: The testbed combines expected successes, deliberately broken controls, and native target behavior.
+    \uncover<2->{
+        \textbf{The testbed combines:}
+        \begin{itemize}
+            \item \textbf{Expected success:} e.g.\ security headers added by the gateway
+            \item \textbf{Deliberately broken:} e.g.\ rate limiting disabled
+            \item \textbf{Native behavior:} other outcomes come from Forgejo and Kong as deployed
+        \end{itemize}
+    }
 
 \end{frame}
 
 \begin{frame}
     \frametitle{Experimental Results}
 
+    % Testo precedente del box:
+    %   Key result: A Discrepancy Between Contract and Behaviour
+    %   Forgejo's OpenAPI specification declares the endpoints as protected, but the service accepts requests to them without credentials.
+    %   The specified oracle reports a discrepancy and classifies the behaviour as BYPASSED.
+    % Solo nello speech: i conteggi misurano la discriminazione, non la sicurezza di Forgejo;
+    % teardown tra le run e SKIP documentati (opzionali).
+    % Il box riprende la riga D1 della slide 7 (spec: endpoint protected -> 2xx without credentials).
     \begin{center}
-        \uncover<1->{
-                \textbf{Two independent runs} \\
-                produced the same outcomes across \textbf{18 active tests in 7 domains}
-            }
+        \textbf{Two independent runs}, same outcomes across \textbf{18 active tests in 7 domains}
 
-
-        \uncover<2->{
-                {\Large
-                    \textbf{\textcolor{green!70!black}{9 PASS}}
-                    \hspace{1.5em}
-                    \textbf{\textcolor{red}{7 FAIL}}
-                    \hspace{1.5em}
-                    \textbf{\textcolor{orange}{2 SKIP}}
-                    \hspace{1.5em}
-                    \textbf{0 ERROR}
-                }
-            }
+        \vspace{.8em}
+        % Numeri lining: con quelli old-style "0 ERROR" sembrava "o ERROR".
+        {\Large\addfontfeatures{Numbers=Lining}
+            \textbf{\textcolor{green!70!black}{9 PASS}}
+            \hspace{1.5em}
+            \textbf{\textcolor{red}{7 FAIL}}
+            \hspace{1.5em}
+            \textbf{\textcolor{orange}{2 SKIP}}
+            \hspace{1.5em}
+            \textbf{0 ERROR}
+        }
 
         \vspace{1.5em}
 
-        \uncover<3->{
+        \uncover<2->{
                 \begin{beamercolorbox}[sep=0.8em,wd=.9\textwidth]{block body}
                     \centering
-                    \textbf{Key result: A Discrepancy Between Contract and Behaviour}
+                    \textbf{Key result: Contract vs.\ Behavior (D1)}
 
-                    \vspace{0.4em}
+                    \vspace{0.5em}
 
-                    Forgejo's OpenAPI specification declares the endpoints as protected,
-                    but the service accepts requests to them without credentials.
+                    \begin{tabular}{r l}
+                        Spec:     & endpoints declared \textbf{protected}       \\
+                        Observed: & \alert{2xx without credentials}             \\
+                        Verdict:  & \textsc{bypassed} (74 findings)             \\
+                    \end{tabular}
 
-                    \vspace{0.4em}
+                    \vspace{0.5em}
 
-                    The specified oracle reports a discrepancy and classifies the behaviour as \textsc{bypassed}.
+                    Public by design: the \alert{contract} is wrong $\rightarrow$ an analyst decides
                 \end{beamercolorbox}
             }
     \end{center}
