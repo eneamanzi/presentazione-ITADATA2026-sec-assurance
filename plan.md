@@ -58,8 +58,13 @@ Si lavora solo nella cartella della presentazione. Si procede slide per slide.
 
 ## Tempi (dopo il primo giro)
 
-Speech ≈ 1.930 parole (senza le parti opzionali) ≈ 15–16 minuti → troppo lungo.
-Obiettivo ≈ 1.450–1.500 parole (~12'). Da tagliare ~450 parole, soprattutto nelle slide 3, 7, 9, 10.
+Obiettivo: 11–11:30 parlando con calma (~110 parole/min) → ~1.250 parole. Non perdere contenuto informativo.
+Prima dei tagli ≈ 1.950 parole (commit 67597df). Dopo i tagli, il controllo con diff sulle perdite e il recupero dei punti 1–5
+(perché dell'oracle problem, NIST, contratto incompleto, perché delle dipendenze, CI/CD nelle conclusioni) e i tagli dei riempitivi
+= **1.335 parole** ≈ 12' a 110 p/min, 11' a 120 p/min. Oltre questo non si taglia senza perdere contenuto.
+Slide 8: i paragrafi sulla riproducibilità e sulle exit code restano nella versione lunga (contenuto informativo).
+Parti "(Optional: …)" nelle slide 8, 9, 10: si dicono solo se avanza tempo.
+Prossimo passo: prova a voce con il timer.
 
 ## Aperti
 
