@@ -1,19 +1,55 @@
 # Speech
 
+## Messaggio mandato a nicola molto bello con esempi pe domande
+
+per rispondere al dubbio generale cosi capisco anche come esporlo.
+
+Il concetto è che gli strumenti attuali fanno principalmente verifiche sintattiche e funzionali, ma nessuno guarda alla semantic/sicurezza di tali richieste
+Ci possono essere richieste sintatticamente perfette (che ad esempio ricevono un 2xx come risposta) che però "semanticamente" non dovrebbero ricevere, si sta manifestando un comportamento errato
+
+Alcuni esempi:
+utente A accede alle risorse di B (Broken Object Level Authorization - BOLA)
+utente A utilizza webhook esterni al suo tenant (SSRF)
+
+oppure più banali, si riceve un 2xx, ma la credenziale che mi ha fornito quel 2xx è expired/revoked/signed-valid? se mando una credenziale non buona come reagisce il servizio? 
+-> in questo caso si verifica il comportamento corretto della revoke e della gestione delle scadenze
+
+rate limiting/circuit breaker/healt-check del gateway entro certe soglie stabilite da standard
+
+
+E dunque gli oracoli con cui valutare ogni test vengono definiti manualmente sulla base della conoscenza del test che si sta sviluppando
+
+Per gli utenti e i permessi, ad esempio, si confrontano tra loro risposte di utenti con privilegi differenti e se è possibile svolgere azioni non permesse
+
+Per le credenziali si confronta il codice http ricevuto con l'esito atteso, provando quindi varie combinazioni (se è scaduto e mi restituisce 2xx è un problema)
+
+Per il gateway si legge la configurazione attuale e la si confronta con soglie configurabili e standard
+
+
+
+gli esperimenti non sono molto significativi
+ho semplicemente dimostrato che quelli che mi aspettavo fallissero (per conf appositamente fatte male) fallivano e gli altri passavano
+In aggiunta ho casualmente notato la divergenza nella documentazione dove un sacco di endpoint sono marcati protetti ma in realtà sono pubblici, quindi di fatto un disallineamento dal contratto
+
+NICOLA
+> Sì, come me l'hai raccontato ora è chiaro, bisogna solo applicarlo al discorso ora  ok anche gli esperimenti, quello che ti direi è: chiarisci che quello è ciò che stai valutando, una sorta di recall diciamo
+> Perché il fatto era proprio che non si capisse quale fosse la metrica che stavi mostrando
+ 
+
 # Speech: Slide 01: Title
 
 Good morning, and thank you for being here.
-Today I will present our work on security assurance for modern Big Data APIs.
+My name is Enea Manzi, and today I will present “Security Assurance for Modern Big Data APIs”, co-authored with Marco Anisetti.
 
 # Speech: Slide 02: Context: Big Data APIs & Security Assurance
 
-Modern Big Data systems are not monolithic: they use pipelines of distributed services, for ingestion, storage, processing, and serving, exposed through REST APIs.
+Modern Big Data systems are not monolithic. They are built from distributed services that handle tasks such as data ingestion, storage, processing, and serving. These services are exposed through REST APIs.
 
-The API is an important trust boundary, because every access to the pipeline and to its data crosses this interface.
+The API is an important trust boundary because every access to the pipeline and its data goes through this interface.
 It is often exposed through an API gateway, which centralizes authentication, authorization, and rate limiting.
 
-Existing assurance work mainly covers the functionalities and the underlying infrastructure, while the interface level is less covered.
-API testing, on the other hand, checks functionality and syntax, not whether the security controls really work.
+Existing assurance work mainly covers functionality and the underlying infrastructure. Security at the interface level is the less covered.
+API testing, on the other hand, checks functionality and syntax; it does not always check whether the security controls really work.
 This creates an assurance gap at the API level.
 
 For example, if authorization is broken, one tenant could read the code of another tenant's pipeline.
@@ -24,23 +60,29 @@ So why is existing API testing not enough? We see three limitations.
 
 First, many tools only check the syntax of requests and responses.
 But a request can be syntactically correct and still violate a security rule.
-For example, an endpoint could answer without credentials, even if the API specification says that it is protected.
-A syntax check does not notice anything: this is syntactic blindness.
+For example, an endpoint could respond without credentials (TODO -> bisogna fare cpaire che le credenziali mancano dalla richiesta), even if the API specification says that it is protected. 
+A syntax check does not detect this. We call this syntactic blindness.
 
-Second, after a test, the tool must decide if the observed behavior is a violation.
-This needs a criterion, and the specification alone cannot always provide it, because it depends on the security control: this is the oracle problem.
+Second, after a test, the tool must decide if/whether the observed behavior is a violation. 
+To do this, it needs a criterion but the specification alone cannot always provide one, because the criterion depends on the security control. 
+This is the oracle problem.
 
-Third, tools are often shallow and flaky.
-Shallow, because tools that work on many APIs stay at the syntactic level.
-Flaky, because they can give different results under the same conditions, which is a problem in a CI/CD process.
+Third, tools are often shallow and flaky. 
+They are shallow because tools that work on many APIs usually stay at the syntactic level. 
+They are flaky because they can give different results under the same conditions, which is a problem in a CI/CD process.
 
-Our objectives follow these limitations: verify the security behavior, define a specified oracle for each guarantee, and build an engine that is portable and reproducible.
+Our objectives follow from these limitations. 
+We want to verify security behavior, define a specified oracle for each guarantee, and build an engine that is portable and reproducible.
 
 # Speech: Slide 04: Our Approach: Overview
 
 We use the OpenAPI contract to build valid requests, and we use specified oracles to judge the security behavior.
 
-The approach has four components: agnostic, contract-driven probing; a taxonomy of eight domains with three access levels; specified oracles; and a deterministic engine.
+The approach has four components.
+The first is agnostic, contract-driven probing. 
+The second is a taxonomy of eight domains with three access levels. 
+The third is specified oracles. 
+The fourth is a deterministic engine.
 
 # Speech: Slide 05: Approach Details: Agnosticism and Contract-Driven
 
@@ -50,7 +92,7 @@ The tool has no code written for a specific target: it reads everything from the
 The configuration file contains all the values that depend on the deployment, such as credentials and path parameters.
 So, to test a different service, we change the configuration, not the code.
 
-The OpenAPI specification defines the attack surface and guides the probes.
+The OpenAPI specification defines the attack surface and guides the tests.
 The tool builds requests that respect the declared types and formats, so they are not rejected by input validation and really reach the application logic.
 
 # Speech: Slide 06: Approach Details: Taxonomy and Privilege-Aware Coverage

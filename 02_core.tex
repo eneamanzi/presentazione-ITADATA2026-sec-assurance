@@ -4,7 +4,7 @@
     \frametitle{Our Approach: Overview}
 
     % Titolo precedente: Our Approach: Contract-Driven API Assurance
-    \textbf{Core Idea:} Derive \alert{valid probes} from OpenAPI contracts and evaluate \alert{security behavior} using specified, deterministic oracles.
+    \textbf{Core Idea:} Derive \alert{valid tests} from OpenAPI contracts and evaluate \alert{security behavior} using specified, deterministic oracles.
 
     % Righe sotto ogni punto (ora solo nello speech):
     % - OpenAPI and configuration drive the assessment.
@@ -14,7 +14,7 @@
     \vspace{1em}
     \begin{itemize}
         \setlength{\itemsep}{0.8em}
-        \item \textbf{Application \alert{Agnosticism} \& \alert{Contract-Driven} Probing}
+        \item \textbf{Application \alert{Agnosticism} \& \alert{Contract-Driven} Testing}
 
         \item \textbf{Eight-Domain \alert{Taxonomy} \& Privilege-Aware Coverage}
 
@@ -31,7 +31,7 @@
 % Come eseguiamo i test in modo affidabile: Motore basato su DAG (risolve G4 - determinismo e CI/CD).
 
 \begin{frame}
-    \frametitle{Approach Details: Agnosticism and Contract-Driven}
+    \frametitle{Our Approach: Agnosticism and Contract-Driven}
     % Testo precedente:
     % - Application Agnosticism: No target-specific code. The target is described at runtime by its OpenAPI specification and configuration.
     % - Configuration as Source of Variation: Deployment-specific values and operational parameters are kept outside the assessment logic.
@@ -40,16 +40,16 @@
     % richieste valide = non scartate dalla validazione dell'input, arrivano alla logica applicativa.
     \begin{itemize}
         \setlength{\itemsep}{0.8em}
-        \item \textbf{Application Agnosticism:} no target-specific code; the target is described by its \alert{OpenAPI spec} and configuration
+        \item \textbf{Application agnosticism:} no target-specific code; the target is described by its \alert{OpenAPI spec} and configuration
 
-        \item \textbf{Configuration as Source of Variation:} all target-specific values live in \alert{one file}
+        \item \textbf{Configuration as source of variation:} all target-specific values live in \alert{one file}
 
-        \item \textbf{Contract-Driven Probing:} the spec defines the \alert{attack surface} and guides the construction of \alert{valid requests}
+        \item \textbf{Contract-driven testing:} the spec defines the \alert{attack surface} and guides the construction of \alert{valid requests}
     \end{itemize}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Approach Details: Taxonomy and Privilege-Aware Coverage}
+    \frametitle{Our Approach: Taxonomy and Privilege-Aware Coverage}
 
     % Testo precedente:
     % - Eight-Domain Taxonomy (D0--D7): Security guarantees are organized into semantically distinct domains.
@@ -59,46 +59,46 @@
     % Solo nello speech, se avanza tempo: catena di precondizioni D0 -> D1 -> D2; D5 senza test attivi.
     \begin{columns}[T]
         \begin{column}{.5\textwidth}
-            \textbf{Eight-Domain Taxonomy}
+            \textbf{8-Domain Taxonomy}
 
             \vspace{.5em}
             % Numeri allineati solo nella colonna ID: Fira Sans usa numeri old-style e "D0" sembrerebbe "Do".
             \renewcommand{\arraystretch}{1.25}
             \begin{tabular}{>{\addfontfeatures{Numbers=Lining}}l l}
                 \toprule
-                \textbf{ID} & \textbf{Domain}                     \\
+                \textbf{ID} & \textbf{Domain}                    \\
                 \midrule
-                D0          & API Discovery                       \\
-                \alert{D1}  & \alert{Identity \& Authentication}  \\
-                \alert{D2}  & \alert{Authorization}               \\
-                D3          & Data Integrity                      \\
-                D4          & Availability \& Resilience          \\
-                D5          & Observability                       \\
-                \alert{D6}  & \alert{Configuration \& Hardening}  \\
-                D7          & Business Logic \& Sensitive Flows   \\
+                D0          & API Discovery                      \\
+                \alert{D1}  & \alert{Identity \& Authentication} \\
+                \alert{D2}  & \alert{Authorization}              \\
+                D3          & Data Integrity                     \\
+                D4          & Availability \& Resilience         \\
+                D5          & Observability                      \\
+                \alert{D6}  & \alert{Configuration \& Hardening} \\
+                D7          & Business Logic \& Sensitive Flows  \\
                 \bottomrule
             \end{tabular}
         \end{column}
 
         \begin{column}{.5\textwidth}
             \uncover<2->{
-                % Cosa serve a ogni livello (solo nello speech): Black = network access only;
-                % Grey = credentials for at least two roles; White = gateway configuration plane.
-                \textbf{Privilege-Aware Box Gradient}
+                    % Cosa serve a ogni livello (solo nello speech): Black = network access only;
+                    % Grey = credentials for at least two roles; White = gateway configuration plane.
+                    \textbf{Privilege-Aware Box Gradient}
 
-                \begin{itemize}
-                    \setlength{\itemsep}{0.8em}
-                    \item \textbf{Black:} \textit{D1: does a protected endpoint refuse requests without credentials?}
-                    \item \textbf{Grey:} \textit{D2: can user A read the resources of user B?}
-                    \item \textbf{White:} \textit{D6: does the gateway enforce the HSTS security header?}
-                \end{itemize}
-            }
+                    \begin{itemize}
+                        \setlength{\itemsep}{0.8em}
+                        \item \textbf{Black:} \textit{D1: does a protected endpoint refuse requests without credentials?}
+                        \item \textbf{Grey:} \textit{D2: can user A read the resources of user B?}
+                        \item \textbf{White:} \textit{D6: does the gateway enforce the HSTS security header?}
+                    \end{itemize}
+                }
         \end{column}
     \end{columns}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Approach Details: Specified Oracles}
+    \frametitle{Our Approach: Specified Oracles}
 
     % Testo precedente:
     % - Semantic Evaluation: Each test evaluates observed behavior against a specific security guarantee.
@@ -119,23 +119,23 @@
 
     \vspace{.8em}
     \uncover<2->{
-        \begin{center}
-            \renewcommand{\arraystretch}{1.3}
-            \begin{tabular}{>{\addfontfeatures{Numbers=Lining}}l l >{\addfontfeatures{Numbers=Lining}}l}
-                \toprule
-                \textbf{Domain}   & \textbf{Criterion from}    & \textbf{Violation}                                  \\
-                \midrule
-                D1 Authentication & spec: endpoint protected   & \alert{2xx without credentials}       \\
-                D2 Authorization  & two roles compared         & \alert{user A reads} user B's resource \\
-                D6 Configuration  & gateway configuration      & HSTS header \alert{missing}           \\
-                \bottomrule
-            \end{tabular}
-        \end{center}
-    }
+            \begin{center}
+                \renewcommand{\arraystretch}{1.3}
+                \begin{tabular}{>{\addfontfeatures{Numbers=Lining}}l l >{\addfontfeatures{Numbers=Lining}}l}
+                    \toprule
+                    \textbf{Domain}   & \textbf{Criterion from}  & \textbf{Violation}                     \\
+                    \midrule
+                    D1 Authentication & spec: endpoint protected & \alert{2xx without credentials}        \\
+                    D2 Authorization  & two roles compared       & \alert{user A reads} user B's resource \\
+                    D6 Configuration  & gateway configuration    & HSTS header \alert{missing}            \\
+                    \bottomrule
+                \end{tabular}
+            \end{center}
+        }
 \end{frame}
 
 \begin{frame}
-    \frametitle{Approach Details: Deterministic Assessment Engine}
+    \frametitle{Our Approach: Deterministic Assessment Engine}
     % Testo precedente:
     % - Dependency-Aware Scheduling: Resolves test dependencies into a deterministic execution order.
     % - Reproducible Assessment: Fixed configuration, ordering, and oracles make relevant results comparable across runs.
@@ -143,10 +143,10 @@
     % Solo nello speech: esempio della revoca del token; 7 fasi (bloccanti / non bloccanti), cicli, tie-break lessicografico.
     \begin{itemize}
         \setlength{\itemsep}{0.8em}
-        \item \textbf{Dependency-Aware Scheduling:} a test runs only after its \alert{prerequisites}
+        \item \textbf{Dependency-aware scheduling:} a test runs only after its \alert{prerequisites}
 
-        \item \textbf{Reproducible Assessment:} fixed configuration, order and oracles $\rightarrow$ \alert{same configuration, same verdict}
+        \item \textbf{Reproducible assessment:} fixed configuration, order and oracles $\rightarrow$ \alert{same configuration, same verdict}
 
-        \item \textbf{Actionable Output:} distinct exit codes separate a \alert{security violation} from an infrastructure error
+        \item \textbf{Actionable output:} distinct exit codes separate a \alert{security violation} from an infrastructure error
     \end{itemize}
 \end{frame}
