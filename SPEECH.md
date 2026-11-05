@@ -97,7 +97,8 @@ The fourth is a deterministic engine.
 ## Speech: Slide 05: Approach Details: Agnosticism and Contract-Driven
 
 The first component combines application agnosticism with contract-driven testing.
-The tool has no code written for a specific target: it reads everything from the OpenAPI specification and a configuration file.
+The tool has no code written for a specific target. 
+Instead, it reads everything from the OpenAPI specification and a configuration file.
 
 The configuration file contains all the values that depend on the deployment, such as credentials and path parameters.
 So, to test a different service, we change the configuration, not the code.
@@ -110,10 +111,10 @@ The tool builds requests that respect the declared types and formats, so they ar
 The second component organizes the security checks into eight domains, from D0 to D7.
 Each domain covers a different type of security guarantee, from API discovery to business logic, and the taxonomy is aligned with the NIST guidelines for APIs.
 
-Not every check needs the same access, so we use a gradient of three levels: black box, grey box, and white box.
-Black-box tests need only network access: for example, in D1 we check whether a protected endpoint refuses requests without credentials.
-Grey-box tests need credentials for at least two roles: in D2 we check whether user A can read the resources of user B.
-White-box tests need access to the gateway configuration: in D6 we check whether the gateway enforces the HSTS header.
+Not every check needs the same level of access, so we use three levels: black box, grey box, and white box.
+- Black-box tests need only network access. For example, in D1 we check whether the service refuses an expired or revoked credential.
+- Grey-box tests need credentials for at least two roles. In D2 we check whether user A can read the resources of user B.
+- White-box tests need access to the gateway configuration. In D4 we check whether the gateway enforces the rate limit.
 
 Each test declares the access level it requires.
 If that access is not available, the test is skipped with an explicit reason, not silently.
@@ -121,15 +122,17 @@ If that access is not available, the test is skipped with an explicit reason, no
 ## Speech: Slide 07: Approach Details: Specified Oracles
 
 The third component addresses the oracle problem.
-A valid request is not enough: the tool must also decide if the behavior respects the security guarantee.
+The tool must decide whether/if the behavior respects the security guarantee.
 
-So every test has its own specified oracle, built in three steps: we identify the guarantee, we define what a violation looks like, and we encode the rule in the test.
+So every test has its own specified oracle, built in three steps: 
+we identify the guarantee, define what a violation looks like, and encode the rule in the test.
 The procedure is always the same; only the source of the rule changes.
 
 Let's go back to our three examples.
-For D1, the rule comes from the specification: if a protected endpoint answers with a 2xx code without credentials, this is a bypass.
-For D2, it comes from comparing two roles: if user A can read a resource of user B, this is a violation.
-For D6, it comes from the gateway configuration: if the HSTS header is missing, this is a violation.
+For D1, the rule comes from the credential rules. If the service accepts an expired or revoked credential, this is a violation.
+(EXTRA: if a protected endpoint answers with a 2xx code without credentials, this is a bypass)
+For D2, it comes from comparing two roles. If user A can read a resource belonging to user B, this is a violation.
+For D4, it comes from the gateway configuration. If the gateway does not enforce the rate limit, this is a violation.
 
 There is also a limit.
 A verdict is only as correct as the contract it is checked against.
@@ -140,66 +143,73 @@ So every difference from the contract is reported with its evidence, and an anal
 
 The fourth component is the deterministic assessment engine.
 Tests can declare dependencies, and the scheduler resolves them before execution.
+
 For example, a test that checks token revocation runs only after the authentication test has produced a valid token.
-In this way, the result depends on the target, and not on the order of the tests.
+In this way, the result depends on the target, and not on the order in which tests run.
 
-Reproducibility comes from three mechanisms.
+Reproducibility comes from three mechanisms. 
 The configuration fixes the operational parameters, the declared dependencies determine the execution order, and the oracles are fixed in advance.
-As a result, the same configuration always gives the same verdict, and the outcomes can be compared across independent runs.
 
-Finally, the engine produces a structured report and distinct exit codes.
+As a result, the same configuration produces the same verdicts, and we can compare the outcomes across independent runs.
+
+Finally, the engine produces a structured report and distinct exit codes. 
 This allows a CI/CD pipeline to react automatically: a security violation goes to the team that owns the service, while an infrastructure problem goes to the team that runs the assessment.
-
-### Optional details, if more time is available:
-The assessment is organized into seven phases.
-The first four phases are blocking: reading the configuration, validating the OpenAPI specification, building the execution context, and scheduling the tests.
-The last three phases are non-blocking: running the tests, cleaning up, and producing the report.
-A failure in one test is recorded as a structured result, while the other tests continue to run.
-The scheduler resolves the dependencies into a topological order before execution starts.
-Dependency cycles are detected before the tests run.
-When several tests are ready at the same time, a lexicographic order resolves the tie deterministically.
 
 ## Speech: Slide 09: Experimental Setup
 
-The evaluation uses Forgejo as the target, behind the Kong API gateway, with three accounts: one administrator and two normal users for the grey-box tests.
-(Optional: Kong runs in DB-less mode, so its configuration is a read-only file and the gateway is the same at every start.)
+The evaluation uses Forgejo as the target, behind the Kong API gateway. 
+We use three accounts: one administrator and two normal users for the grey-box tests.
+
 
 We did not choose Forgejo because it is a Big Data system.
 We chose it because it has the same interface properties as a Big Data service exposed through a gateway.
-A native OpenAPI specification, distinct privilege levels, and a gateway configuration we can inspect: these are exactly the properties our approach relies on.
-(Optional: in a Big Data platform, a service like this could be the repository where pipeline code is stored.)
 
-The testbed mixes three kinds of conditions: some controls are correct on purpose, like the security headers; others are broken on purpose, like rate limiting; and other results come from the native behavior of Forgejo and Kong.
+It has a native OpenAPI specification, distinct privilege levels, and a gateway configuration that we can inspect. 
+These are exactly the properties our approach relies on.
+
+The testbed combines three kinds of conditions.
+- First, some controls are configured correctly, so we expect the tests to pass.
+  - For example, the gateway adds the required security headers. 
+- Second, some controls are deliberately misconfigured, so we expect the tests to fail. 
+  - For example, rate limiting is disabled.
+- Finally, some results depend on the native behavior of Forgejo and Kong.
 
 ## Speech: Slide 10: Experimental Results
 
-The testbed includes controls that are correctly configured, controls that are deliberately broken, and tests that are not applicable.
+Here, we compare the observed results with the expected outcomes.
+A correctly configured control should pass, a deliberately broken control should fail, and a non-applicable test should be skipped.
 
-For these conditions, we know the expected outcome: correctly configured controls should pass, broken controls should fail, and non-applicable tests should be skipped.
-
-The assessment produced 9 PASS, 7 FAIL, 2 SKIP, and 0 ERROR across 18 active tests in 7 domains. 
+The assessment produced 9 PASS, 7 FAIL, 2 SKIP, and 0 ERROR across 18 tests in 7 domains. 
 These outcomes were identical in two independent runs.
 
 This shows that the assessment correctly classified the expected testbed outcomes and that the execution is reproducible. 
 These numbers do not measure the overall security of Forgejo.
 
-The most informative result is our D1 example. 
-Forgejo's specification declares authentication at the document level, so every endpoint is declared as protected. 
-But many endpoints answer with a 2xx code without credentials: the oracle classifies them as bypassed, with 74 findings.
+The most informative result is our D1 example. Forgejo's specification declares authentication at the document level, so every endpoint is declared as protected. 
+However, many endpoints respond with a 2xx code without credentials. 
+The oracle classifies this as a bypass, with 74 findings.
 
-In reality, these endpoints are public by design: it is the contract that does not say so.
-So this is not necessarily a vulnerability, but it is a real misalignment, because clients rely on the contract.
-The tool reports it with its evidence, and an analyst decides if it is intentional or a real problem.
+In reality, these endpoints are public by design. 
+The problem is that the contract does not say so. 
+So this is not necessarily a vulnerability, but it is a real misalignment because clients rely on the contract.
+
+The tool reports the discrepancy together with its evidence, and an analyst decides whether it is intentional or a real problem.
 
 ## Speech: Slide 11: Conclusions & Future Work
 
-To conclude, we proposed a contract-driven approach to the security assurance of Big Data APIs, based on specified oracles.
+To conclude, we proposed a contract-driven approach to security assurance for Big Data APIs, based on specified oracles.
 
-The evaluation showed three things: the approach verifies security behavior, not only syntax; independent runs give the same outcomes, so it fits a CI/CD pipeline; and it found a real discrepancy between contract and behavior.
+The evaluation showed three things. 
+First, the approach verifies security behavior, not only syntax. 
+Second, independent runs produce the same outcomes, so the approach can support CI/CD pipelines. 
+Third, it found a real discrepancy between the contract and the observed behavior.
 
-Our future work follows the current limits: the oracles are written by hand, so we want to generate them automatically; we want to complete the taxonomy; and we want to validate the approach on other Big Data services.
+Our future work follows from the current limits. 
+The oracles are written by hand, so we want to generate them automatically. 
+We also want to complete the taxonomy and validate the approach on other Big Data services.
 
-The API is where the pipelines and the data are exposed: we want its security to be something we verify, not something we assume.
+**An API is where pipelines and data are exposed. 
+We want its security to be something we verify, not something we assume.**
 
 ## Speech: Slide 12: Thanks
 

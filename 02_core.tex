@@ -55,7 +55,7 @@
     % - Eight-Domain Taxonomy (D0--D7): Security guarantees are organized into semantically distinct domains.
     % - Privilege-Aware Coverage: Each test declares the access level it requires:
     %   BLACK_BOX: Network access only. / GREY_BOX: Credentials for distinct roles. / WHITE_BOX: Access to the gateway configuration plane.
-    % D1, D2, D6 evidenziati: tornano come esempi di oracolo (slide 7) e nei risultati.
+    % D1, D2, D4 evidenziati: tornano come esempi di oracolo (slide 7) e nei risultati.
     % Solo nello speech, se avanza tempo: catena di precondizioni D0 -> D1 -> D2; D5 senza test attivi.
     \begin{columns}[T]
         \begin{column}{.5\textwidth}
@@ -72,9 +72,9 @@
                 \alert{D1}  & \alert{Identity \& Authentication} \\
                 \alert{D2}  & \alert{Authorization}              \\
                 D3          & Data Integrity                     \\
-                D4          & Availability \& Resilience         \\
+                \alert{D4}  & \alert{Availability \& Resilience} \\
                 D5          & Observability                      \\
-                \alert{D6}  & \alert{Configuration \& Hardening} \\
+                D6          & Configuration \& Hardening         \\
                 D7          & Business Logic \& Sensitive Flows  \\
                 \bottomrule
             \end{tabular}
@@ -88,9 +88,9 @@
 
                     \begin{itemize}
                         \setlength{\itemsep}{0.8em}
-                        \item \textbf{Black:} \textit{D1: does a protected endpoint refuse requests without credentials?}
+                        \item \textbf{Black:} \textit{D1: does the service reject an expired or revoked credential?}
                         \item \textbf{Grey:} \textit{D2: can user A read the resources of user B?}
-                        \item \textbf{White:} \textit{D6: does the gateway enforce the HSTS security header?}
+                        \item \textbf{White:} \textit{D4: does the gateway enforce the rate limit?}
                     \end{itemize}
                 }
         \end{column}
@@ -105,7 +105,7 @@
     % - 3-Step Oracle Construction: Identify the guarantee under verification. / Define what a violation looks like. / Encode the resulting evaluation rule.
     % - Epistemic Limit: Verdicts are only as sound as the contract they are checked against.
     % Solo nello speech: limite epistemico + la divergenza viene sempre segnalata, la gravità la decide un analista.
-    % Esempi dalla Tabella 3 del paper, stessi domini della slide 6 (D1 black, D2 grey, D6 white).
+    % Esempi dalla Tabella 3 del paper, stessi domini della slide 6 (D1 black, D2 grey, D4 white).
     Every test has its own \alert{specified oracle}, built in three steps:
 
     \vspace{.6em}
@@ -123,11 +123,11 @@
                 \renewcommand{\arraystretch}{1.3}
                 \begin{tabular}{>{\addfontfeatures{Numbers=Lining}}l l >{\addfontfeatures{Numbers=Lining}}l}
                     \toprule
-                    \textbf{Domain}   & \textbf{Criterion from}  & \textbf{Violation}                     \\
+                    \textbf{Domain}   & \textbf{Criterion from} & \textbf{Violation}                             \\
                     \midrule
-                    D1 Authentication & spec: endpoint protected & \alert{2xx without credentials}        \\
-                    D2 Authorization  & two roles compared       & \alert{user A reads} user B's resource \\
-                    D6 Configuration  & gateway configuration    & HSTS header \alert{missing}            \\
+                    D1 Authentication & credential rules        & \alert{expired or revoked} credential accepted \\
+                    D2 Authorization  & two roles compared      & user \alert{A reads user B}'s resource         \\
+                    D4 Availability   & gateway configuration   & \alert{rate limit} not enforced                \\
                     \bottomrule
                 \end{tabular}
             \end{center}
