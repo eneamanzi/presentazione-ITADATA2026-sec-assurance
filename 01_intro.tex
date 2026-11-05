@@ -11,17 +11,27 @@
     % Esempi solo nello speech: tenant che legge la pipeline di un altro tenant (BOLA);
     % endpoint dichiarato protetto che risponde senza credenziali (anticipa il risultato chiave).
     \begin{itemize}
-        \item \textbf{Big Data Ecosystem:} pipelines of distributed services behind \alert{REST APIs}
+        \item \textbf{Big Data Ecosystem:} distributed services exposed through \alert{APIs} and protected by API \alert{gateways}
               \pause
 
-        \item \textbf{Trust Boundary:} API Gateways centralize main security controls
+        \item \textbf{Trust Boundary:} APIs and gateways control access to pipelines, data, and services
               \pause
 
-        \item \textbf{Assurance Gap:} infrastructure and functional checks miss \alert{API security semantics}
-              \pause
-
-        \item \textbf{Consequence:} an API-level weakness can expose the \alert{pipelines and data} behind the interface
+        \item \textbf{Assurance Gap:} syntactic and functional checks do not prove the expected \alert{security behavior}
     \end{itemize}
+
+    \vspace{0.4em}
+    \begin{center}
+        \textbf{Examples of \alert{behavior} violations}
+
+        \vspace{0.4em}
+        \begin{tabular}{rcl}
+            User A requests User B's resource
+             & $\rightarrow$ & unauthorized access \\[0.4em]
+            Expired or revoked credential
+             & $\rightarrow$ & request accepted
+        \end{tabular}
+    \end{center}
 
 \end{frame}
 

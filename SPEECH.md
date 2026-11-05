@@ -34,7 +34,20 @@ In aggiunta ho casualmente notato la divergenza nella documentazione dove un sac
 NICOLA
 > Sì, come me l'hai raccontato ora è chiaro, bisogna solo applicarlo al discorso ora  ok anche gli esperimenti, quello che ti direi è: chiarisci che quello è ciò che stai valutando, una sorta di recall diciamo
 > Perché il fatto era proprio che non si capisse quale fosse la metrica che stavi mostrando
- 
+
+
+DISTRIBUZIONE ESEMPI
+ Context:
+  A/B + expired/revoked credential
+
+State of the Art:
+  request without credentials → syntactically valid, security violation
+
+Speech/context transition:
+  rate limiting at gateway
+
+Specified Oracles:
+  A/B, credentials, rate limiting, SSRF as examples of different rules
 
 # Speech: Slide 01: Title
 
@@ -43,16 +56,19 @@ My name is Enea Manzi, and today I will present “Security Assurance for Modern
 
 # Speech: Slide 02: Context: Big Data APIs & Security Assurance
 
-Modern Big Data systems are not monolithic. They are built from distributed services that handle tasks such as data ingestion, storage, processing, and serving. These services are exposed through REST APIs.
+Modern Big Data systems are built from distributed services that handle tasks such as data ingestion, storage, processing, and serving. 
+These services are exposed through APIs and are often protected by an API gateway, which centralizes security controls.
 
-The API is an important trust boundary because every access to the pipeline and its data goes through this interface.
-It is often exposed through an API gateway, which centralizes authentication, authorization, and rate limiting.
+APIs and gateways form an important trust boundary because they control access to the pipelines, the data, and the services behind them.
 
-Existing assurance work mainly covers functionality and the underlying infrastructure. Security at the interface level is the less covered.
-API testing, on the other hand, checks functionality and syntax; it does not always check whether the security controls really work.
-This creates an assurance gap at the API level.
+However, existing assurance activities mainly check infrastructure, functionality, and the syntax of requests and responses. 
+**A request can be syntactically and functionally valid without respecting the expected security behavior of the API or the gateway.** (check security controls behave as expected)
 
-For example, if authorization is broken, one tenant could read the code of another tenant's pipeline.
+For example, user A may request a resource belonging to user B.
+The request can be valid, but access should still be denied.
+Similarly, an expired or revoked credential can be well formed, but the service should not accept it.
+The same issue can also appear at the gateway level. 
+For example, the gateway may receive valid requests but fail to enforce a rate limit.
 
 # Speech: Slide 03: State of the Art Limitations and Objectives
 
