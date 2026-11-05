@@ -34,13 +34,13 @@
 
     % Frase precedente: The testbed combines expected successes, deliberately broken controls, and native target behavior.
     \uncover<2->{
-        \textbf{The testbed combines:}
-        \begin{itemize}
-            \item \textbf{Expected success:} e.g.\ security headers added by the gateway
-            \item \textbf{Deliberately broken:} e.g.\ rate limiting disabled
-            \item \textbf{Native behavior:} other outcomes come from Forgejo and Kong as deployed
-        \end{itemize}
-    }
+            \textbf{The testbed combines:}
+            \begin{itemize}
+                \item \textbf{Expected success:} e.g.\ security headers added by the gateway
+                \item \textbf{Deliberately broken:} e.g.\ rate limiting disabled
+                \item \textbf{Native behavior:} other outcomes come from Forgejo and Kong as deployed
+            \end{itemize}
+        }
 
 \end{frame}
 
@@ -55,19 +55,22 @@
     % teardown tra le run e SKIP documentati (opzionali).
     % Il box riprende la riga D1 della slide 7 (spec: endpoint protected -> 2xx without credentials).
     \begin{center}
-        \textbf{Two independent runs}, same outcomes across \textbf{18 active tests in 7 domains}
+        \textbf{Expected testbed outcomes correctly classified}
 
-        \vspace{.8em}
-        % Numeri lining: con quelli old-style "0 ERROR" sembrava "o ERROR".
-        {\Large\addfontfeatures{Numbers=Lining}
-            \textbf{\textcolor{green!70!black}{9 PASS}}
-            \hspace{1.5em}
-            \textbf{\textcolor{red}{7 FAIL}}
-            \hspace{1.5em}
-            \textbf{\textcolor{orange}{2 SKIP}}
-            \hspace{1.5em}
-            \textbf{0 ERROR}
+        \vspace{.35em}
+        {\addfontfeatures{Numbers=Lining}
+            9 \textcolor{green!70!black}{PASS}
+            \quad\textbullet\quad
+            7 \textcolor{red}{FAIL}
+            \quad\textbullet\quad
+            2 \textcolor{orange}{SKIP}
+            \quad\textbullet\quad
+            0 ERROR
         }
+
+        \vspace{.35em}
+        18 active tests in 7 domains \quad $\mid$ \quad
+        2 independent runs \quad $\mid$ \quad identical outcomes
 
         \vspace{1.5em}
 
@@ -79,9 +82,9 @@
                     \vspace{0.5em}
 
                     \begin{tabular}{r l}
-                        Spec:     & endpoints declared \textbf{protected}       \\
-                        Observed: & \alert{2xx without credentials}             \\
-                        Verdict:  & \textsc{bypassed} (74 findings)             \\
+                        Spec:     & endpoints declared \textbf{protected} \\
+                        Observed: & \alert{2xx without credentials}       \\
+                        Verdict:  & \textsc{bypassed} (74 findings)       \\
                     \end{tabular}
 
                     \vspace{0.5em}

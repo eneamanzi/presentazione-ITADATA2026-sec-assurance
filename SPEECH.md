@@ -74,13 +74,16 @@ For example, the gateway may receive valid requests but fail to enforce a rate l
 
 So why is existing API testing not enough? We see three limitations.
 
-First, many tools only check the syntax of requests and responses.
-But a request can be syntactically correct and still violate a security rule.
-For example, an endpoint could respond without credentials (TODO -> bisogna fare cpaire che le credenziali mancano dalla richiesta), even if the API specification says that it is protected. 
-A syntax check does not detect this. We call this syntactic blindness.
+First, many tools check whether requests and responses are syntactically valid and whether the functional interaction succeeds. 
+But this does not prove that the security behavior is correct. (it can still violate a security rule.)
 
-Second, after a test, the tool must decide if/whether the observed behavior is a violation. 
-To do this, it needs a criterion but the specification alone cannot always provide one, because the criterion depends on the security control. 
+For example, a request without credentials can still be a valid HTTP request, and the response can still be well formed. 
+However, if the endpoint is protected, a successful response is a security violation.
+
+This is what we mean by syntactic blindness: the request and the response may look correct, while the observed behavior violates a security rule.
+
+Second, after a test, the tool must decide if the observed behavior matches the expected one or represents a violation.
+To make this decision, the tool needs an explicit criterion based on the expected behavior of the security control being tested.
 This is the oracle problem.
 
 Third, tools are often shallow and flaky. 
