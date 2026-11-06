@@ -121,79 +121,65 @@ If that access is not available, the test is skipped with an explicit reason, no
 
 ## Speech: Slide 07: Approach Details: Specified Oracles
 
-The third component addresses the oracle problem.
-The tool must decide whether/if the behavior respects the security guarantee.
+The tool must judge whether the behavior respects the security guarantee.
+Every test has its own specified oracle, built in three steps:
+*we identify the guarantee, define what a violation looks like, and encode the rule in the test.*
+The procedure is the same, but the source of the rule can change.
 
-So every test has its own specified oracle, built in three steps: 
-we identify the guarantee, define what a violation looks like, and encode the rule in the test.
-The procedure is always the same; only the source of the rule changes.
-
-Let's go back to our three examples.
-For D1, the rule comes from the credential rules. If the service accepts an expired or revoked credential, this is a violation.
-(EXTRA: if a protected endpoint answers with a 2xx code without credentials, this is a bypass)
-For D2, it comes from comparing two roles. If user A can read a resource belonging to user B, this is a violation.
-For D4, it comes from the gateway configuration. If the gateway does not enforce the rate limit, this is a violation.
+Here are the oracles for the three examples presented earlier.
+For Authentication, accepting an expired or revoked credential is a violation.
+For Authorization, if user A can read a resource belonging to user B, this is a violation. We detect it by comparing the two roles.
+For Availability, if the gateway does not enforce the rate limit, this is a violation detected through the gateway configuration.
 
 There is also a limit.
 A verdict is only as correct as the contract it is checked against.
 If the specification is incomplete or wrong, the tool can reach a wrong conclusion.
-So every difference from the contract is reported with its evidence, and an analyst decides how serious it is.
 
 ## Speech: Slide 08: Approach Details: Deterministic Assessment Engine
 
-The fourth component is the deterministic assessment engine.
-Tests can declare dependencies, and the scheduler resolves them before execution.
+(The fourth component is the deterministic assessment engine.)
 
-For example, a test that checks token revocation runs only after the authentication test has produced a valid token.
-In this way, the result depends on the target, and not on the order in which tests run.
+So tests can declare prerequisites, and the scheduler uses them to fix the execution order.
 
-Reproducibility comes from three mechanisms. 
-The configuration fixes the operational parameters, the declared dependencies determine the execution order, and the oracles are fixed in advance.
+For example, before checking authorization, we first check/verify that both users can authenticate.
+Otherwise, a failure could be caused by authentication problems rather than by broken authorization. 
+(could be an authentication problems instead of a broken authorization)
 
-As a result, the same configuration produces the same verdicts, and we can compare the outcomes across independent runs.
+With the execution order fixed, the *configuration is the only source of variation* in the assessment.
+This makes the assessment reproducible: with the same target and configuration, independent runs should produce the same results.
 
-Finally, the engine produces a structured report and distinct exit codes. 
-This allows a CI/CD pipeline to react automatically: a security violation goes to the team that owns the service, while an infrastructure problem goes to the team that runs the assessment.
+Finally, the engine produces a structured report and distinct semantic exit codes.
+This allows a CI/CD pipeline to react automatically to the assessment result.
 
 ## Speech: Slide 09: Experimental Setup
 
 The evaluation uses Forgejo as the target, behind the Kong API gateway. 
-We use three accounts: one administrator and two normal users for the grey-box tests.
-
 
 We did not choose Forgejo because it is a Big Data system.
-We chose it because it has the same interface properties as a Big Data service exposed through a gateway.
+We chose it because it has the interface properties our approach targets, which are also common in Big Data services exposed through a gateway.
+It provides a native OpenAPI specification, distinct privilege levels, and a gateway configuration that we can inspect.
 
-It has a native OpenAPI specification, distinct privilege levels, and a gateway configuration that we can inspect. 
-These are exactly the properties our approach relies on.
-
-The testbed combines three kinds of conditions.
-- First, some controls are configured correctly, so we expect the tests to pass.
-  - For example, the gateway adds the required security headers. 
-- Second, some controls are deliberately misconfigured, so we expect the tests to fail. 
-  - For example, rate limiting is disabled.
+The testbed combines three kinds of cases.
+- First, some controls are correctly configured and should pass. For example, the gateway adds the required security headers.
+- Second, some controls are intentionally misconfigured and should fail. For example, rate limiting is disabled.
 - Finally, some results depend on the native behavior of Forgejo and Kong.
 
 ## Speech: Slide 10: Experimental Results
 
-Here, we compare the observed results with the expected outcomes.
-A correctly configured control should pass, a deliberately broken control should fail, and a non-applicable test should be skipped.
+The assessment compares the observed results with the expected outcomes defined by the testbed.
+This shows if the test correctly identifies each condition or reports a discrepancy.
 
-The assessment produced 9 PASS, 7 FAIL, 2 SKIP, and 0 ERROR across 18 tests in 7 domains. 
-These outcomes were identical in two independent runs.
+Two independent runs produced identical outcomes, and the tests classified the testbed conditions as expected.
+These counts measure the tool’s ability to distinguish the expected outcomes, not Forgejo’s overall security.
 
-This shows that the assessment correctly classified the expected testbed outcomes and that the execution is reproducible. 
-These numbers do not measure the overall security of Forgejo.
+The most informative result is the D1 example.
+Forgejo's specification declares authentication at the document level, so every endpoint is marked as protected.
+However, many endpoints respond with a 2xx code without credentials and the oracle reports this as a bypass.
 
-The most informative result is our D1 example. Forgejo's specification declares authentication at the document level, so every endpoint is declared as protected. 
-However, many endpoints respond with a 2xx code without credentials. 
-The oracle classifies this as a bypass, with 74 findings.
+In reality these endpoints are public by design, but **the contract does not say so.**
+This is not necessarily a vulnerability, but it is a **real misalignment** because clients rely on the contract.
 
-In reality, these endpoints are public by design. 
-The problem is that the contract does not say so. 
-So this is not necessarily a vulnerability, but it is a real misalignment because clients rely on the contract.
-
-The tool reports the discrepancy together with its evidence, and an analyst decides whether it is intentional or a real problem.
+The tool reports the discrepancies, and then it is up to an analyst to judge their severity and exploitability.
 
 ## Speech: Slide 11: Conclusions & Future Work
 
@@ -205,8 +191,8 @@ Second, independent runs produce the same outcomes, so the approach can support 
 Third, it found a real discrepancy between the contract and the observed behavior.
 
 Our future work follows from the current limits. 
-The oracles are written by hand, so we want to generate them automatically. 
-We also want to complete the taxonomy and validate the approach on other Big Data services.
+The oracles are written by hand, so we want to generate them automatically and ...
+...we also want to validate the approach on other Big Data services.
 
 **An API is where pipelines and data are exposed. 
 We want its security to be something we verify, not something we assume.**
