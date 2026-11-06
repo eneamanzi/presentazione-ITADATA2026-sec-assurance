@@ -38,7 +38,7 @@ State of the Art:
   request without credentials → syntactically valid, security violation
 
 Specified Oracles:
-  A/B, credentials, rate limiting, SSRF as examples of different rules
+  A/B, credentials, rate limiting
 
 ## Speech: Slide 01: Title
 
@@ -63,26 +63,23 @@ For example, the gateway may receive valid requests but fail to enforce a rate l
 
 ## Speech: Slide 03: State of the Art Limitations and Objectives
 
-So why is existing API testing not enough? We see three limitations.
+So why is existing API testing not enough?
 
-First, many tools check whether requests and responses are syntactically valid and whether the functional interaction succeeds. 
-But this does not prove that the security behavior is correct. (it can still violate a security rule.)
+First, many tools check whether requests and responses are syntactically and functionally valid.
+But this does not prove that the security behavior is correct.
 
-For example, a request without credentials can still be a valid HTTP request, and the response can still be well formed. 
-However, if the endpoint is protected, a successful response is a security violation.
+For example, a request without credentials can still be a valid HTTP request, and the response can still be well formed (syntactically correct). 
+However, if the endpoint is protected, a successful response is a security violation (violate the secuity behavior).
+This is the **syntactic blindness** and our first objective is therefore to verify security behavior.
 
-This is what we mean by syntactic blindness: the request and the response may look correct, while the observed behavior violates a security rule.
+Second, the tool has to judge if the observed behavior violates a security rule or matches the expected behavior.
+To make this decision, the tool needs an explicit criterion based on the security control being tested.
+Our second objective is to define a specified oracle for each guarantee.
 
-Second, after a test, the tool must decide if the observed behavior matches the expected one or represents a violation.
-To make this decision, the tool needs an explicit criterion based on the expected behavior of the security control being tested.
-This is the oracle problem.
-
-Third, tools are often shallow and flaky. 
-They are shallow because tools that work on many APIs usually stay at the syntactic level. 
+Third, tools are often shallow and flaky.
+They are shallow because tools that work on many APIs usually stay at the syntactic level.
 They are flaky because they can give different results under the same conditions, which is a problem in a CI/CD process.
-
-Our objectives follow from these limitations. 
-We want to verify security behavior, define a specified oracle for each guarantee, and build an engine that is portable and reproducible.
+Our third objective is therefore to build an engine that is agnostic and deterministic.
 
 ## Speech: Slide 04: Our Approach: Overview
 
@@ -104,7 +101,7 @@ The configuration file contains all the values that depend on the deployment, su
 So, to test a different service, we change the configuration, not the code.
 
 The OpenAPI specification defines the attack surface and guides the tests.
-The tool builds requests that respect the declared types and formats, so they are not rejected by input validation and really reach the application logic.
+The tool builds requests that respect the declared types and formats, so they pass input validation and reach the application logic.
 
 ## Speech: Slide 06: Approach Details: Taxonomy and Privilege-Aware Coverage
 
@@ -117,7 +114,7 @@ Not every check needs the same level of access, so we use three levels: black bo
 - White-box tests need access to the gateway configuration. In D4 we check whether the gateway enforces the rate limit.
 
 Each test declares the access level it requires.
-If that access is not available, the test is skipped with an explicit reason, not silently.
+If the required access is unavailable, the test is skipped with an explicit reason.
 
 ## Speech: Slide 07: Approach Details: Specified Oracles
 
@@ -146,7 +143,8 @@ Otherwise, a failure could be caused by authentication problems rather than by b
 (could be an authentication problems instead of a broken authorization)
 
 With the execution order fixed, the *configuration is the only source of variation* in the assessment.
-This makes the assessment reproducible: with the same target and configuration, independent runs should produce the same results.
+So, if we use the same target and configuration, independent runs should produce the same results. 
+This makes the assessment reproducible.
 
 Finally, the engine produces a structured report and distinct semantic exit codes.
 This allows a CI/CD pipeline to react automatically to the assessment result.
@@ -166,13 +164,12 @@ The testbed combines three kinds of cases.
 
 ## Speech: Slide 10: Experimental Results
 
-The assessment compares the observed results with the expected outcomes defined by the testbed.
-This shows if the test correctly identifies each condition or reports a discrepancy.
+The assessment compares the observed results with the expected outcomes defined by the testbed and reports any discrepancy.
 
 Two independent runs produced identical outcomes, and the tests classified the testbed conditions as expected.
 These counts measure the tool’s ability to distinguish the expected outcomes, not Forgejo’s overall security.
 
-The most informative result is the D1 example.
+D1 provides the most informative result.
 Forgejo's specification declares authentication at the document level, so every endpoint is marked as protected.
 However, many endpoints respond with a 2xx code without credentials and the oracle reports this as a bypass.
 
@@ -187,14 +184,13 @@ To conclude, we proposed a contract-driven approach to security assurance for Bi
 
 The evaluation showed three things. 
 First, the approach verifies security behavior, not only syntax. 
-Second, independent runs produce the same outcomes, so the approach can support CI/CD pipelines. 
+Second, independent runs are deterministic, so the approach can support CI/CD pipelines. 
 Third, it found a real discrepancy between the contract and the observed behavior.
 
 Our future work follows from the current limits. 
-The oracles are written by hand, so we want to generate them automatically and ...
-...we also want to validate the approach on other Big Data services.
+The oracles are written by hand, so we want to generate them automatically and we also want to validate the approach on other Big Data services.
 
-**An API is where pipelines and data are exposed. 
+**In conclusion, an API is where pipelines and data are exposed. 
 We want its security to be something we verify, not something we assume.**
 
 ## Speech: Slide 12: Thanks

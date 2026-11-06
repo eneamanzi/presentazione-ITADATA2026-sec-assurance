@@ -5,10 +5,6 @@
 \begin{frame}
     \frametitle{Experimental Setup}
 
-    % Colonna destra rinominata (prima: "Target properties"): sono le proprietà che rendono Forgejo
-    % un esempio valido per i servizi Big Data dietro un gateway.
-    % Solo nello speech: Kong DB-less = configurazione read-only, gateway identico a ogni avvio;
-    % esempi di condizioni (broken: rate limiting off, TLS self-signed; enforced: security headers, redirect HTTPS).
     \begin{columns}[T]
         \begin{column}{.5\textwidth}
             \textbf{Target and gateway}
@@ -31,7 +27,6 @@
 
     \vspace{1.2em}
 
-    % Frase precedente: The testbed combines expected successes, deliberately broken controls, and native target behavior.
     \uncover<2->{
             \textbf{The testbed combines:}
             \begin{itemize}
@@ -46,13 +41,6 @@
 \begin{frame}
     \frametitle{Experimental Results}
 
-    % Testo precedente del box:
-    %   Key result: A Discrepancy Between Contract and Behaviour
-    %   Forgejo's OpenAPI specification declares the endpoints as protected, but the service accepts requests to them without credentials.
-    %   The specified oracle reports a discrepancy and classifies the behaviour as BYPASSED.
-    % Solo nello speech: i conteggi misurano la discriminazione, non la sicurezza di Forgejo;
-    % teardown tra le run e SKIP documentati (opzionali).
-    % Il box riprende la riga D1 della slide 7 (spec: endpoint protected -> 2xx without credentials).
     \begin{center}
         \textbf{Expected testbed outcomes correctly classified}
 

@@ -3,7 +3,6 @@
 \begin{frame}
     \frametitle{Our Approach: Overview}
 
-    % Titolo precedente: Our Approach: Contract-Driven API Assurance
     \textbf{Core Idea:} Derive \alert{valid tests} from OpenAPI contracts and evaluate \alert{security behavior} using specified, deterministic oracles.
 
     % Righe sotto ogni punto (ora solo nello speech):
@@ -16,7 +15,7 @@
         \setlength{\itemsep}{0.8em}
         \item \textbf{Application \alert{Agnosticism} \& \alert{Contract-Driven} Testing}
 
-        \item \textbf{Eight-Domain \alert{Taxonomy} \& Privilege-Aware Coverage}
+        \item \textbf{8-Domain \alert{Taxonomy} \& Privilege-Aware Coverage}
 
         \item \textbf{\alert{Specified Oracles} for Security Guarantees}
 
@@ -32,12 +31,6 @@
 
 \begin{frame}
     \frametitle{Our Approach: Agnosticism and Contract-Driven}
-    % Testo precedente:
-    % - Application Agnosticism: No target-specific code. The target is described at runtime by its OpenAPI specification and configuration.
-    % - Configuration as Source of Variation: Deployment-specific values and operational parameters are kept outside the assessment logic.
-    % - Contract-Driven Probing: The specification defines the documented attack surface and guides the construction of valid requests.
-    % Solo nello speech: esempi di valori di configurazione (path, credenziali per ruolo, soglie);
-    % richieste valide = non scartate dalla validazione dell'input, arrivano alla logica applicativa.
     \begin{itemize}
         \setlength{\itemsep}{0.8em}
         \item \textbf{Application agnosticism:} no target-specific code; the target is described by its \alert{OpenAPI spec} and configuration
@@ -50,13 +43,6 @@
 
 \begin{frame}
     \frametitle{Our Approach: Taxonomy and Privilege-Aware Coverage}
-
-    % Testo precedente:
-    % - Eight-Domain Taxonomy (D0--D7): Security guarantees are organized into semantically distinct domains.
-    % - Privilege-Aware Coverage: Each test declares the access level it requires:
-    %   BLACK_BOX: Network access only. / GREY_BOX: Credentials for distinct roles. / WHITE_BOX: Access to the gateway configuration plane.
-    % D1, D2, D4 evidenziati: tornano come esempi di oracolo (slide 7) e nei risultati.
-    % Solo nello speech, se avanza tempo: catena di precondizioni D0 -> D1 -> D2; D5 senza test attivi.
     \begin{columns}[T]
         \begin{column}{.5\textwidth}
             \textbf{8-Domain Taxonomy}
@@ -100,12 +86,6 @@
 \begin{frame}
     \frametitle{Our Approach: Specified Oracles}
 
-    % Testo precedente:
-    % - Semantic Evaluation: Each test evaluates observed behavior against a specific security guarantee.
-    % - 3-Step Oracle Construction: Identify the guarantee under verification. / Define what a violation looks like. / Encode the resulting evaluation rule.
-    % - Epistemic Limit: Verdicts are only as sound as the contract they are checked against.
-    % Solo nello speech: limite epistemico + la divergenza viene sempre segnalata, la gravità la decide un analista.
-    % Esempi dalla Tabella 3 del paper, stessi domini della slide 6 (D1 black, D2 grey, D4 white).
     Every test has its own \alert{specified oracle}, built in three steps:
 
     \vspace{.6em}
@@ -136,11 +116,7 @@
 
 \begin{frame}
     \frametitle{Our Approach: Deterministic Assessment Engine}
-    % Testo precedente:
-    % - Dependency-Aware Scheduling: Resolves test dependencies into a deterministic execution order.
-    % - Reproducible Assessment: Fixed configuration, ordering, and oracles make relevant results comparable across runs.
-    % - Actionable Output: Structured results and semantic exit codes support automated CI/CD decisions.
-    % Solo nello speech: esempio della revoca del token; 7 fasi (bloccanti / non bloccanti), cicli, tie-break lessicografico.
+
     \begin{itemize}
         \setlength{\itemsep}{0.8em}
         \item \textbf{Dependency-aware scheduling:} a test runs only after its \alert{prerequisites}

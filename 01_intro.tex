@@ -5,11 +5,6 @@
     \frametitle{Context: Big Data APIs \& Security Assurance}
 
     % Goal della slide: Stabilire il contesto (Big Data API) e far capire subito dove si colloca il problema.
-    % Testo precedente (spostato nello speech):
-    % - Big Data Ecosystem: distributed services organized into pipelines and exposed through REST APIs
-    % - Assurance Gap: infrastructure and functional testing leave API security semantics largely unchecked
-    % Esempi solo nello speech: tenant che legge la pipeline di un altro tenant (BOLA);
-    % endpoint dichiarato protetto che risponde senza credenziali (anticipa il risultato chiave).
     \begin{itemize}
         \item \textbf{Big Data Ecosystem:} distributed services exposed through \alert{APIs} and protected by API \alert{gateways}
               \pause
@@ -39,13 +34,6 @@
     \frametitle{State of the Art Limitations and Objectives}
 
     % Gap del paper: G1 = riga 1, G2 = riga 2, G3 (portabilità vs profondità) + G4 (flakiness) = riga 3.
-    % Testo precedente:
-    % - Syntactic Blindness: Checks request/response syntax, but not security semantics
-    % - The Oracle Problem: No automated criterion to evaluate security guarantees
-    % - Unreliable Execution: Flaky results make continuous CI/CD integration unreliable
-    % - Semantic Verification: Verify security behavior beyond request/response syntax
-    % - Specified Oracles: Define explicit rules for evaluating security guarantees
-    % - Agnostic & Deterministic: Build a reproducible engine, portable across any documented target
     \begin{columns}[T]
         \begin{column}{.5\textwidth}
             \begin{block}{State of the Art Limitations}
