@@ -42,7 +42,7 @@ Specified Oracles:
 
 ## Speech: Slide 01: Title
 
-Good morning, and thank you for being here.
+Good afternoon, and thank you for being here.
 My name is Enea Manzi, and today I will present “Security Assurance for Modern Big Data APIs”, co-authored with Marco Anisetti.
 
 ## Speech: Slide 02: Context: Big Data APIs & Security Assurance
@@ -52,7 +52,7 @@ These services are exposed through APIs and are often protected by an API gatewa
 
 APIs and gateways form an important trust boundary because they control access to the pipelines, the data, and the services behind them.
 
-However, existing assurance activities mainly check infrastructure, functionality, and the syntax of requests and responses. 
+However, existing assurance activities mainly check functionality and the syntax of requests and responses. 
 **A request can be syntactically and functionally valid without respecting the expected security behavior of the API or the gateway.** (check security controls behave as expected)
 
 For example, user A may request a resource belonging to user B.
@@ -118,7 +118,7 @@ If the required access is unavailable, the test is skipped with an explicit reas
 
 ## Speech: Slide 07: Approach Details: Specified Oracles
 
-The tool must judge whether the behavior respects the security guarantee.
+The tool must judge if the behavior respects the security guarantee.
 Every test has its own specified oracle, built in three steps:
 *we identify the guarantee, define what a violation looks like, and encode the rule in the test.*
 The procedure is the same, but the source of the rule can change.
